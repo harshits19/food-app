@@ -1,5 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import Navbar from "./components/Navbar";
+import BannerIntro from "./components/BannerIntro";
+import RestCaraousal from "./components/RestCarousal";
+
 /* 
         Header
          - logo
@@ -21,17 +25,13 @@ import ReactDOM from "react-dom/client";
          - credits
          
 */
-const Header = () => {
-  return (
-    <div className="header">
-      <div className="logo"></div>
-      <div className="profile"></div>
-      <div className="search"></div>
-    </div>
-  );
-};
 const Body = () => {
-  return <h2>Body</h2>;
+  return (
+    <>
+      <BannerIntro />
+      <RestCaraousal />
+    </>
+  );
 };
 const Footer = () => {
   return <h2>Footer</h2>;
@@ -39,7 +39,7 @@ const Footer = () => {
 const Applayout = () => {
   return (
     <>
-      <Header />
+      <Navbar />
       <Body />
       <Footer />
     </>
