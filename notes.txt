@@ -1,0 +1,45 @@
+Step by step process to setup react app
+
+1. Install NodeJs Locally
+2. npm init or npm init -y (saves from entering all details about project)
+3. npm install react or npm i react
+4. npm i react-dom
+5. npm i -D parcel (to install parcel as dev dependeny) or npm i --save-dev parcel
+6. npx parcel index.html (run the app using the command)
+	npm used when installing a package, npx used for executing commands and packages
+7. making shorthand for commands in package.json  under script section
+	start : "parcel entrypoint.exe ", (to start the app)
+8. this will allow use to use command like npm run start for starting the app
+
+9. npm start / npm run start/ npx parcel index.html are same to built project
+
+
+Notes:
+
+~ JSX is not a HTML inside javascript, JSX is a html like syntax, but not exactly html
+~ for multiple elements react uses a key to uniquely identify each element "key is not a id in html"
+~ working : React.createElement(tag) => object => HTML (DOM) (babel comverts this JSX into react object which is then rendered in HTML DOM)
+~ JSX uses camelcasing similar to Js
+~ Name of a component starts with Capital Letter (not mandatory but a good practice), the react element can be smaller case
+~ We can write javascript code inside { } braces.
+
+
+Few Things about JSX
+- A jsx code can only have one parent
+eg : const title = ()=>{
+			<h2>HEllo</h2>  //this is incorrent
+			<h3>masdkds</h3>
+	}
+	to use multiple element we should wrap it inside a <div> or <React.Fragment> or simply use empty tags (<> </>)(shorthand of react.fragment) to wrap the elements inside
+	const title = ()=>{
+			<React.Fragment> //now its valid
+				<h2>Hello</h2>  
+				<h3>masdkds</h3>
+			</React.Fragment>
+	}
+
+- To give a style to a jsx element, we use style = {}, and define attributes inside {} , style takes object as argument in Js
+	<div style={background-color:"red"}></div>
+	or 
+	const styleobj = {background-color:"red"}
+	<div style={styleobj}></div>
