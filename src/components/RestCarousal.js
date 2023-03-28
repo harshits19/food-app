@@ -1,9 +1,14 @@
-import { IMG_CDN_URL } from "../config";
-import { resList } from "../config";
+import { resList, IMG_CDN_URL } from "../config";
+import { useState } from "react";
 
-// const RestBox = ({ name, area, cuisines, cloudinaryImageId }) => {
-const RestBox = ({ restid }) => {
-  const { name, cloudinaryImageId, cuisines, area } = restid.data;
+function filterData(searchText, restaurants) {
+  const filterData = restaurants.filter((restaurant) =>
+    restaurant.data.name.includes(searchText)
+  );
+  return filterData;
+}
+
+const RestBox = ({ name, area, cuisines, cloudinaryImageId }) => {
   return (
     <div className="restbox">
       <div className="restimg">
@@ -18,25 +23,35 @@ const RestBox = ({ restid }) => {
     </div>
   );
 };
+
 const RestCaraousal = () => {
+  const [searchText, setSearchText] = useState("");
+  const [restaurants, setRestaurants] = useState(resList);
+
   return (
     <>
       <div className="container">
         <div className="restCarousal">
           <h2>Top Restaurant Chains in Delhi</h2>
+          <div className="searchBox">
+            <input
+              placeholder="Search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                const data = filterData(searchText, restaurants);
+                setRestaurants(data);
+              }}>
+              Search
+            </button>
+          </div>
+
           <div className="restContainer">
-            {/*  <RestBox
-              name={resList[1].data.name}
-              area={resList[1].data.area}
-              cuisines={resList[1].data.cuisines}
-              cloudinaryImageId={resList[1].data.cloudinaryImageId}
-            /> */}
-            <RestBox restid={resList[0]} />
-            <RestBox restid={resList[1]} />
-            <RestBox restid={resList[2]} />
-            <RestBox restid={resList[3]} />
-            <RestBox restid={resList[4]} />
-            <RestBox restid={resList[5]} />
+            {restaurants.map((restaurant) => {
+              return <RestBox {...restaurant.data} />;
+            })}
           </div>
         </div>
       </div>
