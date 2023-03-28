@@ -1,47 +1,8 @@
-import React from "react";
+/* Config file used to store the hard coded data, which is used in multiple files */
+export const IMG_CDN_URL =
+  "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
 
-const RestBox = (props) => {
-  return (
-    <div className="restbox">
-      <div className="restimg">
-        <img
-          src={
-            "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" +
-            resList[props.restid].data.cloudinaryImageId
-          }
-          alt=""></img>
-      </div>
-      <div className="restdesc">
-        <h3>{resList[props.restid].data?.name}</h3>
-        <p>Rating</p>
-        <p>{resList[props.restid].data?.cuisines.join(" , ")}</p>
-        <p>{resList[props.restid].data?.area}</p>
-      </div>
-    </div>
-  );
-};
-const RestCaraousal = () => {
-  return (
-    <>
-      <div className="container">
-        <div className="restCarousal">
-          <h2>Top Restaurant Chains in Delhi</h2>
-          <div className="restContainer">
-            <RestBox restid="1" />
-            <RestBox restid="2" />
-            <RestBox restid="3" />
-            <RestBox restid="4" />
-            <RestBox restid="5" />
-            <RestBox restid="6" />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-export default RestCaraousal;
-
-const resList = [
+export const resList = [
   {
     type: "restaurant",
     data: {

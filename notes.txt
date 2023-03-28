@@ -8,22 +8,116 @@ Notes:
 ~ We can write javascript code inside { } braces.
 
 
-Few Things about JSX
-- A jsx code can only have one parent
-eg : const title = ()=>{
-			<h2>HEllo</h2>  //this is incorrent
-			<h3>masdkds</h3>
-	}
-	to use multiple element we should wrap it inside a <div> or <React.Fragment> or simply use empty tags (<> </>)(shorthand of react.fragment) to wrap the elements inside
-	const title = ()=>{
+~ Few Things about JSX
+
+	- A jsx code can only have one parent
+		eg : const title = ()=>{
+				<h2>HEllo</h2>  //this is incorrent
+				<h3>masdkds</h3>
+			}
+	- to use multiple element we should wrap it inside a <div> or <React.Fragment> or simply use empty tags (<> </>)(shorthand of react.fragment) to wrap the elements inside
+		const title = ()=>{
 			<React.Fragment> //now its valid
 				<h2>Hello</h2>  
 				<h3>masdkds</h3>
 			</React.Fragment>
-	}
+		}
 
-- To give a style to a jsx element, we use style = {}, and define attributes inside {} , style takes object as argument in Js
-	<div style={{backgroundColor:"red"}}></div>
-	or 
-	const styleobj = {background-color:"red"}
-	<div style={styleobj}></div>
+	- To give a style to a jsx element, we use style = {}, and define attributes inside {} , style takes object as argument in Js
+		<div style={{backgroundColor:"red"}}></div>
+			or 
+		const styleobj = {background-color:"red"}
+		<div style={styleobj}></div>
+
+~ Something about props
+
+	- props are the properties(parameters) passed to a react component(as an argument). 
+		Suppose this API is given:
+		 const restList = [
+    		data: {
+      			id: "1",
+      			name: "KFC",
+      			area: "Koramangala",
+  			},]
+	
+		eg. const reactobj = (props)=>{ //its not mandatory to use props word, we can name it anything, but genrally we name it props 
+				<h2>{props.name}</h2>;
+			}
+			<reactobj name="Harshit" />		//here name prop is passed as object to the component
+
+	- suppose there are multiple properties that are to be passed, then it is good to destructure the prop object inside the react component
+		const reactobj = (props)=>{  
+			const {name,id,area} = props.restraunt.data; //when we destructure the object
+			<h2>{name}</h2>;		//then we dont need to write the props anymore
+			<h2>{id}</h2>;
+			<h2>{area}</h2>;
+		}
+		<reactobj restraunt={restList[0]} />
+
+	- one more way to direct destructure the object
+		const reactobj = ({restaurant})=>{  //we destructured the object directly inside the function
+			const {name,id,area} = restraunt.data; //then we dont need to write the props anymore 
+			<h2>{name}</h2>;
+			<h2>{id}</h2>;
+			<h2>{area}</h2>;		
+		}
+		<reactobj restraunt={restList[0]} />
+
+	- another way of destructuring object directly inside react component
+		const reactobj = ({name,id,area})=>{  //note: here order of items is important, as destructuring is done directly in fn header
+			<h2>{name}</h2>;
+			<h2>{id}</h2>;
+			<h2>{area}</h2>;		
+		}
+		<reactobj name={restList[0].data.name} id={restList[0].data.id} area={restList[0].data.area} /> //now we have to pass the props one by one
+					or
+	 		instead of passing each and every props we can use javascript ES6 using spread operator for passing multiple props
+		<reactobj {...restList[0].data} /> 
+
+
+~ Something about Imports and  Exports:
+	- we can export the components by 2 ways,
+		1. default export (we can export only one component by default)
+		2. named export  (can export as much we want)
+
+	- if we default export a component then we can import it directly into the app without using {}
+			>>  export default ComponentOne;
+		   	<<  import ComponentOne from "src/ComponentOne";
+	- in default export, while importing a component , the name doesnt matter , we can rename it (not allowed in named export)
+			>>  export default ComponentOne;
+		   	<<  import myRenamedComponent from "src/ComponentOne"; //we renamed ComponentOne to myRenamedComponent
+	- to export multiple components as default we had to export them by making an array or Something
+			>> export default {Title,Heading};
+		   	>> import obj from "src/Component";
+		    {<obj.Title />,<obj.Heading/>};
+
+	- if we named export a component directly then we had to use the {} braces(mandatory)
+			>> export const Title () =>{}
+			>> import {Title} from "src/Title;
+
+	- if we had to import multiple named Exports then
+			>> export {Title,Header};
+			<< import * as obj from "src/Header"; //here we cannot write like "import obj from "src/header"" because its not like default export
+						or						  // we have to use {} braces while named importing
+			<< import {Title,Header} from "src/Header"; 
+	
+	- we can export both named and default export at the same time
+			>> export default Header;
+			>> export const Title = ()=>{}
+			<< import Header,{Title} from "src/Header";  //named import using {}, default import directly
+
+~ Something about React Hooks and State Hooks
+
+	- React Hooks are the simple functions that have their own unique functionality.
+	- useState Hook is a fn which is used to create state variables, it returns an array which contains [name of variable, fn to modify that variable]
+	 eg. 	const searchText = useState();
+	    	const [searchText,setSearchText] = useState(); // so we destructure the useState Hook
+	 or		const searchText = useState(); 	
+	 		[searchText,setSearchText] = searchText; 
+	- import using named variable ; import {useState} from "react";
+
+	- useState Hook syntax
+		const [variableName, setVariableFunctionName] = useState("default value");		//same like: const variableName = "default value";
+	- here setVariableFunctionName is used to set the value of a state variable. 
+	- in react, we cannot directly assign the value of a state variable, we have to use the setState function which we already defined in useState
+		setVariableFunctionName("new value"); 			// same like: variableName = new value 

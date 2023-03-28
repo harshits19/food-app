@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Navbar from "./components/Navbar";
-import BannerIntro from "./components/BannerIntro";
-import RestCaraousal from "./components/RestCarousal";
+import Header from "./components/Header";
+import Body from "./components/Body";
+import Footer from "./components/Footer";
 
 /* 
         Header
@@ -25,21 +25,11 @@ import RestCaraousal from "./components/RestCarousal";
          - credits
          
 */
-const Body = () => {
-  return (
-    <>
-      <BannerIntro />
-      <RestCaraousal />
-    </>
-  );
-};
-const Footer = () => {
-  return <h2>Footer</h2>;
-};
+
 const Applayout = () => {
   return (
     <>
-      <Navbar />
+      <Header />
       <Body />
       <Footer />
     </>
