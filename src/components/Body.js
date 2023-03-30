@@ -1,10 +1,10 @@
 import BannerIntro from "./BannerIntro";
-import RestCaraousal from "./RestCarousal";
+import RestContainer from "./RestContainer";
 const Body = () => {
   return (
     <>
       <BannerIntro />
-      <RestCaraousal />
+      <RestContainer />
     </>
   );
 };

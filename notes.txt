@@ -5,7 +5,9 @@ Notes:
 ~ working : React.createElement(tag) => object => HTML (DOM) (babel comverts this JSX into react object which is then rendered in HTML DOM)
 ~ JSX uses camelcasing similar to Js
 ~ Name of a component starts with Capital Letter (not mandatory but a good practice), the react element can be smaller case
-~ We can write javascript code inside { } braces.
+~ we can write javascript expressions inside { } braces , but not js statements.
+~ Never write useState hook inside if/else/for statements
+~ Write useState inside the functional component which it belongs to. as useState creates the local variable for the component.
 
 
 ~ Few Things about JSX
@@ -104,20 +106,85 @@ Notes:
 	- we can export both named and default export at the same time
 			>> export default Header;
 			>> export const Title = ()=>{}
-			<< import Header,{Title} from "src/Header";  //named import using {}, default import directly
+			<<link import Header,{Title} from "src/Header";  //named import using {}, default import directly
 
-~ Something about React Hooks and State Hooks
+~ Something about React Hooks and useState Hook
 
 	- React Hooks are the simple functions that have their own unique functionality.
 	- useState Hook is a fn which is used to create state variables, it returns an array which contains [name of variable, fn to modify that variable]
+	- useState Hook syntax
+		const [variableName, setVariableFunctionName] = useState("default value");		//same like: const variableName = "default value";
+	- here setVariableFunctionName is used to set the value of a state variable. 
 	 eg. 	const searchText = useState();
 	    	const [searchText,setSearchText] = useState(); // so we destructure the useState Hook
 	 or		const searchText = useState(); 	
 	 		[searchText,setSearchText] = searchText; 
 	- import using named variable ; import {useState} from "react";
-
-	- useState Hook syntax
-		const [variableName, setVariableFunctionName] = useState("default value");		//same like: const variableName = "default value";
-	- here setVariableFunctionName is used to set the value of a state variable. 
 	- in react, we cannot directly assign the value of a state variable, we have to use the setState function which we already defined in useState
 		setVariableFunctionName("new value"); 			// same like: variableName = new value 
+
+~ Somethings about useEffect Hooks
+
+	- useEffect Hook is a function which is placed inside any component , it will call itself each time when the component is re rendered.
+	- It has a callback function as it’s 1st parameter, and a dependency array as its 2nd parameter.
+	- Callback fn is called each time useState() is called. because useState(), when defined within a component, is called everytime our component is re-rendered.
+ 	- We know that our component is re-rendered whenever, we load a page or a state variable changes or we change the props. But, this is a bad way to call it.
+	- To call the useEffect hook on specific time, we use the dependency array, which is passed in useEffect hook as 2nd argument.
+	- This array accepts any variable. Those variables are treated as dependencies and only when any of those variables are changed, the useEffect hook is called (except the first time when useEffect is called when the page is loaded). 
+	- If we keep the dependency array empty, then useEffect will only be called once, at loading the page. 
+	- syntax
+		useEffect(()=>{/* callback() fn */}, [dependency array]);
+	- Its used when we want to execute some function at a certain time, (like when a certain component renders,then execute a function).
+
+~ React Router DOM
+	- Install it using npm i react-router-dom
+	- import {createBrowserRouter,RouterProvider} from "react-router-dom";
+	- const appRouter = createBrowserRouter([{
+		/* define path */
+	   }]);
+	   eg. const appRouter = createBrowserRouter([
+		{path:"/", element:<AppLayout/>},{path:"/About",element:<AboutUs/>}])
+	- Now we render the root according to our router path
+	  root.render(<RouterProvider router={appRouter}/>);
+	- To build single page application, we need to fix the links in header and replace anchor tags with the link to tag.
+		but first import {Link} from 'react-router-dom';
+		<a href="/"></a> => <Link to="/"></Link>
+	- Two types of routing 
+		1. client side routing (used in React)
+		2. server side routing
+	- To find the errors while routing pages, use the useRouterError hook from the react router dom 	
+		import {useRouterError} from "react-router-dom";
+		const err = useRouterError(); //this object will give us all details about the error  like error code or status
+	- A custom error page can also be created, and inside the createBrowserRouter(), we declare it as, errorElement :  <Error Component />;
+	- Nested Routing - to route to the specific child component, inside the parent component, we use nested routing
+		like <header />
+				<about />  //here about is the child component, if we want to route to it, we use something like <Outlet /> 
+			<footer />> 		//THe Outlet will be filled by the children config while rendering the parent components
+		first import {Outlet} from "react-router-dom"; 
+		then place the outlet inside the Applayout component where all the other components are defined.
+		then make children components in the createBrowserRouter(), like children :[{path:"/about",element:<About/>}], where object is the path of child component.
+	- useParams Hook:- react-router-dom provides us useParams Hook. This function returns the parameter in out path.
+		const outPath = useParams(); //if we console log it, we get the different parameters from react-router-dom which are hidden in our path
+	
+~ React Class Based components
+	-You cannot create a class-based component without a render() method. a class-based component (CBC) returns JSX using the render().
+	syntax:
+		class CLASSNAME extends React.Component {
+			render(){
+				return ();
+			}
+		} export default CLASSNAME;
+	- Props are passed to component(<cbc name="CBC"/>) as usual but used inside the component by using this.props.propName.
+	- We know that classes have a constructor which is a special member function used for initialisation and hence we create the state variables inside a class constructor. 
+	- We use this.state object(to create local state variables) In that object we can write the state variables with their initial value in the form of key-value pairs.
+	- In CBC, the state variables are created inside a single state object inside the constructor
+	constructor(props){
+		super(props);
+		this.state = {
+			count:0,
+			count1:1,
+		};
+	}
+
+
+	
