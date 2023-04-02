@@ -4,11 +4,16 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import About from "./components/About";
-import Offers from "./components/Offers";
 import Error from "./components/Error";
 import Profile from "./components/Profile";
 import RestaurantView from "./components/RestaurantView";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Shimmer from "./components/Shimmer";
+import { lazy, Suspense } from "react";
+
+//Lazy loading
+// import Offers from "./components/Offers";
+const Offers = lazy(() => import("./components/Offers"));
 
 /* 
         Header
@@ -58,7 +63,14 @@ const appRouter = createBrowserRouter([
           },
         ],
       },
-      { path: "/offers", element: <Offers /> },
+      {
+        path: "/offers",
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <Offers />
+          </Suspense>
+        ),
+      }, //to dynamic/lazy load, wrap the component in suspense tag
       { path: "/restaurants/:resId", element: <RestaurantView /> },
     ],
   },

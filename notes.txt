@@ -9,6 +9,9 @@ Notes:
 ~ Never write useState hook inside if/else/for statements
 ~ Write useState inside the functional component which it belongs to. as useState creates the local variable for the component.
 
+~ Q : Why do we use super(props) in constructor?
+	A : super(props) is used to inherit the properties and access of variables of the React parent class when we initialize our component. super() is used inside constructor of a class to derive the parent's all properties inside the class that extended it. If super() is not used, then Reference Error : Must call super constructor in derived classes before accessing 'this' or returning from derived constructor is thrown in the console. The main difference between super() and super(props) is the this.props is undefined in child's constructor in super() but this.props contains the passed props if super(props) is used.
+
 
 ~ Few Things about JSX
 
@@ -135,6 +138,11 @@ Notes:
 	- syntax
 		useEffect(()=>{/* callback() fn */}, [dependency array]);
 	- Its used when we want to execute some function at a certain time, (like when a certain component renders,then execute a function).
+	- useEffect hook also have the cleanup function that invokes when the component goes out of scope i.e when we move to another page, so its kind of similar to componentWillUnmount() of CBC, its written as:
+		useEffect(()=>{
+			return()=>{}; //inside return() we can define the contents which we want to cleanup before moving to another page
+		},[])
+
 
 ~ React Router DOM
 	- Install it using npm i react-router-dom
@@ -180,11 +188,19 @@ Notes:
 	- In CBC, the state variables are created inside a single state object inside the constructor
 	constructor(props){
 		super(props);
-		this.state = {
-			count:0,
-			count1:1,
-		};
+		this.state = {count:0,count1:1};
 	}
+	- To update the state variables we use setState() method
+		this.setState({count:0, count2:1});
+	- Class based components uses a Life cycle methods
+		A constructor is called before the render method 
+		A componentDidMount() method (like useEffect hook) is called after render. (Great place to call an API)
+	-	 Following is the order of lifecycle methods calls in Class Based Components:
+		constructor()
+		render ()
+		componentDidMount()
+		componentDidUpdate()
+		componentWillUnmount()
+	- ComponentDidUpdate() is called when the rerendering of an existing component and its updation in DOM has already been done. In simple words,  this method will be called after every next render.
+	-componentWillUnmount() is useful for the cleanup of the application when we switch routes from one place to another. Since we are working with a SPA(Single Page Application) the component process always runs in the background even if we switch to another route. So it is required to stop those processes before leaving the page.
 
-
-	

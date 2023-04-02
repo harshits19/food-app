@@ -1,5 +1,6 @@
-import { resList, IMG_CDN_URL } from "../config";
+import { ALL_RESTAURANT_URL, IMG_CDN_URL } from "../config";
 import { useEffect, useState } from "react";
+import useOnline from "../utils/useOnline";
 import { Link } from "react-router-dom";
 import Shimmer from "./Shimmer";
 
@@ -19,17 +20,10 @@ const RestBox = ({ name, area, cuisines, cloudinaryImageId }) => {
   );
 };
 
-function filterData(searchText, allRestaurants) {
-  const filterData = allRestaurants.filter((restaurant) =>
-    restaurant.data.name.toLowerCase().includes(searchText.toLowerCase())
-  );
-  return filterData;
-}
-
 const RestContainer = () => {
-  const [searchText, setSearchText] = useState("");
   const [allRestaurants, setAllRestaurants] = useState([]); //maintaining 2 variable for, so that if one is filtered out, others remains intact
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [otherRestInfo, setOtherRestInfo] = useState([]);
 
   useEffect(() => {
     getRestaurants();
@@ -41,8 +35,15 @@ const RestContainer = () => {
     );
     const dataAPI = await data.json();
     // console.log(json);
-    setAllRestaurants(dataAPI?.data?.cards[2]?.data?.data?.cards); //initially we have to fill both objects with API data
-    setFilteredRestaurants(dataAPI?.data?.cards[2]?.data?.data?.cards);
+    const restData = dataAPI?.data?.cards[2]?.data?.data;
+    setAllRestaurants(restData?.cards); //initially we have to fill both objects with API data
+    setFilteredRestaurants(restData?.cards);
+    setOtherRestInfo(restData);
+  }
+
+  const isOnline = useOnline();
+  if (!isOnline) {
+    return <h1>Seems like you have no internet Connection</h1>;
   }
 
   return allRestaurants.length == 0 ? (
@@ -51,21 +52,7 @@ const RestContainer = () => {
     <>
       <div className="container">
         <div className="restCarousal">
-          <h2>Top Restaurant Chains in Delhi</h2>
-          <div className="searchBox">
-            <input
-              placeholder="Search"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            <button
-              onClick={() => {
-                const data = filterData(searchText, allRestaurants);
-                setFilteredRestaurants(data);
-              }}>
-              Search
-            </button>
-          </div>
+          <h2>{otherRestInfo.totalOpenRestaurants} Restaurant</h2>
 
           <div className="restContainer">
             {filteredRestaurants.length == 0 ? (
@@ -88,3 +75,26 @@ const RestContainer = () => {
   );
 };
 export default RestContainer;
+/* 
+  const [searchText, setSearchText] = useState("");
+function filterData(searchText, allRestaurants) {
+  const filterData = allRestaurants.filter((restaurant) =>
+    restaurant.data.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+  return filterData;
+}
+ <div className="searchBox">
+            <input
+              placeholder="Search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                const data = filterData(searchText, allRestaurants);
+                setFilteredRestaurants(data);
+              }}>
+              Search
+            </button>
+          </div>
+*/
