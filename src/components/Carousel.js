@@ -24,14 +24,18 @@ const Carousel = () => {
           onClick={() => {
             document.getElementById("bbox").scrollLeft += 310;
           }}>
-          <img src="https://raw.githubusercontent.com/Keyamoon/IcoMoon-Free/master/SVG/317-arrow-right2.svg" />
+          <i
+            className="fa-solid fa-arrow-right fa-xl"
+            style={{ color: "#282828" }}></i>
         </button>
         <button
           className="carouselBtn btnLeft"
           onClick={() => {
             document.getElementById("bbox").scrollLeft -= 310;
           }}>
-          <img src="https://raw.githubusercontent.com/Keyamoon/IcoMoon-Free/master/SVG/321-arrow-left2.svg" />
+          <i
+            className="fa-solid fa-arrow-left fa-xl"
+            style={{ color: "#282828" }}></i>
         </button>
       </div>
     </div>

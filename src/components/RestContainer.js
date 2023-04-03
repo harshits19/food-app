@@ -1,20 +1,54 @@
 import { ALL_RESTAURANT_URL, IMG_CDN_URL } from "../config";
 import { useEffect, useState } from "react";
-import useOnline from "../utils/useOnline";
 import { Link } from "react-router-dom";
 import Shimmer from "./Shimmer";
 
-const RestBox = ({ name, area, cuisines, cloudinaryImageId }) => {
+const RestBox = ({
+  name,
+  costForTwoString,
+  slaString,
+  cuisines,
+  avgRating,
+  cloudinaryImageId,
+  aggregatedDiscountInfo,
+}) => {
+  const setBg = (avgRating) => {
+    if (avgRating >= 4) {
+      return "green";
+    } else if (avgRating >= 3) {
+      return "orange";
+    } else if (avgRating >= 2) {
+      return "yellow";
+    } else if (avgRating >= 1) {
+      return "red";
+    } else {
+      return "grey";
+    }
+  };
   return (
     <div className="restbox">
       <div className="restimg">
         <img src={IMG_CDN_URL + cloudinaryImageId} alt=""></img>
       </div>
       <div className="restdesc">
-        <h3>{name}</h3>
-        <p>Rating</p>
-        <p>{cuisines.join(" , ")}</p>
-        <p>{area}</p>
+        <div className="restName">{name}</div>
+        <div className="restCuisines">{cuisines.join(", ")}</div>
+        <div className="restArea">
+          <div className={setBg(avgRating) + " restRatings"}>
+            <i
+              className="fa-solid fa-star fa-2xs"
+              style={{ color: "#f1f1f1", marginRight: "2px" }}></i>
+            {avgRating}
+          </div>
+          <div>•</div>
+          <div className="resDelTiming">{slaString}</div>
+          <div>•</div>
+          <div className="resCostppn">{costForTwoString}</div>
+        </div>
+        {/* {console.log(
+          Object.values(aggregatedDiscountInfo.shortDescriptionList)[0].meta
+        )} */}
+        {/* <div className="restQuickView">QUICK VIEW</div> */}
       </div>
     </div>
   );
@@ -41,11 +75,6 @@ const RestContainer = () => {
     setOtherRestInfo(restData);
   }
 
-  const isOnline = useOnline();
-  if (!isOnline) {
-    return <h1>Seems like you have no internet Connection</h1>;
-  }
-
   return allRestaurants.length == 0 ? (
     <Shimmer />
   ) : (
@@ -62,8 +91,9 @@ const RestContainer = () => {
                 return (
                   <Link
                     to={"/restaurants/" + restaurant.data.id}
-                    key={restaurant.data.id}>
-                    <RestBox {...restaurant.data} />
+                    key={restaurant.data.id}
+                    style={{ textDecoration: "none" }}>
+                    <RestBox {...restaurant?.data} />
                   </Link>
                 );
               })
