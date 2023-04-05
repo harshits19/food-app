@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import useLocation from "../utils/useLocation";
 const Header = () => {
-  useLocation();
   return (
     <>
       <div className="headers fixed" id="myHeader">

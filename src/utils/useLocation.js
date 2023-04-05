@@ -1,8 +1,9 @@
+/*
 import Geocode from "react-geocode";
 import { useEffect, useState } from "react";
 const useLocation = () => {
   const [address, setAddress] = useState({});
-  const APIKEY = "AIzaSyAfSARyhuHejlqsP5pT1VMfUqVeWdyt_Zk";
+  const APIKEY = "";
   useEffect(() => {
     navigator.geolocation.getCurrentPosition = (position) => {
       console.log(position);
@@ -32,3 +33,4 @@ const useLocation = () => {
   );
 };
 export default useLocation;
+*/

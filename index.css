@@ -142,7 +142,7 @@ body {
   width: 500px;
 }
 
-/* ----------Restaurant Cards------------ */
+/* ----------Restaurant Cards (Homepage)------------ */
 .restCarousal {
   padding: 3em 0;
   max-width: 1200px;
@@ -219,19 +219,19 @@ body {
   color: #f9f9f9;
 }
 
-.grey {
+.greybg {
   background-color: #ffffff;
 }
-.orange {
+.orangebg {
   background-color: #db7c38;
 }
-.green {
+.greenbg {
   background-color: #48c479;
 }
-.red {
+.redbg {
   background-color: #ff0000;
 }
-.yellow {
+.yellowbg {
   background-color: yellow;
 }
 
@@ -402,4 +402,146 @@ body {
   flex-direction: row;
   justify-content: space-between;
   width: 180px;
+}
+
+/* ---------Shimmer Cards----------- */
+.shimmerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 1em 0;
+}
+.shimmerInnerContainer {
+  display: flex;
+  flex-direction: column;
+}
+.shimmerBox {
+  width: 254px;
+  height: 160px;
+  margin: 18px 0 2px;
+}
+.lines {
+  height: 10px;
+  width: 255px;
+  margin: 10px 0 0 0;
+}
+.shine {
+  background: #f6f7f8;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 800px 160px;
+  display: inline-block;
+  position: relative;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-name: placeholderShimmer;
+  -webkit-animation-timing-function: linear;
+}
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+/* ----------- Restaurant Menu/View------------- */
+.restoBody {
+  max-width: 800px;
+  min-height: 800px;
+  margin: 20px auto 0;
+  display: flex;
+  flex-direction: column;
+}
+.restroHeaderContainer {
+  height: 100%;
+  width: 100%;
+  padding: 20px 0px;
+  border-bottom: 1px dashed #d3d3d3;
+  display: flex;
+  justify-content: space-between;
+}
+.restroName {
+  font-size: 1.43rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.restroCuisines {
+  font-size: 13px;
+  color: #7e808c;
+  height: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+.restroDelCost {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #7e808c;
+}
+.ratingBox {
+  border: 1px solid #e9e9eb;
+  box-shadow: 0 1px 5px #f9f9f9;
+  border-radius: 6px;
+  text-align: center;
+  padding: 8px;
+  max-width: 100px;
+  cursor: pointer;
+}
+.ratingBox .ratingIcons {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9e9eb;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+}
+.totalRatings {
+  font-size: 10px;
+  color: #8b8d97;
+  font-weight: 500;
+}
+.grey {
+  color: #ffffff;
+}
+.orange {
+  color: #db7c38;
+}
+.green {
+  color: #48c479;
+}
+.red {
+  color: #ff0000;
+}
+.yellow {
+  color: rgb(189, 173, 72);
+}
+.restroTimeCostWrapper {
+  color: #3e4152;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 18px 0;
+}
+.restroTimeCostItem {
+  margin-right: 24px;
+  display: inline-block;
+}
+.restroTimeCostIcon {
+  vertical-align: bottom;
+  margin-right: 10px;
 }
