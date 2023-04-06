@@ -4,8 +4,7 @@ import RestCards from "./RestCards";
 import { getRestaurants } from "../utils/useRestaurant";
 
 const RestContainer = () => {
-  const { allRestaurants, filteredRestaurants, otherRestInfo } =
-    getRestaurants();
+  const { allRestaurants, otherRestInfo } = getRestaurants();
 
   return allRestaurants.length == 0 ? (
     <Shimmer />
@@ -15,20 +14,16 @@ const RestContainer = () => {
         <div className="restCarousal">
           <h2>{otherRestInfo.totalOpenRestaurants} Restaurants</h2>
           <div className="restContainer">
-            {filteredRestaurants.length == 0 ? (
-              <h1>No Restaurants</h1>
-            ) : (
-              filteredRestaurants.map((restaurant) => {
-                return (
-                  <Link
-                    to={"/restaurants/" + restaurant.data.id}
-                    key={restaurant.data.id}
-                    style={{ textDecoration: "none" }}>
-                    <RestCards {...restaurant?.data} />
-                  </Link>
-                );
-              })
-            )}
+            {allRestaurants.map((restaurant) => {
+              return (
+                <Link
+                  to={"/restaurants/" + restaurant.data.id}
+                  key={restaurant.data.id}
+                  style={{ textDecoration: "none" }}>
+                  <RestCards {...restaurant?.data} />
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

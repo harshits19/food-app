@@ -77,7 +77,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/offers/">
+              <Link to="/search/">
                 <div className="navItems">
                   <span className="navIcons">
                     <svg

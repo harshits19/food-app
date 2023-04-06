@@ -11,7 +11,8 @@ const useRestaurant = (resId) => {
     const response = await fetch(RESTAURANT_MENU_URL + resId);
     const jsonData = await response.json();
     // console.log(jsonData.data);
-    setRestaurant(jsonData?.data?.cards[0]?.card?.card?.info);
+    // setRestaurant(jsonData?.data?.cards[0]?.card?.card?.info);
+    setRestaurant(jsonData?.data);
   }
   return restaurant;
 };
@@ -20,7 +21,6 @@ const useRestaurant = (resId) => {
 
 const getRestaurants = () => {
   const [allRestaurants, setAllRestaurants] = useState([]); //maintaining 2 variable for, so that if one is filtered out, others remains intact
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [otherRestInfo, setOtherRestInfo] = useState([]);
 
   useEffect(() => {
@@ -33,10 +33,8 @@ const getRestaurants = () => {
     // console.log(json);
     const restData = dataAPI?.data?.cards[2]?.data?.data;
     setAllRestaurants(restData?.cards); //initially we have to fill both objects with API data
-    setFilteredRestaurants(restData?.cards);
     setOtherRestInfo(restData);
   }
-  return { allRestaurants, filteredRestaurants, otherRestInfo };
+  return { allRestaurants, otherRestInfo };
 };
-
 export { useRestaurant, getRestaurants };

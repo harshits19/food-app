@@ -163,6 +163,8 @@ body {
   transition: 0.2s ease;
   padding: 20px;
   border: 1px solid #fff;
+}
+.restbox:first-child {
   margin: 0px -20px;
 }
 .restbox:hover {
@@ -202,7 +204,7 @@ body {
   display: inline-block;
   color: #fff;
   padding: 3px 6px;
-  line-height: 1;
+  /* line-height: 1; */
 }
 .restArea {
   display: flex;
@@ -232,7 +234,7 @@ body {
   background-color: #ff0000;
 }
 .yellowbg {
-  background-color: yellow;
+  background-color: #e1b055;
 }
 
 /*------------Homepage Carousel--------------*/
@@ -529,7 +531,7 @@ body {
   color: #ff0000;
 }
 .yellow {
-  color: rgb(189, 173, 72);
+  color: #e1b055;
 }
 .restroTimeCostWrapper {
   color: #3e4152;
@@ -544,4 +546,60 @@ body {
 .restroTimeCostIcon {
   vertical-align: bottom;
   margin-right: 10px;
+}
+.restroOffersContainer {
+  display: flex;
+  /* flex-direction: column; */
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.restroOffersContainer::-webkit-scrollbar {
+  display: none;
+}
+.offerOuterContainer {
+  display: flex;
+  border: 1px solid #e9e9eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-width: 200px;
+  margin-right: 12px;
+}
+.offerBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 5px;
+}
+.offerBoxHeader {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #686b78;
+}
+.offerBoxBody {
+  font-size: 11px;
+  color: #93959f;
+  margin-top: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 200px;
+  font-weight: 600;
+}
+.hideFlatDeals {
+  display: none;
+}
+
+.flatDeals {
+  color: #e46d47;
+  font-weight: 700;
+  font-size: 9px;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  padding-left: 4px;
+  text-align: center;
+  border-left: 1px solid #e9e9eb;
 }

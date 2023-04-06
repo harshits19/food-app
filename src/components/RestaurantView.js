@@ -1,5 +1,3 @@
-//import { IMG_CDN_URL, RESTAURANT_MENU_URL } from "../config";
-// import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import { useRestaurant } from "../utils/useRestaurant";
@@ -21,8 +19,28 @@ const RestaurantView = () => {
     }
   };
 
-  const restaurants = useRestaurant(resId); //created custom hook for fetching restaurant menu api
-  console.log(restaurants);
+  const OffersBox = ({ header, couponCode, description, offerTag }) => {
+    return (
+      <div className="offerOuterContainer">
+        <div className="flatDeals">
+          <span>{offerTag}</span>
+        </div>
+        <div className="offerBox">
+          <p className="offerBoxHeader">{header}</p>
+          <p className="offerBoxBody">
+            {couponCode} | {description}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
+  const restaurantAPI = useRestaurant(resId); //created custom hook for fetching restaurant menu api
+  const restaurants = restaurantAPI?.cards[0]?.card?.card?.info;
+  const restroOffers =
+    restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
+  //console.log(restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle);
+  //console.log(restaurants);
   return !restaurants ? (
     <Shimmer />
   ) : (
@@ -93,16 +111,14 @@ const RestaurantView = () => {
         </li>
       </ul>
       <div className="restroOffersContainer">
-        <ul className="restroOffersList"></ul>
+        {restroOffers.offers.map((offersData) => {
+          return (
+            <OffersBox {...offersData.info} key={offersData.info.offerIds} />
+          );
+        })}
       </div>
     </div>
   );
 };
 
 export default RestaurantView;
-
-{
-  /* <h1>{restaurants?.name}</h1>
-<h1>{restaurants?.id}</h1>
-<img src={IMG_CDN_URL + restaurants?.cloudinaryImageId} /> */
-}

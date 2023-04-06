@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import Error from "./components/Error";
 import Profile from "./components/Profile";
+import SearchComp from "./components/SearchComp";
 import RestaurantView from "./components/RestaurantView";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Shimmer from "./components/Shimmer";
@@ -54,11 +55,12 @@ const appRouter = createBrowserRouter([
     children: [
       { path: "/", element: <Body /> },
       {
-        path: "/about",
+        path: "about",
         element: <About />,
         children: [
           {
-            path: "profile", //dont write /about/profile or/profile/
+            path: "profile",
+            //dont write /about/profile or/profile/
             element: <Profile />,
           },
         ],
@@ -72,6 +74,10 @@ const appRouter = createBrowserRouter([
         ),
       }, //to dynamic/lazy load, wrap the component in suspense tag
       { path: "/restaurants/:resId", element: <RestaurantView /> },
+      {
+        path: "/search",
+        element: <SearchComp />,
+      },
     ],
   },
 ]);
