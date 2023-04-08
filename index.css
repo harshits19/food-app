@@ -163,8 +163,6 @@ body {
   transition: 0.2s ease;
   padding: 20px;
   border: 1px solid #fff;
-}
-.restbox:first-child {
   margin: 0px -20px;
 }
 .restbox:hover {
@@ -462,6 +460,107 @@ body {
   }
 }
 
+/* ----------- Search ShimmerContent----------- */
+.searchShimmer {
+  width: 860px;
+  position: relative;
+  margin: 0 auto;
+  height: 80vh;
+}
+.innerSSContainer {
+  display: block;
+}
+
+.ssHeader {
+  font-size: 21px;
+  font-weight: 700;
+  padding: 20px;
+}
+.ssBody {
+  margin: 0 auto;
+  height: 100%;
+  width: 860px;
+  display: flex;
+  column-gap: 15px;
+  padding: 0px 20px;
+  cursor: pointer;
+}
+.ssBody img {
+  height: 109px;
+  width: 77px;
+}
+
+/* ---------- Search Component------------------- */
+.searchContainer {
+  width: 860px;
+  margin: 0 auto;
+}
+.searchInnerContainer {
+  margin: 50px 0 20px 0;
+}
+.searchBox {
+  height: 48px;
+  border: 1px solid rgba(40, 44, 63, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+}
+.searchBox input {
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  padding: 10px 20px;
+  font-family: "Roboto", sans-serif;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  outline: none;
+}
+.searchButton {
+  background-color: #fff;
+  border: #fff;
+  cursor: pointer;
+  padding: 0 12px;
+}
+
+/* ----------- Search Cards -------------------- */
+.searchCardsContainer {
+  height: 100%;
+  width: 100%;
+  padding-bottom: 30px;
+}
+.searchCardsInner:hover {
+  background-color: #f6f6f6;
+}
+.searchCardsInner {
+  display: flex;
+  height: 105px;
+  width: 100%;
+  padding: 20px;
+  column-gap: 8px;
+}
+.searchCardHeader {
+  height: 64px;
+  width: 64px;
+}
+.searchCardHeader img {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+.searchCardDesc {
+  align-self: center;
+  text-decoration: none;
+  color: #282c3f;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+.searchCardDesc .typeofCard {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #7e808c;
+}
 /* ----------- Restaurant Menu/View------------- */
 .restoBody {
   max-width: 800px;

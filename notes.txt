@@ -204,3 +204,27 @@ Notes:
 	- ComponentDidUpdate() is called when the rerendering of an existing component and its updation in DOM has already been done. In simple words,  this method will be called after every next render.
 	-componentWillUnmount() is useful for the cleanup of the application when we switch routes from one place to another. Since we are working with a SPA(Single Page Application) the component process always runs in the background even if we switch to another route. So it is required to stop those processes before leaving the page.
 
+~ Custom Hooks
+	- We can build our own hooks to ensure readability, reusability, maintainability / modularity ,testable : because I can write separate test cases for each helper function/hook.
+	- Always, mention “use” as the prefix of the filename containing our hook.
+	- Always do a named export from the hooks file because a default export fails to imply which function that file is exporting.
+	- a custom hook file can contain more than one hook, then we should have to export diffrent hooks thru named export  like export {hook1, hook2}.
+	- first import the custom hook file then use it like
+		>>	import {useRestraunt} from "utils/useRestraunt";
+		>>	const restaurant = useRestraunt();
+	
+~ Lazy loading
+	- Also known as Chunking / Code-splitting / Dynamic Bundling / Lazy Loading / On-demand Loading / Dynamic Import
+	- In single page applications, like a react app, the parcel bundles(also does compression) the app into one file. For an SPA app, the file could become very large and thus take longer time to load, thats why we can split up the app into multiple components and by using lazy loading we can load the specific components at the specific time.
+	- for eg - a <About /> component should be loaded only when we click the link to about page, for this , the lazy load creates a new network call to grab the <About /> component file used for loading it. This way we ensures the network load is optimal.
+	- When we build a large scale application, then there will be multiple components and bundling them all up in a single js file will take much time to load. Therefore, we should break the entire production ready code into smaller parts. This concept is called Chunking/Code-splitting.
+	- working
+	suppose we have a component <About/> which we want to lazy loaded
+	- we have to use a lazy(){named import from react library} fn while importing the <About/>, and we have to pass a callback function to it.
+		>>  const about = lazy(()=>import("./components/about));
+	- we have to tell React to stop rendering a component until the bundle with that specific component gets loaded. To do this, we just wrap around that component with a element named <Suspense>
+		>> import { lazy,Suspense } from "react";
+		>> <Suspense>
+				<About />
+		   </Suspense>
+	- Never dynamically import one component inside another component. This is because if we do so, the former component will get dynamically imported in every render cycle of the latter component
