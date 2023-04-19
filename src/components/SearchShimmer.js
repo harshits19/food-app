@@ -10,7 +10,7 @@ const searchShimmer = () => {
       "https://www.swiggy.com/dapi/landing/PRE_SEARCH?lat=26.4633953&lng=80.3554247"
     );
     const dataAPI = await response.json();
-    console.log(dataAPI);
+    // console.log(dataAPI);
     setSearchData(dataAPI?.data?.cards[1]?.card?.card?.imageGridCards?.info);
   }
 

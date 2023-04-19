@@ -1,6 +1,68 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import Shimmer from "./Shimmer";
+import RestaurantShimmer from "./RestaurantShimmer";
 import { useRestaurant } from "../utils/useRestaurant";
+import { IMG_CDN_URL } from "../config";
+
+const ItemCont = ({ card }) => {
+  // console.log(card.info.name);
+  return (
+    <div className="itemContainer">
+      <div className="itemBody">
+        <div className="itemTitle">{card.info.name}</div>
+        <div className="rateAndOffersBox">
+          <span className="itemRate">
+            <i
+              className="fa-solid fa-indian-rupee-sign fa-xs"
+              style={{ color: "#3e4152" }}></i>
+            {" " + card.info.price / 100}
+          </span>
+        </div>
+        <div className="itemDescription">{card.info.description}</div>
+      </div>
+      <div className="itemPic">
+        {card.info.imageId && <img src={IMG_CDN_URL + card.info.imageId} />}
+      </div>
+    </div>
+  );
+};
+
+const FoodItemsAccordion = ({ title, itemCards }) => {
+  const [isAVisible, setIsAVisible] = useState(true);
+  return (
+    <div className="foodItemsAccordion">
+      <div
+        className="foodItemsHeader"
+        onClick={() => {
+          isAVisible ? setIsAVisible(false) : setIsAVisible(true);
+        }}>
+        {title + " " + "(" + itemCards?.length + ")"}
+        <button>
+          {isAVisible ? (
+            <span>
+              <i
+                className="fa-solid fa-chevron-up fa-lg"
+                style={{ color: "#000000" }}></i>
+            </span>
+          ) : (
+            <span>
+              <i
+                className="fa-solid fa-chevron-down fa-lg"
+                style={{ color: "#000000" }}></i>
+            </span>
+          )}
+        </button>
+      </div>
+      {isAVisible && (
+        <div className="foodItemsBody">
+          {itemCards?.map((itemDetails, idx) => {
+            return <ItemCont {...itemDetails} key={idx} />;
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const RestaurantView = () => {
   const { resId } = useParams();
@@ -22,9 +84,11 @@ const RestaurantView = () => {
   const OffersBox = ({ header, couponCode, description, offerTag }) => {
     return (
       <div className="offerOuterContainer">
-        <div className="flatDeals">
-          <span>{offerTag}</span>
-        </div>
+        {offerTag && (
+          <div className="flatDeals">
+            <span>{offerTag}</span>
+          </div>
+        )}
         <div className="offerBox">
           <p className="offerBoxHeader">{header}</p>
           <p className="offerBoxBody">
@@ -39,10 +103,12 @@ const RestaurantView = () => {
   const restaurants = restaurantAPI?.cards[0]?.card?.card?.info;
   const restroOffers =
     restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
+  const restaurantMenuItems =
+    restaurantAPI?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
   //console.log(restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle);
-  //console.log(restaurants);
+  // console.log(restaurantMenuItems);
   return !restaurants ? (
-    <Shimmer />
+    <RestaurantShimmer />
   ) : (
     <div className="restoBody">
       <div className="restroHeaderContainer">
@@ -58,7 +124,7 @@ const RestaurantView = () => {
         </div>
         <div className="rightHeaderContainer">
           <div className="ratingBox">
-            <div className={"ratingIcons " + setBg(restaurants?.avgRating)}>
+            <div className="ratingIcons green">
               <i
                 className="fa-solid fa-star fa-2xs"
                 style={{ marginRight: "2px" }}></i>
@@ -111,10 +177,15 @@ const RestaurantView = () => {
         </li>
       </ul>
       <div className="restroOffersContainer">
-        {restroOffers.offers.map((offersData) => {
+        {restroOffers.offers?.map((offersData) => {
           return (
             <OffersBox {...offersData.info} key={offersData.info.offerIds} />
           );
+        })}
+      </div>
+      <div className="restroFoodItemContainer">
+        {restaurantMenuItems?.map((restObject, index) => {
+          return <FoodItemsAccordion {...restObject?.card?.card} key={index} />;
         })}
       </div>
     </div>

@@ -436,7 +436,7 @@ body {
     #f6f7f8 100%
   );
   background-repeat: no-repeat;
-  background-size: 800px 160px;
+  background-size: 800px 400px;
   display: inline-block;
   position: relative;
   animation-duration: 1s;
@@ -489,6 +489,40 @@ body {
   height: 109px;
   width: 77px;
 }
+/* --------- Restaurant View Shimmer ------------ */
+
+.restroShimHeaderCont {
+  height: 130px;
+  width: 100%;
+}
+.restroShimInnerCont {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  height: 100%;
+  width: 100%;
+}
+.restroShimBox {
+  width: 100%;
+  height: 100%;
+}
+.restroLines {
+  width: 100%;
+  height: 12px;
+}
+.restroShimTCWrapper {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  column-gap: 8px;
+  justify-content: space-around;
+  padding-top: 10px;
+}
+.restroShimOfferCont {
+  width: 100%;
+  height: 160px;
+  padding-top: 5px;
+}
 
 /* ---------- Search Component------------------- */
 .searchContainer {
@@ -525,6 +559,7 @@ body {
 
 /* ----------- Search Cards -------------------- */
 .searchCardsContainer {
+  min-height: 100vh;
   height: 100%;
   width: 100%;
   padding-bottom: 30px;
@@ -565,7 +600,7 @@ body {
 .restoBody {
   max-width: 800px;
   min-height: 800px;
-  margin: 20px auto 0;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
 }
@@ -624,7 +659,7 @@ body {
   color: #db7c38;
 }
 .green {
-  color: #48c479;
+  color: #3d9b6d;
 }
 .red {
   color: #ff0000;
@@ -701,4 +736,68 @@ body {
   padding-left: 4px;
   text-align: center;
   border-left: 1px solid #e9e9eb;
+}
+
+.restroFoodItemContainer {
+  height: 100%;
+  width: 100%;
+}
+.foodItemsAccordion {
+  border-bottom: 16px solid #f1f1f6;
+  padding: 10px 0;
+}
+.foodItemsHeader {
+  color: #3e4152;
+  font-weight: 800;
+  font-size: 17px;
+  /* display: inline-block; */
+  line-height: 1.2;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.foodItemsHeader button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.itemContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 20px;
+  margin: 20px 0;
+  border-bottom: 0.5px solid #d3d3d3;
+}
+.itemTitle {
+  font-size: 17px;
+  font-weight: 500;
+  color: #3e4152;
+  word-break: break-word;
+}
+.itemDescription {
+  margin-top: 14px;
+  width: 98%;
+  line-height: 1.3;
+  color: rgba(40, 44, 63, 0.45);
+  letter-spacing: -0.3px;
+  font-size: 14px;
+}
+.itemPic img {
+  width: 118px;
+  height: 96px;
+  border-radius: 6px;
+}
+.rateAndOffersBox {
+  margin-top: 2px;
+}
+.itemRate {
+  margin-right: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #3e4152;
 }

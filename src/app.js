@@ -11,6 +11,7 @@ import RestaurantView from "./components/RestaurantView";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Shimmer from "./components/Shimmer";
 import { lazy, Suspense } from "react";
+import NewSearchComp from "./components/NewSearchComp";
 
 //Lazy loading
 // import Offers from "./components/Offers";
@@ -76,7 +77,7 @@ const appRouter = createBrowserRouter([
       { path: "/restaurants/:resId", element: <RestaurantView /> },
       {
         path: "/search",
-        element: <SearchComp />,
+        element: <NewSearchComp />,
       },
     ],
   },
