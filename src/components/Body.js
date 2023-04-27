@@ -1,5 +1,4 @@
 import useOnline from "../utils/useOnline";
-import BannerIntro from "./BannerIntro";
 import Carousel from "./Carousel";
 import RestContainer from "./RestContainer";
 const Body = () => {

@@ -6,46 +6,26 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import Error from "./components/Error";
 import Profile from "./components/Profile";
-import SearchComp from "./components/SearchComp";
 import RestaurantView from "./components/RestaurantView";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Shimmer from "./components/Shimmer";
 import { lazy, Suspense } from "react";
 import NewSearchComp from "./components/NewSearchComp";
+import { Provider } from "react-redux";
+import reduxStore from "./utils/reduxStore";
 
 //Lazy loading
 // import Offers from "./components/Offers";
 const Offers = lazy(() => import("./components/Offers"));
 
-/* 
-        Header
-         - logo
-         -profile
-         -search
-        Body
-         -banner big
-         -carausal
-         -resturant cards
-           -restaurant pic
-           -name
-           -rating
-           -tags
-         -Explore tab
-          -local food card
-         -Top restro cards
-         -app banner
-        Footer
-         - credits
-         
-*/
-
+/*wrapping whole app in provider so that we can use redux-store anywhere */
 const Applayout = () => {
   return (
-    <>
+    <Provider store={reduxStore}>
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </Provider>
   );
 };
 const appRouter = createBrowserRouter([

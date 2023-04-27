@@ -12,7 +12,28 @@ const RestContainer = () => {
     <>
       <div className="container">
         <div className="restCarousal">
-          <h2>{otherRestInfo.totalOpenRestaurants} Restaurants</h2>
+          <div className="restFilters">
+            <div>
+              <h2>{otherRestInfo.totalOpenRestaurants} restaurants</h2>
+            </div>
+            <div className="filterBtnContainer">
+              <div className="filterBtn" id="rel">
+                <a href="#rel">Relevance</a>
+              </div>
+              <div className="filterBtn" id="del">
+                <a href="#del">Delivery Time</a>
+              </div>
+              <div className="filterBtn" id="rat">
+                <a href="#rat">Rating</a>
+              </div>
+              <div className="filterBtn" id="lth">
+                <a href="#lth">Cost: Low to High</a>
+              </div>
+              <div className="filterBtn" id="htl">
+                <a href="#htl">Cost: High to Low</a>
+              </div>
+            </div>
+          </div>
           <div className="restContainer">
             {allRestaurants.map((restaurant) => {
               return (

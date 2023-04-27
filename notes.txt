@@ -228,3 +228,39 @@ Notes:
 				<About />
 		   </Suspense>
 	- Never dynamically import one component inside another component. This is because if we do so, the former component will get dynamically imported in every render cycle of the latter component
+
+~ createContext and useContext Hooks
+	- we should rather store the details (which we need throughout our code) in a central storage space. Storing the details in local storage is not a good idea because updating from local storage is a time consuming operation. As such, React gives us a central storage to store these values, called Context. 
+	- React provides a hook called createContext. It takes in the default value of our context and helps to make our data available throughout our app
+		<< create a [UserContext.js] Hook file to store these context values. 
+		>> import {useContext} from "react"
+		>> const UserContext = useContext({ //default object values});
+	- Now, we have successfully created an user data which we can globally use and exported it. We have to now access this data from the necessary components. To use the context, React provides us another hook called useContext.
+		>> import {useContext} from "react"
+		>> import UserContext from "../utils/UserContext";
+		>> const {user} = useContext(UserContext); //destructured the values obtained from the user context
+	- Using useContext() in a Class Based Component :-
+	We know that in CBC, we do not have any concept of hook. So, in CBC we first import the context that was created (here UserContext) and use it as a component. This component can accept a JSX piece of code, within which we can write a function where the function parameter is actually the context data.
+
+~ React Redux
+	>>	npm i @reduxjs/toolkit
+	>>	npm i react-redux
+	-create a store file for 
+	>>	import { configureStore } from "@reduxjs/toolkit";
+	>>	const reduxStore = configureStore({});
+	>>	export default reduxStore;
+	- we can provide this store to whole app or a specific component
+		for eg, if using in whole app, then , in app.Js
+	>>	import {Provider} from "react-redux";
+	>> 	import {reduxStore} from "./utils/reduxStore";
+	- we have to wrap up the whole body components in <Provider>
+	>> 	<Provider store={reduxStore}> <body /> </Provider>
+	- creating slices for store in new file, where we define the structure of slice [name, items, reducer, ...]
+	>> 	const cartSlice = createSlice({name: ABC, initialState: {items:[...], ... }, reducers: {fn_definitions(),... }});
+	now we can use cartSlice in our store as:
+	>> 	import { createSlice } from "@reduxjs/toolkit";	
+	>>	const reduxStore = configureStore({reducer: { cart: cartSlice,}, ... });
+	- To store the states of components , we have to first import useDispatch and reducer functions of required slice.
+	>>  import { useDispatch } from "react-redux";
+	>> 	import {addItems,removeItems} from "../utils/slice";
+	

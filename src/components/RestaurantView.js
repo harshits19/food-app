@@ -3,9 +3,28 @@ import { useParams } from "react-router-dom";
 import RestaurantShimmer from "./RestaurantShimmer";
 import { useRestaurant } from "../utils/useRestaurant";
 import { IMG_CDN_URL } from "../config";
+import { useDispatch, useSelector } from "react-redux";
+import { addItems, removeItems } from "../utils/cartSlice";
 
 const ItemCont = ({ card }) => {
-  // console.log(card.info.name);
+  // console.log(card.info);
+  const dispatch = useDispatch();
+  const addIntoCart = (item) => {
+    dispatch(addItems(item));
+  };
+  const removeFromCart = (item) => {
+    dispatch(removeItems(item));
+  };
+
+  const cartItems = useSelector((store) => store.cart.items);
+  // console.log(cartItems);
+  let qty = 0;
+  cartItems.map((obj) => {
+    if (obj.item.id === card.info.id) {
+      qty = obj.quantity;
+    }
+  });
+
   return (
     <div className="itemContainer">
       <div className="itemBody">
@@ -22,6 +41,27 @@ const ItemCont = ({ card }) => {
       </div>
       <div className="itemPic">
         {card.info.imageId && <img src={IMG_CDN_URL + card.info.imageId} />}
+        {qty == 0 ? (
+          <div
+            className="itemOuterBtn addBtn"
+            onClick={() => addIntoCart(card.info)}>
+            ADD
+          </div>
+        ) : (
+          <div className="itemOuterBtn itemCounter">
+            <span
+              className="itemInnerBtn minusItemBtn"
+              onClick={() => removeFromCart(card.info)}>
+              -
+            </span>
+            {qty}
+            <span
+              className="itemInnerBtn plusItemBtn"
+              onClick={() => addIntoCart(card.info)}>
+              +
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -64,40 +104,41 @@ const FoodItemsAccordion = ({ title, itemCards }) => {
   );
 };
 
+const setBg = (avgRating) => {
+  if (avgRating >= 4) {
+    return "green";
+  } else if (avgRating >= 3) {
+    return "orange";
+  } else if (avgRating >= 2) {
+    return "yellow";
+  } else if (avgRating >= 1) {
+    return "red";
+  } else {
+    return "grey";
+  }
+};
+
+const OffersBox = ({ header, couponCode, description, offerTag }) => {
+  return (
+    <div className="offerOuterContainer">
+      {offerTag && (
+        <div className="flatDeals">
+          <span>{offerTag}</span>
+        </div>
+      )}
+      <div className="offerBox">
+        <p className="offerBoxHeader">{header}</p>
+        <p className="offerBoxBody">
+          {couponCode} | {description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const RestaurantView = () => {
   const { resId } = useParams();
   // console.log(resId);
-  const setBg = (avgRating) => {
-    if (avgRating >= 4) {
-      return "green";
-    } else if (avgRating >= 3) {
-      return "orange";
-    } else if (avgRating >= 2) {
-      return "yellow";
-    } else if (avgRating >= 1) {
-      return "red";
-    } else {
-      return "grey";
-    }
-  };
-
-  const OffersBox = ({ header, couponCode, description, offerTag }) => {
-    return (
-      <div className="offerOuterContainer">
-        {offerTag && (
-          <div className="flatDeals">
-            <span>{offerTag}</span>
-          </div>
-        )}
-        <div className="offerBox">
-          <p className="offerBoxHeader">{header}</p>
-          <p className="offerBoxBody">
-            {couponCode} | {description}
-          </p>
-        </div>
-      </div>
-    );
-  };
 
   const restaurantAPI = useRestaurant(resId); //created custom hook for fetching restaurant menu api
   const restaurants = restaurantAPI?.cards[0]?.card?.card?.info;

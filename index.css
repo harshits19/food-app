@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap");
+
 :root {
   --primary-color: #000000ab;
   --secondary-color: #ffffff;
-  --primary-font: "Roboto", sans-serif;
+  --primary-font: "Figtree", sans-serif;
 }
 * {
   padding: 0;
@@ -11,7 +13,7 @@
 }
 body {
   font-size: 1em;
-  font-family: "Roboto", sans-serif;
+  font-family: var(--primary-font);
   width: 100%;
   margin: auto;
   overflow-x: hidden;
@@ -79,7 +81,6 @@ body {
 }
 .navList li a {
   text-decoration: none;
-  font-family: "Roboto", sans-serif;
   color: #3d4152;
   font-size: 16px;
   font-weight: 500;
@@ -91,6 +92,16 @@ body {
   cursor: pointer;
   align-items: center;
 }
+.navItems:hover {
+  color: #fc8019;
+}
+.navItems:hover .svgSet {
+  fill: #fc8019 !important;
+}
+.navItems:hover .cartSet {
+  fill: #ffffff !important;
+  stroke: #fc8019;
+}
 .navIcons {
   position: relative;
   right: 9px;
@@ -99,10 +110,79 @@ body {
 .svgSet {
   fill: #3d4152;
 }
+.cartSet {
+  fill: #fff;
+  stroke-width: 3px;
+  stroke: #3d4152;
+}
+.cartCount {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: 600;
+}
 .sticky {
   background-color: var(--secondary-color);
   transition: 0.2s;
 }
+.cartMenu {
+  opacity: 0;
+  display: flex;
+  width: auto;
+  z-index: 1;
+  top: 100%;
+  right: 0;
+  border-radius: 2px;
+  padding: 26px 30px;
+  position: absolute;
+  background-color: #fff;
+  border-top: 2px solid #fc8019;
+  box-shadow: 0 2px 20px 0 #93959f;
+}
+.cartMore {
+  width: 280px;
+  padding: 7px 14px 14px;
+}
+.cartMenuHeader {
+  color: #7e808c;
+  letter-spacing: -0.3px;
+  font-size: 32px;
+  font-weight: 600;
+}
+.cartMenuBody {
+  color: #93959f;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 300;
+  max-width: 218px;
+}
+.cartArrow {
+  position: absolute;
+  top: -12px;
+  right: 15%;
+  z-index: 2;
+}
+.cartArrow::before {
+  content: "";
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  top: 5px;
+  box-shadow: -3px -4px 9px -4px rgba(40, 44, 63, 0.5);
+  background-color: #fff;
+  border: 2px solid #fc8019;
+  border-right: none;
+  border-bottom: none;
+  -ms-transform: translateX(-50%) rotate(45deg);
+  transform: translateX(-50%) rotate(45deg);
+}
+.navList li:first-child:hover {
+  opacity: 1;
+}
+
 /* ---------------Home Banner--------------------*/
 
 .banner {
@@ -154,7 +234,56 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  margin: 1em 0;
+  /* margin: 1em 0; */
+  padding-top: 1em;
+  row-gap: 10px;
+  border-top: 1px solid #e9e9eb;
+}
+.restFilters {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 50px;
+}
+.restFilters h2 {
+  color: #282c3f;
+  font-weight: 600;
+  font-size: 28px;
+  flex: 1;
+}
+.filterBtnContainer {
+  display: flex;
+  align-items: center;
+  /* margin-top: 9px; */
+  height: 100%;
+  flex: 1;
+  justify-content: end;
+}
+.filterBtn {
+  font-size: 16px;
+  font-weight: 300;
+  text-transform: capitalize;
+  margin-left: 35px;
+  cursor: pointer;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.filterBtn a {
+  text-decoration: none;
+  color: #686b78;
+}
+.filterBtn a:hover {
+  color: #3d4152;
+}
+#rel:target,
+#del:target,
+#rat:target,
+#lth:target,
+#htl:target {
+  border-bottom: 2px solid #000000;
 }
 
 .restbox {
@@ -183,7 +312,7 @@ body {
 
 .restbox .restdesc {
   width: 100%;
-  padding: 1em 0em;
+  padding: 1em 0 0;
 }
 .restName {
   font-size: 17px;
@@ -212,15 +341,42 @@ body {
   color: #535665;
   justify-content: space-between;
 }
-.restQuickView {
+.restOffers {
   border-top: 1px solid #e9e9eb;
-  display: block;
-  margin: 0 auto;
-  color: #f9f9f9;
+  padding-top: 14px;
+  margin-top: 14px;
+  color: #8a584b;
+  font-weight: 400;
+  font-size: 14px;
+  display: flex;
+  /* align-items: center; */
+}
+.resOffers span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.restQuickView {
+  color: #5d8ed5;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 13px;
+  border-top: 1px solid #e9e9eb;
+  padding-top: 14px;
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  visibility: hidden;
+}
+.restQuickView:hover {
+  color: #93959f;
+}
+.restbox:hover .restQuickView {
+  visibility: visible;
 }
 
 .greybg {
-  background-color: #ffffff;
+  color: #ffffff;
 }
 .orangebg {
   background-color: #db7c38;
@@ -544,7 +700,7 @@ body {
   width: 100%;
   height: 100%;
   padding: 10px 20px;
-  font-family: "Roboto", sans-serif;
+  font-family: var(--primary-font);
   border: none;
   font-size: 15px;
   font-weight: 500;
@@ -791,6 +947,7 @@ body {
   width: 118px;
   height: 96px;
   border-radius: 6px;
+  margin-bottom: -30px;
 }
 .rateAndOffersBox {
   margin-top: 2px;
@@ -800,4 +957,42 @@ body {
   font-weight: 400;
   font-size: 14px;
   color: #3e4152;
+}
+.itemPic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.itemOuterBtn {
+  box-shadow: 0 3px 8px #e9e9eb;
+  border-radius: 4px;
+  height: 36px;
+  width: 96px;
+  border: 1px solid #d4d5d9;
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  color: #60b246;
+}
+.addBtn {
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+.itemCounter {
+  align-items: center;
+  justify-content: space-around;
+  font-size: 14px;
+}
+.plusItemBtn {
+  animation: 0.2s ease;
+  font-size: 20px;
+}
+.plusItemBtn:hover {
+  transform: scale3d(1.2, 1.2, 1);
+}
+.minusItemBtn {
+  color: #bebfc5;
+  font-size: 20px;
 }
