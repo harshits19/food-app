@@ -71,28 +71,40 @@ body {
   flex-direction: row-reverse;
   height: 100%;
   align-items: center;
-  list-style-type: none;
 }
-.navList li {
+.navListItems {
   margin-right: 60px;
+  color: #3d4152;
+  font-size: 16px;
+  font-weight: 500;
 }
-.navList li:first-child {
+.navList div:first-child {
   margin-right: 0;
 }
-.navList li a {
+.navItems a {
   text-decoration: none;
   color: #3d4152;
   font-size: 16px;
   font-weight: 500;
 }
 .navItems {
-  display: flex;
   position: relative;
   height: 80px;
   cursor: pointer;
+  display: flex;
+  -ms-flex-align: center;
   align-items: center;
+  padding-left: 28px;
 }
-.navItems:hover {
+.navIcons {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  line-height: 0;
+}
+.navListItems :hover a {
   color: #fc8019;
 }
 .navItems:hover .svgSet {
@@ -101,11 +113,6 @@ body {
 .navItems:hover .cartSet {
   fill: #ffffff !important;
   stroke: #fc8019;
-}
-.navIcons {
-  position: relative;
-  right: 9px;
-  line-height: 0;
 }
 .svgSet {
   fill: #3d4152;
@@ -128,6 +135,8 @@ body {
   background-color: var(--secondary-color);
   transition: 0.2s;
 }
+
+/*------------------------Cart Menu---------------------------*/
 .cartMenu {
   opacity: 0;
   display: flex;
@@ -141,7 +150,19 @@ body {
   background-color: #fff;
   border-top: 2px solid #fc8019;
   box-shadow: 0 2px 20px 0 #93959f;
+  visibility: hidden;
 }
+@keyframes cartMenuAmv {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 5px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
 .cartMore {
   width: 280px;
   padding: 7px 14px 14px;
@@ -179,8 +200,160 @@ body {
   -ms-transform: translateX(-50%) rotate(45deg);
   transform: translateX(-50%) rotate(45deg);
 }
-.navList li:first-child:hover {
-  opacity: 1;
+.navListItems:hover .cartMenu {
+  /* opacity: 1; */
+  visibility: visible;
+  animation: cartMenuAmv 0.3s 0.4s ease-out forwards;
+}
+.cartRest {
+  width: 280px;
+  position: relative;
+}
+.cartRestInfo {
+  padding-bottom: 20px;
+  position: relative;
+}
+.restInfoPic {
+  height: 66px;
+  width: 66px;
+  overflow: hidden;
+  position: relative;
+  float: left;
+  cursor: pointer;
+}
+.restInfoPic img {
+  height: 66px;
+  width: 66px;
+}
+.restInfoDesc {
+  margin-left: 86px;
+  height: 66px;
+  overflow: hidden;
+  padding-right: 30px;
+}
+.restInfoDesc:after {
+  content: "";
+  border-bottom: 1px solid #d4d5d9;
+  position: absolute;
+  left: 0;
+  right: -30px;
+  bottom: 0;
+}
+.restInfoName {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-top: 2px;
+  font-size: 17px;
+  font-weight: 500;
+  color: #282c3f;
+}
+.restInfoArea {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-top: -1px;
+  font-size: 13px;
+  color: #7e808c;
+  font-weight: 300;
+}
+.restInfoMenu {
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #5d8ed5;
+  cursor: pointer;
+}
+.restInfoMenu:hover {
+  font-weight: 700;
+}
+.cartMenuSection {
+  padding: 15px 0 12px;
+  border-bottom: 1px dashed #a9abb2;
+  min-height: 60px;
+  max-height: 230px;
+  overflow-y: auto;
+}
+.cartMenuItems {
+  display: -ms-flexbox;
+  display: flex;
+  margin: 12px 0 15px;
+  font-size: 15px;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.cartMenuItemName {
+  -ms-flex: 1;
+  flex: 1;
+  font-weight: 500;
+  font-size: 13px;
+  color: #3d4152;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cartMenuItemPrice {
+  color: #686b78;
+  text-align: right;
+  font-weight: 300;
+  font-size: 13px;
+  width: 60px;
+}
+.vegNonVegIcon {
+  height: 15px;
+  width: 15px;
+  margin-right: 8px;
+}
+
+.cartMenuTotalSection {
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px 0 22px;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  color: #282c3f;
+}
+.totalContainer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.subTotalBody {
+  font-size: 15px;
+  font-weight: 500;
+  -ms-flex: 1;
+  flex: 1;
+}
+.subTotalPrice {
+  font-size: 15px;
+  font-weight: 500;
+}
+.subTotalDesc {
+  margin-top: -1px;
+  font-size: 13px;
+  color: #7e808c;
+  font-weight: 300;
+}
+.checkoutBtn {
+  width: 100%;
+  padding: 11px;
+  font-size: 15px;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  background: #fc8019;
+  margin-bottom: 4px;
+  font-weight: 600;
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+}
+.checkoutBtn:hover {
+  position: relative;
+  box-shadow: 0 4px 14px #d4d5d9;
 }
 
 /* ---------------Home Banner--------------------*/
@@ -897,6 +1070,7 @@ body {
 .restroFoodItemContainer {
   height: 100%;
   width: 100%;
+  padding: 2em 0;
 }
 .foodItemsAccordion {
   border-bottom: 16px solid #f1f1f6;

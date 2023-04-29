@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { IMG_CDN_URL } from "../config";
 
 const Header = () => {
   const cartItems = useSelector((reduxStore) => reduxStore.cart.items);
+  const restDetails = useSelector((reduxStore) => reduxStore.cart.restDetails);
+  let totalCost = 0;
+  cartItems.map((items) => {
+    totalCost += items.item.price ? items.item.price : items.item.finalPrice;
+  });
   return (
     <>
       <div className="headers fixed" id="myHeader">
@@ -28,11 +34,11 @@ const Header = () => {
               </defs>
             </svg>
           </Link>
-          <ul className="navList">
-            <li>
-              <Link to="/offers/">
-                <div className="navItems">
-                  <div className="navIcons cartBtn">
+          <div className="navList">
+            <div className="navListItems">
+              <div className="navItems">
+                <Link to="/offers/">
+                  <span className="navIcons">
                     <svg
                       className="svgSet cartSet"
                       viewBox="-1 0 37 32"
@@ -41,14 +47,86 @@ const Header = () => {
                       <path d="M4.438 0l-2.598 5.11-1.84 26.124h34.909l-1.906-26.124-2.597-5.11z"></path>
                     </svg>
                     <span className="cartCount">{cartItems.length}</span>
+                  </span>
+                  <span>Cart</span>
+                </Link>
+              </div>
+              <div className="cartMenu">
+                <span className="cartArrow"></span>
+                {cartItems.length == 0 ? (
+                  <div className="cartMore">
+                    <div className="cartMenuHeader">Cart Empty</div>
+                    <div className="cartMenuBody">
+                      Good food is always cooking! Go ahead, order some yummy
+                      items from the menu.
+                    </div>
                   </div>
-                  <div>Cart</div>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/offers/">
-                <div className="navItems">
+                ) : (
+                  <div className="cartRest">
+                    <div className="cartRestInfo">
+                      <div className="restInfoPic">
+                        <img
+                          src={IMG_CDN_URL + restDetails[1].cloudinaryImageId}
+                        />
+                      </div>
+                      <div className="restInfoDesc">
+                        <div className="restInfoName">
+                          {restDetails[1].name}
+                        </div>
+                        <div className="restInfoArea">
+                          {restDetails[1].areaName}
+                        </div>
+                        <div className="restInfoMenu">view full menu</div>
+                      </div>
+                    </div>
+                    <div className="cartMenuSection">
+                      {cartItems.map((items) => {
+                        return (
+                          <div className="cartMenuItems" key={items.item.id}>
+                            {items.item.isVeg ? (
+                              <img
+                                className="vegNonVegIcon"
+                                src="https://img.icons8.com/color/48/null/vegetarian-food-symbol.png"
+                              />
+                            ) : (
+                              <img
+                                className="vegNonVegIcon"
+                                src="https://img.icons8.com/color/48/null/non-vegetarian-food-symbol.png"
+                              />
+                            )}
+                            <div className="cartMenuItemName">
+                              {items.item.name}
+                            </div>
+                            <div className="cartMenuItemPrice">
+                              {"₹ "}
+                              {items.item.price
+                                ? items.item.price / 100
+                                : items.item.finalPrice / 100}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="cartMenuTotalSection">
+                      <div className="totalContainer">
+                        <div className="subTotalBody">Sub total</div>
+                        <div className="subTotalPrice">
+                          {"₹ "}
+                          {totalCost / 100}
+                        </div>
+                      </div>
+                      <div className="subTotalDesc">
+                        Extra charges may apply
+                      </div>
+                    </div>
+                    <div className="checkoutBtn">Checkout</div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="navListItems">
+              <div className="navItems">
+                <Link to="/offers/">
                   <span className="navIcons">
                     <svg
                       className="svgSet"
@@ -59,12 +137,12 @@ const Header = () => {
                     </svg>
                   </span>
                   <span>Sign In</span>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/offers/">
-                <div className="navItems">
+                </Link>
+              </div>
+            </div>
+            <div className="navListItems">
+              <div className="navItems">
+                <Link to="/offers/">
                   <span className="navIcons">
                     <svg
                       className="svgSet"
@@ -75,12 +153,12 @@ const Header = () => {
                     </svg>
                   </span>
                   <span>Help</span>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/offers/">
-                <div className="navItems">
+                </Link>
+              </div>
+            </div>
+            <div className="navListItems">
+              <div className="navItems">
+                <Link to="/offers/">
                   <span className="navIcons">
                     <svg
                       className="svgSet"
@@ -91,12 +169,12 @@ const Header = () => {
                     </svg>
                   </span>
                   <span>Offers</span>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/search/">
-                <div className="navItems">
+                </Link>
+              </div>
+            </div>
+            <div className="navListItems">
+              <div className="navItems">
+                <Link to="/search/">
                   <span className="navIcons">
                     <svg
                       className="svgSet"
@@ -107,23 +185,9 @@ const Header = () => {
                     </svg>
                   </span>
                   <span>Search</span>
-                </div>
-              </Link>
-            </li>
-          </ul>
-          <div className="cartMenu">
-            <span className="cartArrow"></span>
-            {cartItems.length == 0 ? (
-              <div className="cartMore">
-                <div className="cartMenuHeader">Cart Empty</div>
-                <div className="cartMenuBody">
-                  Good food is always cooking! Go ahead, order some yummy items
-                  from the menu.
-                </div>
+                </Link>
               </div>
-            ) : (
-              <div></div>
-            )}
+            </div>
           </div>
         </div>
       </div>

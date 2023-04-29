@@ -233,8 +233,8 @@ Notes:
 	- we should rather store the details (which we need throughout our code) in a central storage space. Storing the details in local storage is not a good idea because updating from local storage is a time consuming operation. As such, React gives us a central storage to store these values, called Context. 
 	- React provides a hook called createContext. It takes in the default value of our context and helps to make our data available throughout our app
 		<< create a [UserContext.js] Hook file to store these context values. 
-		>> import {useContext} from "react"
-		>> const UserContext = useContext({ //default object values});
+		>> import {createContext} from "react"
+		>> const UserContext = createContext({ name:"HARS",email:"gmail",//default object values});
 	- Now, we have successfully created an user data which we can globally use and exported it. We have to now access this data from the necessary components. To use the context, React provides us another hook called useContext.
 		>> import {useContext} from "react"
 		>> import UserContext from "../utils/UserContext";

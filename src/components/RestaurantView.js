@@ -4,10 +4,10 @@ import RestaurantShimmer from "./RestaurantShimmer";
 import { useRestaurant } from "../utils/useRestaurant";
 import { IMG_CDN_URL } from "../config";
 import { useDispatch, useSelector } from "react-redux";
-import { addItems, removeItems } from "../utils/cartSlice";
+import { addItems, removeItems, getDetails } from "../utils/cartSlice";
 
 const ItemCont = ({ card }) => {
-  // console.log(card.info);
+  // console.log(card);
   const dispatch = useDispatch();
   const addIntoCart = (item) => {
     dispatch(addItems(item));
@@ -15,7 +15,6 @@ const ItemCont = ({ card }) => {
   const removeFromCart = (item) => {
     dispatch(removeItems(item));
   };
-
   const cartItems = useSelector((store) => store.cart.items);
   // console.log(cartItems);
   let qty = 0;
@@ -33,8 +32,10 @@ const ItemCont = ({ card }) => {
           <span className="itemRate">
             <i
               className="fa-solid fa-indian-rupee-sign fa-xs"
-              style={{ color: "#3e4152" }}></i>
-            {" " + card.info.price / 100}
+              style={{ color: "#3e4152" }}></i>{" "}
+            {card.info.price
+              ? card.info.price / 100
+              : card.info.finalPrice / 100}
           </span>
         </div>
         <div className="itemDescription">{card.info.description}</div>
@@ -67,7 +68,7 @@ const ItemCont = ({ card }) => {
   );
 };
 
-const FoodItemsAccordion = ({ title, itemCards }) => {
+const FoodItemsAccordion = ({ itemCards, title }) => {
   const [isAVisible, setIsAVisible] = useState(true);
   return (
     <div className="foodItemsAccordion">
@@ -76,7 +77,7 @@ const FoodItemsAccordion = ({ title, itemCards }) => {
         onClick={() => {
           isAVisible ? setIsAVisible(false) : setIsAVisible(true);
         }}>
-        {title + " " + "(" + itemCards?.length + ")"}
+        {itemCards ? title + " " + "(" + itemCards?.length + ")" : title}
         <button>
           {isAVisible ? (
             <span>
@@ -96,26 +97,20 @@ const FoodItemsAccordion = ({ title, itemCards }) => {
       {isAVisible && (
         <div className="foodItemsBody">
           {itemCards?.map((itemDetails, idx) => {
-            return <ItemCont {...itemDetails} key={idx} />;
+            if (itemDetails.itemCards) {
+              return (
+                <FoodItemsAccordion
+                  itemCards={itemDetails.itemCards}
+                  title={itemDetails.title}
+                  key={idx}
+                />
+              );
+            } else return <ItemCont {...itemDetails} key={idx} />;
           })}
         </div>
       )}
     </div>
   );
-};
-
-const setBg = (avgRating) => {
-  if (avgRating >= 4) {
-    return "green";
-  } else if (avgRating >= 3) {
-    return "orange";
-  } else if (avgRating >= 2) {
-    return "yellow";
-  } else if (avgRating >= 1) {
-    return "red";
-  } else {
-    return "grey";
-  }
 };
 
 const OffersBox = ({ header, couponCode, description, offerTag }) => {
@@ -148,6 +143,12 @@ const RestaurantView = () => {
     restaurantAPI?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
   //console.log(restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle);
   // console.log(restaurantMenuItems);
+
+  const dispatch = useDispatch();
+  setTimeout(() => {
+    dispatch(getDetails(restaurants));
+  }, 1000);
+
   return !restaurants ? (
     <RestaurantShimmer />
   ) : (
@@ -218,15 +219,26 @@ const RestaurantView = () => {
         </li>
       </ul>
       <div className="restroOffersContainer">
-        {restroOffers.offers?.map((offersData) => {
+        {restroOffers?.offers?.map((offersData) => {
           return (
-            <OffersBox {...offersData.info} key={offersData.info.offerIds} />
+            <OffersBox {...offersData?.info} key={offersData?.info?.offerIds} />
           );
         })}
       </div>
       <div className="restroFoodItemContainer">
         {restaurantMenuItems?.map((restObject, index) => {
-          return <FoodItemsAccordion {...restObject?.card?.card} key={index} />;
+          if (restObject.card.card.title) {
+            return (
+              <FoodItemsAccordion
+                itemCards={
+                  restObject?.card?.card?.itemCards ||
+                  restObject?.card?.card?.categories
+                }
+                title={restObject?.card?.card?.title}
+                key={index}
+              />
+            );
+          }
         })}
       </div>
     </div>
