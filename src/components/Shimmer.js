@@ -13,7 +13,7 @@ const Shimmer = () => {
   return (
     <>
       <div className="container">
-        <div className="restCarousal">
+        <div className="homepageContainer">
           <h2>Open Restaurants</h2>
           <div className="shimmerContainer">
             <ShimmerBox />

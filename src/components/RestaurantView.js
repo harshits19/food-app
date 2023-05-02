@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RestaurantShimmer from "./RestaurantShimmer";
 import { useRestaurant } from "../utils/useRestaurant";
 import { IMG_CDN_URL } from "../config";
 import { useDispatch, useSelector } from "react-redux";
 import { addItems, removeItems, getDetails } from "../utils/cartSlice";
+import GoToTop from "../utils/gotoTop";
 
 const ItemCont = ({ card }) => {
   // console.log(card);
@@ -27,6 +28,19 @@ const ItemCont = ({ card }) => {
   return (
     <div className="itemContainer">
       <div className="itemBody">
+        <div>
+          {card.info.isVeg ? (
+            <img
+              className="vegNonvegClassifier"
+              src="https://img.icons8.com/color/48/null/vegetarian-food-symbol.png"
+            />
+          ) : (
+            <img
+              className="vegNonvegClassifier"
+              src="https://img.icons8.com/color/48/null/non-vegetarian-food-symbol.png"
+            />
+          )}
+        </div>
         <div className="itemTitle">{card.info.name}</div>
         <div className="rateAndOffersBox">
           <span className="itemRate">
@@ -35,7 +49,9 @@ const ItemCont = ({ card }) => {
               style={{ color: "#3e4152" }}></i>{" "}
             {card.info.price
               ? card.info.price / 100
-              : card.info.finalPrice / 100}
+              : card.info.finalPrice
+              ? card.info.finalPrice / 100
+              : card.info.defaultPrice / 100}
           </span>
         </div>
         <div className="itemDescription">{card.info.description}</div>
@@ -115,17 +131,25 @@ const FoodItemsAccordion = ({ itemCards, title }) => {
 
 const OffersBox = ({ header, couponCode, description, offerTag }) => {
   return (
-    <div className="offerOuterContainer">
-      {offerTag && (
-        <div className="flatDeals">
-          <span>{offerTag}</span>
+    <div className="offerBoxOuterContainer">
+      <div className="offerBoxInnerContainer">
+        {offerTag && (
+          <div className="flatDeals">
+            <span>{offerTag}</span>
+          </div>
+        )}
+        <div className="offerBox">
+          <p className="offerBoxHeader">
+            <img
+              src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_28,h_28/Store_Assets/Icons/OfferIconCart"
+              className="RestaurantOfferIcon"
+            />
+            {header}
+          </p>
+          <p className="offerBoxBody">
+            {couponCode} | {description}
+          </p>
         </div>
-      )}
-      <div className="offerBox">
-        <p className="offerBoxHeader">{header}</p>
-        <p className="offerBoxBody">
-          {couponCode} | {description}
-        </p>
       </div>
     </div>
   );
@@ -146,8 +170,11 @@ const RestaurantView = () => {
 
   const dispatch = useDispatch();
   setTimeout(() => {
-    dispatch(getDetails(restaurants));
+    // dispatch(getDetails(restaurants));
   }, 1000);
+  useEffect(() => {
+    dispatch(getDetails(restaurants));
+  });
 
   return !restaurants ? (
     <RestaurantShimmer />
@@ -241,6 +268,7 @@ const RestaurantView = () => {
           }
         })}
       </div>
+      <GoToTop />
     </div>
   );
 };

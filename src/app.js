@@ -6,11 +6,12 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import Error from "./components/Error";
 import Profile from "./components/Profile";
+import Cart from "./components/Cart";
 import RestaurantView from "./components/RestaurantView";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Shimmer from "./components/Shimmer";
-import { lazy, Suspense } from "react";
 import NewSearchComp from "./components/NewSearchComp";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import { Provider } from "react-redux";
 import reduxStore from "./utils/reduxStore";
 
@@ -58,6 +59,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/search",
         element: <NewSearchComp />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
   },

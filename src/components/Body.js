@@ -1,6 +1,7 @@
 import useOnline from "../utils/useOnline";
 import Carousel from "./Carousel";
 import RestContainer from "./RestContainer";
+import GoToTop from "../utils/gotoTop";
 const Body = () => {
   const isOnline = useOnline();
   if (!isOnline) {
@@ -12,6 +13,7 @@ const Body = () => {
       <Carousel />
       {/* <BannerIntro /> */}
       <RestContainer />
+      <GoToTop />
     </>
   );
 };

@@ -396,7 +396,7 @@ body {
 }
 
 /* ----------Restaurant Cards (Homepage)------------ */
-.restCarousal {
+.homepageContainer {
   padding: 3em 0;
   max-width: 1200px;
   margin: 0 auto;
@@ -411,6 +411,9 @@ body {
   padding-top: 1em;
   row-gap: 10px;
   border-top: 1px solid #e9e9eb;
+}
+.filterContainer {
+  width: 100%;
 }
 .restFilters {
   display: flex;
@@ -435,7 +438,6 @@ body {
 }
 .filterBtn {
   font-size: 16px;
-  font-weight: 300;
   text-transform: capitalize;
   margin-left: 35px;
   cursor: pointer;
@@ -447,6 +449,7 @@ body {
 .filterBtn a {
   text-decoration: none;
   color: #686b78;
+  font-weight: 400;
 }
 .filterBtn a:hover {
   color: #3d4152;
@@ -529,6 +532,11 @@ body {
   overflow: hidden;
   white-space: nowrap;
 }
+.restCardIcon {
+  height: 18px;
+  width: 18px;
+  margin-right: 8px;
+}
 .restQuickView {
   color: #5d8ed5;
   text-transform: uppercase;
@@ -571,6 +579,82 @@ body {
   padding: 0 20px;
   contain: content;
 }
+.carouselShimmer {
+  position: relative;
+  margin: 0 auto;
+  width: 1200px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: hsla(0, 0%, 100%, 0.8);
+  font-size: 30px;
+  row-gap: 1em;
+}
+.rotatingImgInnerContainer {
+  background: linear-gradient(
+    180deg,
+    #ecebeb,
+    hsla(0, 3%, 92%, 0.51) 53%,
+    hsla(0, 3%, 92%, 0)
+  );
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 50%;
+  -ms-flex-pack: center;
+  justify-content: center;
+  animation: rotateImg 2s infinite;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+.rotatingImgInnerContainer:after {
+  position: absolute;
+  display: block;
+  top: 4px;
+  left: 4px;
+  width: 72px;
+  height: 72px;
+  content: "";
+  background-color: #171a29;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.rotatingImg {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  margin-left: 2px;
+}
+.rotatingImgInnerContainer {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.rotatingImgContainer,
+.rotatingImgInnerContainer {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.rotatingImgContainer {
+  margin: 0 auto;
+}
+@keyframes rotateImg {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
 .carouselInnerContainer {
   position: relative;
   margin: 0 auto;
@@ -1021,14 +1105,22 @@ body {
 .restroOffersContainer::-webkit-scrollbar {
   display: none;
 }
-.offerOuterContainer {
+.offerBoxOuterContainer {
+  margin-right: 12px;
+}
+.offerBoxInnerContainer {
   display: flex;
   border: 1px solid #e9e9eb;
+  box-sizing: border-box;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   border-radius: 8px;
-  padding: 10px 12px;
+  padding: 8px;
+  height: 100%;
   min-width: 200px;
-  margin-right: 12px;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  text-align: left;
 }
 .offerBox {
   display: flex;
@@ -1038,9 +1130,11 @@ body {
 }
 .offerBoxHeader {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
   color: #686b78;
+  display: flex;
+  align-items: center;
 }
 .offerBoxBody {
   font-size: 11px;
@@ -1054,6 +1148,11 @@ body {
 }
 .hideFlatDeals {
   display: none;
+}
+.RestaurantOfferIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }
 
 .flatDeals {
@@ -1075,6 +1174,9 @@ body {
 .foodItemsAccordion {
   border-bottom: 16px solid #f1f1f6;
   padding: 10px 0;
+}
+div.foodItemsBody > div.foodItemsAccordion {
+  border-bottom: 1px solid #f1f1f6;
 }
 .foodItemsHeader {
   color: #3e4152;
@@ -1102,6 +1204,13 @@ body {
   padding: 0 0 20px;
   margin: 20px 0;
   border-bottom: 0.5px solid #d3d3d3;
+}
+.itemContainer:last-child {
+  border-bottom: none;
+}
+.vegNonvegClassifier {
+  height: 20px;
+  width: 20px;
 }
 .itemTitle {
   font-size: 17px;
@@ -1169,4 +1278,248 @@ body {
 .minusItemBtn {
   color: #bebfc5;
   font-size: 20px;
+}
+
+/* ----------Cart Comp ------------- */
+.cartContainer {
+  background: #e9ecee;
+}
+.cartInnerContainer {
+  height: calc(100vh - 80px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  /* margin: 0 auto; */
+  text-align: center;
+  background: #fff;
+}
+.cartFilled {
+  height: calc(100vh - 80px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2em 0;
+}
+.cartBGImage {
+  width: 271px;
+  height: 256px;
+  background-image: url(https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+}
+.cartMsg {
+  margin-top: 24px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #535665;
+}
+.cartDesc {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #7e808c;
+}
+.goHomeBtn {
+  margin-top: 30px;
+  padding: 11px 20px;
+  text-transform: uppercase;
+  background-color: #fc8019;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  font-size: 15px;
+  text-align: center;
+  transform: translateY(0);
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+}
+.checkOutSection {
+  display: flex;
+  width: 366px;
+  flex-direction: column;
+}
+.cartRestroDetails {
+  cursor: pointer;
+  padding: 20px 30px;
+  background: #fff;
+  display: flex;
+  min-height: 90px;
+  text-align: left;
+  border: none;
+  width: 100%;
+}
+.cartRestroImgBox {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+.cartRestroImg {
+  transition: opacity 0.3s ease-out;
+}
+.cartRestroDesc {
+  margin-left: 14px;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 50px;
+}
+.cartRestroName {
+  font-size: 17px;
+  color: #282c3f;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cartRestroArea {
+  font-size: 13px;
+  color: #686b78;
+}
+.cartItemContainer {
+  max-height: calc(100vh - 270px);
+  display: flex;
+  background: #fff;
+}
+.cartInnerItemContainer {
+  display: flex;
+  position: relative;
+  overflow-y: hidden;
+}
+.cartItemSection {
+  display: flex;
+  flex-grow: 1;
+  position: relative;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 30px;
+  width: 366px;
+  padding-bottom: 0 !important;
+}
+.cartItems {
+  margin: 0 -16px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  position: relative;
+}
+.cartItemInner {
+  padding: 10px 0;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.cartItemName {
+  display: flex;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+.cartItemName div {
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 10px;
+  margin-right: 14px;
+}
+.cartItemRateSection {
+  width: 120px;
+  float: right;
+  display: flex;
+  align-items: center;
+}
+.cartItemPrice {
+  font-size: 13px;
+  color: #535665;
+  text-align: right;
+  width: 60px;
+}
+.cartItemBtn {
+  height: 30px;
+  width: 70px;
+  border-radius: none;
+  cursor: pointer;
+  color: #60b246;
+  background-color: #fff;
+  border: 1px solid #d4d5d9;
+  display: flex;
+}
+.beforeCheckContainer {
+  background: #fff;
+  padding: 8px 30px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+.beforeCheckInner {
+  border: 1px solid #a9abb2;
+  display: flex;
+  padding: 4px 10px;
+  font-size: 14px;
+}
+
+.checkBoxBody {
+  overflow: hidden;
+}
+.beforeCheckBox {
+  margin-top: 1px;
+  margin-right: 9px;
+}
+
+.checkBoxInnerHeader {
+  font-weight: 500;
+  color: #3e4152;
+}
+.checkBoxInnerBody {
+  opacity: 0.6;
+  color: #282c3f;
+}
+.cartCostSection {
+  background: #fff;
+  padding: 8px 30px;
+  display: flex;
+  flex-direction: column;
+}
+.billDetails {
+  font-weight: 500;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #282c3f;
+}
+.costnDelSection {
+  font-size: 13px;
+  color: #686b78;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.costnDelSection + .costnDelSection {
+  margin-top: 10px;
+}
+.otherCharges {
+  border-bottom: 1px solid #e9e9eb;
+  margin: 17px 0 15px;
+}
+.totalPayoutSec {
+  width: 100%;
+  background: #fff;
+  height: 60px;
+  min-height: 60px;
+  display: flex;
+  font-weight: 600;
+  color: #282c3f;
+  padding: 5px 30px;
+  z-index: 1;
+}
+.totalPayoutInner {
+  margin: 0 auto;
+  width: 100%;
+  border-top: 2px solid #282c3f;
+  height: 100%;
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
 }

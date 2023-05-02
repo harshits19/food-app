@@ -7,19 +7,22 @@ const SearchCard = ({ data }) => {
   let resId = 0;
   return (
     <div className="search">
-      {data.suggestions.map((restaurants) => {
-        {
-          resId = JSON.parse(restaurants.metadata).data.primaryRestaurantId;
+      {data?.suggestions?.map((restaurants) => {
+        if (restaurants?.metadata) {
+          resId = JSON.parse(restaurants?.metadata)?.data?.primaryRestaurantId;
         }
         return (
-          <Link to={"/restaurants/" + resId} style={{ textDecoration: "none" }}>
-            <div className="searchCardsInner" key={resId}>
+          <Link
+            to={"/restaurants/" + resId}
+            style={{ textDecoration: "none" }}
+            key={restaurants?.cloudinaryId}>
+            <div className="searchCardsInner">
               <div className="searchCardHeader">
-                <img src={IMG_CDN_URL + restaurants.cloudinaryId} />
+                <img src={IMG_CDN_URL + restaurants?.cloudinaryId} />
               </div>
               <div className="searchCardDesc">
                 <p>{restaurants.text}</p>
-                <p className="typeofCard">{restaurants.tagToDisplay}</p>
+                <p className="typeofCard">{restaurants?.tagToDisplay}</p>
               </div>
             </div>
           </Link>
@@ -73,6 +76,7 @@ const NewSearchComp = () => {
               className="searchButton"
               onClick={() => {
                 setIsSearched(false);
+                setSearchText("");
               }}>
               {!isSearched ? (
                 <i
@@ -89,7 +93,7 @@ const NewSearchComp = () => {
         <div className="searchCardsContainer">
           {!isSearched ? (
             <SearchShimmer />
-          ) : allRestaurants.statusCode == 1 ? (
+          ) : allRestaurants?.statusCode == 1 ? (
             <h2>No restaurants</h2>
           ) : (
             <SearchCard {...allRestaurants} />

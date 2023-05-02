@@ -7,7 +7,12 @@ const Header = () => {
   const restDetails = useSelector((reduxStore) => reduxStore.cart.restDetails);
   let totalCost = 0;
   cartItems.map((items) => {
-    totalCost += items.item.price ? items.item.price : items.item.finalPrice;
+    totalCost +=
+      (items.item.price
+        ? items.item.price
+        : items.item.finalPrice
+        ? items.item.finalPrice
+        : items.item.defaultPrice) * items.quantity;
   });
   return (
     <>
@@ -37,7 +42,7 @@ const Header = () => {
           <div className="navList">
             <div className="navListItems">
               <div className="navItems">
-                <Link to="/offers/">
+                <Link to="/cart/">
                   <span className="navIcons">
                     <svg
                       className="svgSet cartSet"
@@ -76,7 +81,11 @@ const Header = () => {
                         <div className="restInfoArea">
                           {restDetails[1].areaName}
                         </div>
-                        <div className="restInfoMenu">view full menu</div>
+                        <Link
+                          to={"/restaurants/" + restDetails[1].id}
+                          style={{ textDecoration: "none" }}>
+                          <div className="restInfoMenu">view full menu</div>
+                        </Link>
                       </div>
                     </div>
                     <div className="cartMenuSection">
@@ -96,12 +105,16 @@ const Header = () => {
                             )}
                             <div className="cartMenuItemName">
                               {items.item.name}
+                              {" x "}
+                              {items.quantity}
                             </div>
                             <div className="cartMenuItemPrice">
                               {"₹ "}
                               {items.item.price
                                 ? items.item.price / 100
-                                : items.item.finalPrice / 100}
+                                : items.item.finalPrice
+                                ? items.item.finalPrice / 100
+                                : items.item.defaultPrice / 100}
                             </div>
                           </div>
                         );
@@ -119,7 +132,9 @@ const Header = () => {
                         Extra charges may apply
                       </div>
                     </div>
-                    <div className="checkoutBtn">Checkout</div>
+                    <Link to="/cart" style={{ textDecoration: "none" }}>
+                      <div className="checkoutBtn">Checkout</div>
+                    </Link>
                   </div>
                 )}
               </div>
