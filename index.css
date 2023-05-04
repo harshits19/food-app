@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap");
 
 :root {
@@ -96,6 +95,11 @@ body {
   align-items: center;
   padding-left: 28px;
 }
+.navItems a.activeLink,
+a.activeLink .svgSet {
+  color: #fc8019 !important;
+  fill: #fc8019 !important;
+}
 .navIcons {
   position: absolute;
   top: 50%;
@@ -104,8 +108,9 @@ body {
   transform: translateY(-50%);
   line-height: 0;
 }
-.navListItems :hover a {
-  color: #fc8019;
+.navListItems :hover a,
+.navItems:hover .cartCountActive {
+  color: #fc8019 !important;
 }
 .navItems:hover .svgSet {
   fill: #fc8019 !important;
@@ -122,6 +127,10 @@ body {
   stroke-width: 3px;
   stroke: #3d4152;
 }
+.activeSet {
+  stroke: #60b246;
+  fill: #60b246;
+}
 .cartCount {
   position: absolute;
   top: 50%;
@@ -130,6 +139,9 @@ body {
   transform: translate(-50%, -50%);
   font-size: 14px;
   font-weight: 600;
+}
+.cartCountActive {
+  color: #ffffff;
 }
 .sticky {
   background-color: var(--secondary-color);
@@ -397,7 +409,7 @@ body {
 
 /* ----------Restaurant Cards (Homepage)------------ */
 .homepageContainer {
-  padding: 3em 0;
+  padding: 2em 0;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -436,7 +448,7 @@ body {
   flex: 1;
   justify-content: end;
 }
-.filterBtn {
+/* .filterBtn {
   font-size: 16px;
   text-transform: capitalize;
   margin-left: 35px;
@@ -459,6 +471,36 @@ body {
 #rat:target,
 #lth:target,
 #htl:target {
+  border-bottom: 2px solid #000000;
+} */
+
+input[type="radio"] {
+  display: none;
+}
+input[type="radio"] ~ label {
+  cursor: pointer;
+}
+.btnLabel {
+  font-size: 16px;
+  text-transform: capitalize;
+  margin-left: 35px;
+  cursor: pointer;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #686b78;
+  font-weight: 400;
+}
+.btnLabel:hover {
+  color: #3d4152;
+}
+#relevance:checked + .btnLabel,
+#delTime:checked + .btnLabel,
+#rating:checked + .btnLabel,
+#lth:checked + .btnLabel,
+#htl:checked + .btnLabel {
   border-bottom: 2px solid #000000;
 }
 
@@ -557,7 +599,7 @@ body {
 }
 
 .greybg {
-  color: #ffffff;
+  color: #535665;
 }
 .orangebg {
   background-color: #db7c38;
@@ -730,12 +772,13 @@ body {
 /*-------------Footer---------------*/
 .footerContainer {
   padding: 0 20px;
-  z-index: 10;
+  z-index: 20;
   background-color: #000;
   min-height: 298px;
   width: 100%;
   color: #fff;
   overflow: hidden;
+  position: relative;
 }
 .footerInner {
   position: relative;
@@ -1010,6 +1053,21 @@ body {
   color: #7e808c;
 }
 /* ----------- Restaurant Menu/View------------- */
+.breadcrumbContainer {
+  height: 40px;
+  font-size: 10px;
+  color: #93959f;
+  /* margin: 0 16px; */
+  padding-top: 8px;
+}
+.breadcrumbContainer span a {
+  text-decoration: none;
+  color: #93959f;
+}
+.breadcrumbContainer span:last-child {
+  color: #535665;
+  font-weight: 400;
+}
 .restoBody {
   max-width: 800px;
   min-height: 800px;
@@ -1019,8 +1077,9 @@ body {
 }
 .restroHeaderContainer {
   height: 100%;
-  width: 100%;
+  /* width: 100%; */
   padding: 20px 0px;
+  margin: 0 16px;
   border-bottom: 1px dashed #d3d3d3;
   display: flex;
   justify-content: space-between;
@@ -1085,6 +1144,7 @@ body {
   font-size: 15px;
   font-weight: 700;
   margin: 18px 0;
+  padding: 0 16px;
 }
 .restroTimeCostItem {
   margin-right: 24px;
@@ -1096,10 +1156,10 @@ body {
 }
 .restroOffersContainer {
   display: flex;
-  /* flex-direction: column; */
-  width: 100%;
+  /* width: 100%; */
   overflow-x: scroll;
   overflow-y: hidden;
+  margin: 0 16px;
 }
 
 .restroOffersContainer::-webkit-scrollbar {
@@ -1169,7 +1229,7 @@ body {
 .restroFoodItemContainer {
   height: 100%;
   width: 100%;
-  padding: 2em 0;
+  padding: 2em 16px;
 }
 .foodItemsAccordion {
   border-bottom: 16px solid #f1f1f6;
@@ -1279,7 +1339,60 @@ div.foodItemsBody > div.foodItemsAccordion {
   color: #bebfc5;
   font-size: 20px;
 }
+.stickyBottomMenuContainer {
+  width: 800px;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.stickyBottomMenu {
+  height: 48px;
+  overflow: hidden;
+  z-index: 3;
+  transition: transform 0.25s ease;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 100%, 0);
+  contain: content;
+  position: relative;
+}
+.stickyBottomMenuVisible {
+  transform: translateZ(0);
+}
+.stickyMenuStyleContainer {
+  height: 48px;
+  background: #60b246;
+  color: #fff;
+  z-index: 2;
+  position: relative;
+  contain: content;
+  pointer-events: auto;
+  width: 100%;
+  border: none;
+}
+.stickyMenuInnerBody {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+}
+.bottomMenuCartImg {
+  margin-left: 8px;
+}
+.bottomMenuRight {
+  text-transform: uppercase;
 
+  display: flex;
+  align-items: center;
+}
 /* ----------Cart Comp ------------- */
 .cartContainer {
   background: #e9ecee;

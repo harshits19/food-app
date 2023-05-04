@@ -7,7 +7,7 @@ const Carousel = () => {
 
   return (
     <div className="carouselContainer">
-      {carouselData.length == 0 ? (
+      {carouselData?.length == 0 ? (
         <div className="carouselShimmer">
           <div className="rotatingImgContainer">
             <div className="rotatingImgInnerContainer"></div>
@@ -21,7 +21,7 @@ const Carousel = () => {
       ) : (
         <div className="carouselInnerContainer">
           <div className="carouselInnerBox" id="bbox">
-            {carElements.map((item) => {
+            {carElements?.map((item) => {
               return (
                 <div
                   className="carouselItem"

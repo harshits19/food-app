@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import RestaurantShimmer from "./RestaurantShimmer";
 import { useRestaurant } from "../utils/useRestaurant";
 import { IMG_CDN_URL } from "../config";
 import { useDispatch, useSelector } from "react-redux";
-import { addItems, removeItems, getDetails } from "../utils/cartSlice";
+import { addItems, removeItems } from "../utils/cartSlice";
+import { getDetails } from "../utils/restroSlice";
 import GoToTop from "../utils/gotoTop";
 
 const ItemCont = ({ card }) => {
   // console.log(card);
   const dispatch = useDispatch();
+
   const addIntoCart = (item) => {
     dispatch(addItems(item));
   };
@@ -169,17 +171,41 @@ const RestaurantView = () => {
   // console.log(restaurantMenuItems);
 
   const dispatch = useDispatch();
-  setTimeout(() => {
-    // dispatch(getDetails(restaurants));
-  }, 1000);
   useEffect(() => {
     dispatch(getDetails(restaurants));
   });
+  const cartDetails = useSelector((store) => store.cart.items);
+  let totalCost = 0;
+  cartDetails.map((items) => {
+    totalCost +=
+      (items.item.price
+        ? items.item.price
+        : items.item.finalPrice
+        ? items.item.finalPrice
+        : items.item.defaultPrice) * items.quantity;
+  });
+  var cartBottomMenu = document.getElementById("stickyBottomMenu");
+  if (cartDetails.length > 0) {
+    cartBottomMenu?.classList?.add("stickyBottomMenuVisible");
+  } else if (
+    cartBottomMenu?.classList?.contains("stickyBottomMenuVisible") &&
+    cartDetails.length == 0
+  ) {
+    cartBottomMenu?.classList?.remove("stickyBottomMenuVisible");
+  }
 
   return !restaurants ? (
     <RestaurantShimmer />
   ) : (
     <div className="restoBody">
+      <div className="breadcrumbContainer">
+        <span>
+          <Link to={"/"}>Home</Link>
+        </span>
+        <span>{" / " + restaurants?.city}</span>
+        <span>{" / " + restaurants?.areaName}</span>
+        <span>{" / " + restaurants?.name}</span>
+      </div>
       <div className="restroHeaderContainer">
         <div className="leftHeaderContainer">
           <p className="restroName">{restaurants?.name}</p>
@@ -268,6 +294,31 @@ const RestaurantView = () => {
           }
         })}
       </div>
+      {
+        <div className="stickyBottomMenuContainer">
+          <div className="stickyBottomMenu" id="stickyBottomMenu">
+            <button className="stickyMenuStyleContainer">
+              <span className="stickyMenuInnerBody">
+                <span>
+                  {(cartDetails.length > 1
+                    ? cartDetails.length + " Items"
+                    : cartDetails.length + " Item") +
+                    " | ₹" +
+                    totalCost / 100}
+                </span>
+                <span className="bottomMenuRight">
+                  view cart
+                  <img
+                    className="bottomMenuCartImg"
+                    height="14"
+                    width="14"
+                    src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_28,h_28/ChatbotAssets/Checkout_Cart"></img>
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      }
       <GoToTop />
     </div>
   );

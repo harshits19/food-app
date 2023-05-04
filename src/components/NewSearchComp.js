@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { IMG_CDN_URL } from "../config";
 import { Link } from "react-router-dom";
 import SearchShimmer from "./SearchShimmer";
+import GoToTop from "../utils/gotoTop";
 
 const SearchCard = ({ data }) => {
   let resId = 0;
@@ -100,6 +101,7 @@ const NewSearchComp = () => {
           )}
         </div>
       </div>
+      <GoToTop />
     </>
   );
 };

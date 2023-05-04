@@ -20,33 +20,51 @@ const RestContainer = () => {
                 <h2>{otherRestInfo?.totalOpenRestaurants} restaurants</h2>
               </div>
               <div className="filterBtnContainer">
-                <div className="filterBtn" id="rel">
-                  <a href="#rel" onClick={() => setFilterType("RELEVANCE")}>
-                    Relevance
-                  </a>
-                </div>
-                <div className="filterBtn" id="del">
-                  <a href="#del" onClick={() => setFilterType("DELIVERY_TIME")}>
-                    Delivery Time
-                  </a>
-                </div>
-                <div className="filterBtn" id="rat">
-                  <a href="#rat" onClick={() => setFilterType("RATING")}>
-                    Rating
-                  </a>
-                </div>
-                <div className="filterBtn" id="lth">
-                  <a href="#lth" onClick={() => setFilterType("COST_FOR_TWO")}>
-                    Cost: Low to High
-                  </a>
-                </div>
-                <div className="filterBtn" id="htl">
-                  <a
-                    href="#htl"
-                    onClick={() => setFilterType("COST_FOR_TWO_H2L")}>
-                    Cost: High to Low
-                  </a>
-                </div>
+                <input
+                  type="radio"
+                  id="relevance"
+                  name="select"
+                  value="1"
+                  defaultChecked
+                />
+                <label
+                  htmlFor="relevance"
+                  className="btnLabel"
+                  onClick={() => setFilterType("RELEVANCE")}>
+                  Relevance
+                </label>
+
+                <input type="radio" id="delTime" name="select" value="2" />
+                <label
+                  htmlFor="delTime"
+                  className="btnLabel"
+                  onClick={() => setFilterType("DELIVERY_TIME")}>
+                  Delivery Time
+                </label>
+
+                <input type="radio" id="rating" name="select" value="3" />
+                <label
+                  htmlFor="rating"
+                  className="btnLabel"
+                  onClick={() => setFilterType("RATING")}>
+                  Rating
+                </label>
+
+                <input type="radio" id="lth" name="select" value="4" />
+                <label
+                  htmlFor="lth"
+                  className="btnLabel"
+                  onClick={() => setFilterType("COST_FOR_TWO")}>
+                  Cost: Low to High
+                </label>
+
+                <input type="radio" id="htl" name="select" value="5" />
+                <label
+                  htmlFor="htl"
+                  className="btnLabel"
+                  onClick={() => setFilterType("COST_FOR_TWO_H2L")}>
+                  Cost: High to Low
+                </label>
               </div>
             </div>
           </div>

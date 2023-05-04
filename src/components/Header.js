@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../config";
 
 const Header = () => {
   const cartItems = useSelector((reduxStore) => reduxStore.cart.items);
-  const restDetails = useSelector((reduxStore) => reduxStore.cart.restDetails);
+  const restDetails = useSelector(
+    (reduxStore) => reduxStore.restro.restDetails
+  );
+  const restNo = restDetails?.length - 1;
   let totalCost = 0;
   cartItems.map((items) => {
     totalCost +=
@@ -14,11 +17,24 @@ const Header = () => {
         ? items.item.finalPrice
         : items.item.defaultPrice) * items.quantity;
   });
+  var cartButton = document.getElementById("cartNavBtn");
+  var cartCounter = document.getElementById("cartCounter");
+  if (cartItems?.length != 0) {
+    cartButton?.classList.add("activeSet");
+    cartCounter?.classList.add("cartCountActive");
+  } else if (
+    cartButton?.classList.contains("activeSet") &&
+    cartCounter?.classList.contains("cartCountActive") &&
+    cartItems?.length == 0
+  ) {
+    cartButton?.classList.remove("activeSet");
+    cartCounter?.classList.remove("cartCountActive");
+  }
   return (
     <>
       <div className="headers fixed" id="myHeader">
         <div className="navBar">
-          <Link className="navlogo" to="/">
+          <NavLink className="navlogo" to="/">
             <svg viewBox="0 0 559 825" height="49" width="34" fill="#fc8019">
               <path
                 fillRule="evenodd"
@@ -38,23 +54,26 @@ const Header = () => {
                 </linearGradient>
               </defs>
             </svg>
-          </Link>
+          </NavLink>
           <div className="navList">
             <div className="navListItems">
               <div className="navItems">
-                <Link to="/cart/">
+                <NavLink to="/cart/">
                   <span className="navIcons">
                     <svg
-                      className="svgSet cartSet"
+                      className="cartSet"
                       viewBox="-1 0 37 32"
                       height="20"
-                      width="20">
+                      width="20"
+                      id="cartNavBtn">
                       <path d="M4.438 0l-2.598 5.11-1.84 26.124h34.909l-1.906-26.124-2.597-5.11z"></path>
                     </svg>
-                    <span className="cartCount">{cartItems.length}</span>
+                    <span className="cartCount" id="cartCounter">
+                      {cartItems.length}
+                    </span>
                   </span>
                   <span>Cart</span>
-                </Link>
+                </NavLink>
               </div>
               <div className="cartMenu">
                 <span className="cartArrow"></span>
@@ -71,28 +90,30 @@ const Header = () => {
                     <div className="cartRestInfo">
                       <div className="restInfoPic">
                         <img
-                          src={IMG_CDN_URL + restDetails[1].cloudinaryImageId}
+                          src={
+                            IMG_CDN_URL + restDetails[restNo]?.cloudinaryImageId
+                          }
                         />
                       </div>
                       <div className="restInfoDesc">
                         <div className="restInfoName">
-                          {restDetails[1].name}
+                          {restDetails[restNo]?.name}
                         </div>
                         <div className="restInfoArea">
-                          {restDetails[1].areaName}
+                          {restDetails[restNo]?.areaName}
                         </div>
-                        <Link
-                          to={"/restaurants/" + restDetails[1].id}
+                        <NavLink
+                          to={"/restaurants/" + restDetails[restNo]?.id}
                           style={{ textDecoration: "none" }}>
                           <div className="restInfoMenu">view full menu</div>
-                        </Link>
+                        </NavLink>
                       </div>
                     </div>
                     <div className="cartMenuSection">
-                      {cartItems.map((items) => {
+                      {cartItems?.map((items) => {
                         return (
                           <div className="cartMenuItems" key={items.item.id}>
-                            {items.item.isVeg ? (
+                            {items?.item?.isVeg ? (
                               <img
                                 className="vegNonVegIcon"
                                 src="https://img.icons8.com/color/48/null/vegetarian-food-symbol.png"
@@ -104,13 +125,13 @@ const Header = () => {
                               />
                             )}
                             <div className="cartMenuItemName">
-                              {items.item.name}
+                              {items?.item?.name}
                               {" x "}
-                              {items.quantity}
+                              {items?.quantity}
                             </div>
                             <div className="cartMenuItemPrice">
                               {"₹ "}
-                              {items.item.price
+                              {items?.item?.price
                                 ? items.item.price / 100
                                 : items.item.finalPrice
                                 ? items.item.finalPrice / 100
@@ -132,16 +153,18 @@ const Header = () => {
                         Extra charges may apply
                       </div>
                     </div>
-                    <Link to="/cart" style={{ textDecoration: "none" }}>
+                    <NavLink to="/cart" style={{ textDecoration: "none" }}>
                       <div className="checkoutBtn">Checkout</div>
-                    </Link>
+                    </NavLink>
                   </div>
                 )}
               </div>
             </div>
             <div className="navListItems">
               <div className="navItems">
-                <Link to="/offers/">
+                <NavLink
+                  to="/about/profile/"
+                  className={({ isActive }) => (isActive ? "activeLink" : "")}>
                   <span className="navIcons">
                     <svg
                       className="svgSet"
@@ -152,12 +175,14 @@ const Header = () => {
                     </svg>
                   </span>
                   <span>Sign In</span>
-                </Link>
+                </NavLink>
               </div>
             </div>
             <div className="navListItems">
               <div className="navItems">
-                <Link to="/offers/">
+                <NavLink
+                  to="/about/"
+                  className={({ isActive }) => (isActive ? "activeLink" : "")}>
                   <span className="navIcons">
                     <svg
                       className="svgSet"
@@ -168,12 +193,14 @@ const Header = () => {
                     </svg>
                   </span>
                   <span>Help</span>
-                </Link>
+                </NavLink>
               </div>
             </div>
             <div className="navListItems">
               <div className="navItems">
-                <Link to="/offers/">
+                <NavLink
+                  to="/offers/"
+                  className={({ isActive }) => (isActive ? "activeLink" : "")}>
                   <span className="navIcons">
                     <svg
                       className="svgSet"
@@ -184,12 +211,14 @@ const Header = () => {
                     </svg>
                   </span>
                   <span>Offers</span>
-                </Link>
+                </NavLink>
               </div>
             </div>
             <div className="navListItems">
               <div className="navItems">
-                <Link to="/search/">
+                <NavLink
+                  to="/search/"
+                  className={({ isActive }) => (isActive ? "activeLink" : "")}>
                   <span className="navIcons">
                     <svg
                       className="svgSet"
@@ -200,7 +229,7 @@ const Header = () => {
                     </svg>
                   </span>
                   <span>Search</span>
-                </Link>
+                </NavLink>
               </div>
             </div>
           </div>

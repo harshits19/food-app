@@ -34,7 +34,7 @@ const RestCards = ({
           <div className={setBg(avgRating) + " restRatings"}>
             <i
               className="fa-solid fa-star fa-2xs"
-              style={{ color: "#ffffff", marginRight: "2px" }}></i>
+              style={{ marginRight: "2px" }}></i>
             {avgRating}
           </div>
           <div>•</div>
@@ -53,9 +53,6 @@ const RestCards = ({
             <span>{aggregatedDiscountInfo?.shortDescriptionList[0]?.meta}</span>
           </div>
         )}
-        {/* 
-        {console.log(aggregatedDiscountInfo?.shortDescriptionList[0]?.meta)}
-          */}
         <div className="restQuickView">QUICK VIEW</div>
       </div>
     </div>

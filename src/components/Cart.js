@@ -6,7 +6,10 @@ import GoToTop from "../utils/gotoTop";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
-  const restDetails = useSelector((reduxStore) => reduxStore.cart.restDetails);
+  const restDetails = useSelector(
+    (reduxStore) => reduxStore.restro.restDetails
+  );
+  const restNo = restDetails?.length - 1;
   const dispatch = useDispatch();
   const addIntoCart = (item) => {
     dispatch(addItems(item));
@@ -53,7 +56,7 @@ const Cart = () => {
           <div className="cartFilled">
             <div className="checkOutSection">
               <Link
-                to={"/restaurants/" + restDetails[1].id}
+                to={"/restaurants/" + restDetails[restNo].id}
                 style={{ textDecoration: "none" }}>
                 <button className="cartRestroDetails">
                   <span className="cartRestroImgBox">
@@ -61,13 +64,15 @@ const Cart = () => {
                       className="cartRestroImg"
                       height="50"
                       width="50"
-                      src={IMG_CDN_URL + restDetails[1].cloudinaryImageId}
+                      src={IMG_CDN_URL + restDetails[restNo].cloudinaryImageId}
                     />
                   </span>
                   <span className="cartRestroDesc">
-                    <div className="cartRestroName">{restDetails[1].name}</div>
+                    <div className="cartRestroName">
+                      {restDetails[restNo].name}
+                    </div>
                     <div className="cartRestroArea">
-                      {restDetails[1].areaName}
+                      {restDetails[restNo].areaName}
                     </div>
                   </span>
                 </button>
@@ -167,11 +172,11 @@ const Cart = () => {
                 </div>
                 <div className="costnDelSection">
                   <div className="">
-                    Delivery Fee | {restDetails[1]?.sla?.lastMileTravel} Km{" "}
+                    Delivery Fee | {restDetails[restNo]?.sla?.lastMileTravel} Km{" "}
                   </div>
                   <div>
                     {"₹"}
-                    {restDetails[1]?.feeDetails?.totalFee / 100}
+                    {restDetails[restNo]?.feeDetails?.totalFee / 100}
                   </div>
                 </div>
                 <div className="otherCharges"></div>
@@ -180,7 +185,7 @@ const Cart = () => {
                   <div className="">Govt Taxes & Other Charges</div>
                   <div>
                     {"₹"}
-                    {restDetails[1]?.feeDetails?.totalFee / 200}
+                    {restDetails[restNo]?.feeDetails?.totalFee / 200}
                   </div>
                 </div>
               </div>
@@ -190,7 +195,8 @@ const Cart = () => {
                   <div>
                     {"₹"}
                     {Math.round(
-                      (totalCost + restDetails[1]?.feeDetails?.totalFee * 1.5) /
+                      (totalCost +
+                        restDetails[restNo]?.feeDetails?.totalFee * 1.5) /
                         100
                     )}
                   </div>
