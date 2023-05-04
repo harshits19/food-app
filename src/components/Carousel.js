@@ -1,9 +1,8 @@
 import { getRestaurants } from "../utils/useRestaurant";
 
 const Carousel = () => {
-  const { carouselData } = getRestaurants("RELEVANCE");
+  const { carouselData } = getRestaurants("RELEVANCE", -1);
   const carElements = carouselData?.data?.data?.cards;
-  // console.log(carElements);
 
   return (
     <div className="carouselContainer">

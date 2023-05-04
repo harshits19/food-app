@@ -1,5 +1,4 @@
 const Shimmer = () => {
-  // console.log("Shimmer");
   const ShimmerBox = () => {
     return (
       <div className="shimmerInnerContainer">
@@ -12,21 +11,14 @@ const Shimmer = () => {
   };
   return (
     <>
-      <div className="container">
-        <div className="homepageContainer">
-          <h2>Open Restaurants</h2>
-          <div className="shimmerContainer">
-            <ShimmerBox />
-            <ShimmerBox />
-            <ShimmerBox />
-            <ShimmerBox />
-            <ShimmerBox />
-            <ShimmerBox />
-            <ShimmerBox />
-            <ShimmerBox />
-          </div>
-        </div>
-      </div>
+      <ShimmerBox />
+      <ShimmerBox />
+      <ShimmerBox />
+      <ShimmerBox />
+      <ShimmerBox />
+      <ShimmerBox />
+      <ShimmerBox />
+      <ShimmerBox />
     </>
   );
 };

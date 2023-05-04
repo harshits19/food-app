@@ -2,22 +2,48 @@ import { Link } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import RestCards from "./RestCards";
 import { getRestaurants } from "../utils/useRestaurant";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const RestContainer = () => {
   const [filterType, setFilterType] = useState("RELEVANCE");
-  const { allRestaurants, otherRestInfo } = getRestaurants(filterType);
+  const [page, setPage] = useState(-1);
 
-  return allRestaurants?.length == 0 ? (
-    <Shimmer />
-  ) : (
+  const { allRestaurants, otherRestInfo, loading, setLoading } = getRestaurants(
+    filterType,
+    page
+  );
+
+  const handleScrollEvents = async () => {
+    try {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.scrollHeight - 400
+      ) {
+        setLoading(true);
+        setPage((prev) => prev + 16);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScrollEvents);
+  }, []);
+
+  return (
     <>
       <div className="container">
-        <div className="homepageContainer">
+        <div className="homepageContainer" id="homepageContainer">
           <div className="filterContainer">
             <div className="restFilters">
               <div>
-                <h2>{otherRestInfo?.totalOpenRestaurants} restaurants</h2>
+                <h2>
+                  {otherRestInfo?.totalOpenRestaurants
+                    ? otherRestInfo?.totalOpenRestaurants
+                    : otherRestInfo?.totalSize}{" "}
+                  restaurants
+                </h2>
               </div>
               <div className="filterBtnContainer">
                 <input
@@ -30,7 +56,10 @@ const RestContainer = () => {
                 <label
                   htmlFor="relevance"
                   className="btnLabel"
-                  onClick={() => setFilterType("RELEVANCE")}>
+                  onClick={() => {
+                    setFilterType("RELEVANCE");
+                    setPage(-1);
+                  }}>
                   Relevance
                 </label>
 
@@ -38,7 +67,10 @@ const RestContainer = () => {
                 <label
                   htmlFor="delTime"
                   className="btnLabel"
-                  onClick={() => setFilterType("DELIVERY_TIME")}>
+                  onClick={() => {
+                    setFilterType("DELIVERY_TIME");
+                    setPage(-1);
+                  }}>
                   Delivery Time
                 </label>
 
@@ -46,7 +78,10 @@ const RestContainer = () => {
                 <label
                   htmlFor="rating"
                   className="btnLabel"
-                  onClick={() => setFilterType("RATING")}>
+                  onClick={() => {
+                    setFilterType("RATING");
+                    setPage(-1);
+                  }}>
                   Rating
                 </label>
 
@@ -54,7 +89,10 @@ const RestContainer = () => {
                 <label
                   htmlFor="lth"
                   className="btnLabel"
-                  onClick={() => setFilterType("COST_FOR_TWO")}>
+                  onClick={() => {
+                    setFilterType("COST_FOR_TWO");
+                    setPage(-1);
+                  }}>
                   Cost: Low to High
                 </label>
 
@@ -62,23 +100,41 @@ const RestContainer = () => {
                 <label
                   htmlFor="htl"
                   className="btnLabel"
-                  onClick={() => setFilterType("COST_FOR_TWO_H2L")}>
+                  onClick={() => {
+                    setFilterType("COST_FOR_TWO_H2L");
+                    setPage(-1);
+                  }}>
                   Cost: High to Low
                 </label>
               </div>
             </div>
           </div>
+
           <div className="restContainer">
-            {allRestaurants?.map((restaurant) => {
-              return (
-                <Link
-                  to={"/restaurants/" + restaurant?.data?.id}
-                  key={restaurant?.data?.id}
-                  style={{ textDecoration: "none" }}>
-                  <RestCards {...restaurant?.data} />
-                </Link>
-              );
-            })}
+            {allRestaurants?.length == 0 ? (
+              <Shimmer />
+            ) : (
+              <>
+                {allRestaurants?.map((restaurant) => {
+                  return restaurant.data.data ? (
+                    <Link
+                      to={"/restaurants/" + restaurant?.data?.data?.id}
+                      key={restaurant?.data?.data?.id}
+                      style={{ textDecoration: "none" }}>
+                      <RestCards {...restaurant?.data?.data} />
+                    </Link>
+                  ) : (
+                    <Link
+                      to={"/restaurants/" + restaurant?.data?.id}
+                      key={restaurant?.data?.id}
+                      style={{ textDecoration: "none" }}>
+                      <RestCards {...restaurant?.data} />
+                    </Link>
+                  );
+                })}
+              </>
+            )}
+            {loading && <Shimmer />}
           </div>
         </div>
       </div>

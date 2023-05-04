@@ -5,3 +5,5 @@ export const RESTAURANT_MENU_URL =
   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.4633953&lng=80.3554247&restaurantId=";
 export const ALL_RESTAURANT_URL =
   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.4633953&lng=80.3554247&page_type=DESKTOP_WEB_LISTING";
+export const HOMEPAGE_REST_URL =
+  "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.4633953&lng=80.3554247&page_type=DESKTOP_SEE_ALL_LISTING";

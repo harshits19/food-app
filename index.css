@@ -368,45 +368,6 @@ a.activeLink .svgSet {
   box-shadow: 0 4px 14px #d4d5d9;
 }
 
-/* ---------------Home Banner--------------------*/
-
-.banner {
-  height: 325px;
-  width: 100%;
-  margin-inline: auto;
-  background: linear-gradient(
-    0deg,
-    rgb(201, 188, 244) 0%,
-    rgb(255, 255, 255) 95.83%
-  );
-  border-bottom-left-radius: 1.5rem;
-  border-bottom-right-radius: 1.5rem;
-}
-
-.banner-content {
-  /* display: inline-block; */
-  position: relative;
-  top: 10vh;
-  left: 10vw;
-  float: left;
-  font-family: var(--primary-font);
-}
-.banner-content h2 {
-  font-size: 2.5em;
-  line-height: 1.3em;
-}
-.banner .banner-img {
-  position: relative;
-  top: 20px;
-  right: 200px;
-  float: right;
-}
-
-.banner .banner-img img {
-  height: 300px;
-  width: 500px;
-}
-
 /* ----------Restaurant Cards (Homepage)------------ */
 .homepageContainer {
   padding: 2em 0;
@@ -416,7 +377,8 @@ a.activeLink .svgSet {
 
 .restContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  column-gap: 53px;
   align-items: flex-start;
   flex-wrap: wrap;
   /* margin: 1em 0; */
@@ -448,31 +410,6 @@ a.activeLink .svgSet {
   flex: 1;
   justify-content: end;
 }
-/* .filterBtn {
-  font-size: 16px;
-  text-transform: capitalize;
-  margin-left: 35px;
-  cursor: pointer;
-  position: relative;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-.filterBtn a {
-  text-decoration: none;
-  color: #686b78;
-  font-weight: 400;
-}
-.filterBtn a:hover {
-  color: #3d4152;
-}
-#rel:target,
-#del:target,
-#rat:target,
-#lth:target,
-#htl:target {
-  border-bottom: 2px solid #000000;
-} */
 
 input[type="radio"] {
   display: none;
@@ -861,21 +798,15 @@ input[type="radio"] ~ label {
 }
 
 /* ---------Shimmer Cards----------- */
-.shimmerContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 1em 0;
-}
 .shimmerInnerContainer {
   display: flex;
   flex-direction: column;
 }
 .shimmerBox {
-  width: 254px;
+  width: 260px;
   height: 160px;
   margin: 18px 0 2px;
+  border: 1px solid #fff;
 }
 .lines {
   height: 10px;

@@ -11,7 +11,6 @@ const Body = () => {
   return (
     <>
       <Carousel />
-      {/* <BannerIntro /> */}
       <RestContainer />
       <GoToTop />
     </>
