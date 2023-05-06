@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { IMG_CDN_URL } from "../config";
+import { IMG_CDN_URL } from "../utils/config";
 const searchShimmer = () => {
   const [searchData, setSearchData] = useState([]);
   useEffect(() => {

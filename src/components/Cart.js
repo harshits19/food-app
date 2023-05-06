@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addItems, removeItems } from "../utils/cartSlice";
-import { IMG_CDN_URL } from "../config";
+import { IMG_CDN_URL } from "../utils/config";
 import GoToTop from "../utils/gotoTop";
 
 const Cart = () => {

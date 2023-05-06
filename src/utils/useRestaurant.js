@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { ALL_RESTAURANT_URL, RESTAURANT_MENU_URL } from "../config";
+import {
+  ALL_RESTAURANT_URL,
+  RESTAURANT_MENU_URL,
+  OFFERS_PAGE_URL,
+  PAYMENTS_PAGE_URL,
+  HOMEPAGE_REST_URL,
+} from "./config";
 
 //A custom hook for Fetching Restaurant Menu View
 const useRestaurant = (resId) => {
@@ -33,7 +39,7 @@ const getRestaurants = (options, page) => {
     let res, restData, json;
     if (page === -1) {
       res = await fetch(ALL_RESTAURANT_URL + "&sortBy=" + options);
-      json = await res.json();
+      json = await res?.json();
       restData =
         options == "RELEVANCE"
           ? json?.data?.cards[2]?.data?.data
@@ -42,14 +48,15 @@ const getRestaurants = (options, page) => {
       setCarouselData(json?.data?.cards[0]);
     } else {
       res = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.4633953&lng=80.3554247" +
+        HOMEPAGE_REST_URL +
           "&offset=" +
           page +
           "&sortBy=" +
           options +
           "&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING"
       );
-      json = await res.json();
+      json = await res?.json();
+      // if (json.data.currentOffset < json.data.totalSize) {
       restData = json?.data;
       setAllRestaurants((prev) => [...prev, ...restData?.cards]);
     }
@@ -60,27 +67,23 @@ const getRestaurants = (options, page) => {
   return { allRestaurants, otherRestInfo, loading, setLoading, carouselData };
 };
 
-export { useRestaurant, getRestaurants };
-/* const getRestaurants = (options) => {
+const getOfferRestaurants = () => {
   const [allRestaurants, setAllRestaurants] = useState([]); //maintaining 2 variable for, so that if one is filtered out, others remains intact
-  const [otherRestInfo, setOtherRestInfo] = useState([]);
-  const [carouselData, setCarouselData] = useState([]);
+  const [paymentOffers, setPaymentOffers] = useState([]); //maintaining 2 variable for, so that if one is filtered out, others remains intact
   useEffect(() => {
     fetchRestaurantsAPI();
-  }, [options]);
+  }, []);
 
   async function fetchRestaurantsAPI() {
-    const res = await fetch(ALL_RESTAURANT_URL + "&sortBy=" + options);
+    const res = await fetch(OFFERS_PAGE_URL);
     const json = await res.json();
+    const restwo = await fetch(PAYMENTS_PAGE_URL);
+    const jsontwo = await restwo.json();
 
-    const restData =
-      options == "RELEVANCE"
-        ? json?.data?.cards[2]?.data?.data
-        : json?.data?.cards[0]?.data?.data;
-
-    setAllRestaurants(restData?.cards);
-    setOtherRestInfo(restData);
-    setCarouselData(json?.data?.cards[0]);
+    setAllRestaurants(json);
+    setPaymentOffers(jsontwo);
   }
-  return { allRestaurants, otherRestInfo, carouselData };
-}; */
+  return { allRestaurants, paymentOffers };
+};
+
+export { useRestaurant, getRestaurants, getOfferRestaurants };

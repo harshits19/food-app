@@ -6,4 +6,8 @@ export const RESTAURANT_MENU_URL =
 export const ALL_RESTAURANT_URL =
   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.4633953&lng=80.3554247&page_type=DESKTOP_WEB_LISTING";
 export const HOMEPAGE_REST_URL =
-  "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.4633953&lng=80.3554247&page_type=DESKTOP_SEE_ALL_LISTING";
+  "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.4633953&lng=80.3554247";
+export const OFFERS_PAGE_URL =
+  "https://www.swiggy.com/dapi/offers/restaurant?lat=26.4633953&lng=80.3554247&offset=0";
+export const PAYMENTS_PAGE_URL =
+  "https://www.swiggy.com/dapi/offers/payment?lat=26.4633953&lng=80.3554247&offset=0";

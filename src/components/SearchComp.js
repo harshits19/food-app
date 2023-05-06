@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ALL_RESTAURANT_URL } from "../config";
+import { ALL_RESTAURANT_URL } from "../utils/config";
 import { Link } from "react-router-dom";
 import SearchShimmer from "./SearchShimmer";
 import SearchCards from "./SearchCards";

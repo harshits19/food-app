@@ -17,7 +17,7 @@ const RestContainer = () => {
     try {
       if (
         window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.scrollHeight - 400
+        document.documentElement.scrollHeight - 500
       ) {
         setLoading(true);
         setPage((prev) => prev + 16);
@@ -116,7 +116,7 @@ const RestContainer = () => {
             ) : (
               <>
                 {allRestaurants?.map((restaurant) => {
-                  return restaurant.data.data ? (
+                  return restaurant?.data?.data ? (
                     <Link
                       to={"/restaurants/" + restaurant?.data?.data?.id}
                       key={restaurant?.data?.data?.id}

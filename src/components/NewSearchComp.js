@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { IMG_CDN_URL } from "../config";
+import { IMG_CDN_URL } from "../utils/config";
 import { Link } from "react-router-dom";
 import SearchShimmer from "./SearchShimmer";
 import GoToTop from "../utils/gotoTop";
