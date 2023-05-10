@@ -16,15 +16,12 @@ const useRestaurant = (resId) => {
   async function fetchAPI() {
     const response = await fetch(RESTAURANT_MENU_URL + resId);
     const jsonData = await response.json();
-    // console.log(jsonData.data);
-    // setRestaurant(jsonData?.data?.cards[0]?.card?.card?.info);
     setRestaurant(jsonData?.data);
   }
   return restaurant;
 };
 
 // Hook for fetching Homepage Restaurant Cards
-
 const getRestaurants = (options, page) => {
   const [allRestaurants, setAllRestaurants] = useState([]);
   const [otherRestInfo, setOtherRestInfo] = useState([]);
@@ -68,8 +65,8 @@ const getRestaurants = (options, page) => {
 };
 
 const getOfferRestaurants = () => {
-  const [allRestaurants, setAllRestaurants] = useState([]); //maintaining 2 variable for, so that if one is filtered out, others remains intact
-  const [paymentOffers, setPaymentOffers] = useState([]); //maintaining 2 variable for, so that if one is filtered out, others remains intact
+  const [allRestaurants, setAllRestaurants] = useState([]);
+  const [paymentOffers, setPaymentOffers] = useState([]);
   useEffect(() => {
     fetchRestaurantsAPI();
   }, []);

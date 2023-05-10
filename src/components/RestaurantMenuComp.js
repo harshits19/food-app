@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import RestaurantShimmer from "./RestaurantShimmer";
-import { useRestaurant } from "../utils/useRestaurant";
+import RestaurantMenuShimmer from "./RestaurantMenuShimmer";
+import { useRestaurant } from "../utils/useFetch";
 import { IMG_CDN_URL } from "../utils/config";
 import { useDispatch, useSelector } from "react-redux";
 import { addItems, removeItems } from "../utils/cartSlice";
 import { getDetails } from "../utils/restroSlice";
+import vegFoodIcon from "../assets/vegFoodIcon.png";
+import nonVegFoodIcon from "../assets/nonVegFoodIcon.png";
+import OfferIconCart from "../assets/offerIconCart.png";
+import checkOutCart from "../assets/checkOutCart.png";
 import GoToTop from "../utils/gotoTop";
 
 const ItemCont = ({ card }) => {
-  // console.log(card);
   const dispatch = useDispatch();
 
   const addIntoCart = (item) => {
@@ -19,7 +22,6 @@ const ItemCont = ({ card }) => {
     dispatch(removeItems(item));
   };
   const cartItems = useSelector((store) => store.cart.items);
-  // console.log(cartItems);
   let qty = 0;
   cartItems.map((obj) => {
     if (obj.item.id === card.info.id) {
@@ -32,15 +34,9 @@ const ItemCont = ({ card }) => {
       <div className="itemBody">
         <div>
           {card.info.isVeg ? (
-            <img
-              className="vegNonvegClassifier"
-              src="https://img.icons8.com/color/48/null/vegetarian-food-symbol.png"
-            />
+            <img className="vegNonvegClassifier" src={vegFoodIcon} />
           ) : (
-            <img
-              className="vegNonvegClassifier"
-              src="https://img.icons8.com/color/48/null/non-vegetarian-food-symbol.png"
-            />
+            <img className="vegNonvegClassifier" src={nonVegFoodIcon} />
           )}
         </div>
         <div className="itemTitle">{card.info.name}</div>
@@ -142,10 +138,7 @@ const OffersBox = ({ header, couponCode, description, offerTag }) => {
         )}
         <div className="offerBox">
           <p className="offerBoxHeader">
-            <img
-              src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_28,h_28/Store_Assets/Icons/OfferIconCart"
-              className="RestaurantOfferIcon"
-            />
+            <img src={OfferIconCart} className="RestaurantOfferIcon" />
             {header}
           </p>
           <p className="offerBoxBody">
@@ -167,13 +160,9 @@ const RestaurantView = () => {
     restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
   const restaurantMenuItems =
     restaurantAPI?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-  //console.log(restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle);
-  // console.log(restaurantMenuItems);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getDetails(restaurants));
-  });
+  setTimeout(() => dispatch(getDetails(restaurants)), 3000);
   const cartDetails = useSelector((store) => store.cart.items);
   let totalCost = 0;
   cartDetails.map((items) => {
@@ -195,7 +184,7 @@ const RestaurantView = () => {
   }
 
   return !restaurants ? (
-    <RestaurantShimmer />
+    <RestaurantMenuShimmer />
   ) : (
     <div className="restoBody">
       <div className="breadcrumbContainer">
@@ -237,7 +226,6 @@ const RestaurantView = () => {
             width="18"
             height="18"
             viewBox="0 0 18 18"
-            xmlns="http://www.w3.org/2000/svg"
             fill="none">
             <circle
               r="8.35"
@@ -256,7 +244,6 @@ const RestaurantView = () => {
             width="18"
             height="18"
             viewBox="0 0 18 18"
-            xmlns="http://www.w3.org/2000/svg"
             fill="none">
             <circle
               cx="9"
@@ -297,25 +284,27 @@ const RestaurantView = () => {
       {
         <div className="stickyBottomMenuContainer">
           <div className="stickyBottomMenu" id="stickyBottomMenu">
-            <button className="stickyMenuStyleContainer">
-              <span className="stickyMenuInnerBody">
-                <span>
-                  {(cartDetails.length > 1
-                    ? cartDetails.length + " Items"
-                    : cartDetails.length + " Item") +
-                    " | ₹" +
-                    totalCost / 100}
+            <Link to="/cart/" style={{ textDecoration: "none" }}>
+              <button className="stickyMenuStyleContainer">
+                <span className="stickyMenuInnerBody">
+                  <span>
+                    {(cartDetails.length > 1
+                      ? cartDetails.length + " Items"
+                      : cartDetails.length + " Item") +
+                      " | ₹" +
+                      totalCost / 100}
+                  </span>
+                  <span className="bottomMenuRight">
+                    view cart
+                    <img
+                      className="bottomMenuCartImg"
+                      height="14"
+                      width="14"
+                      src={checkOutCart}></img>
+                  </span>
                 </span>
-                <span className="bottomMenuRight">
-                  view cart
-                  <img
-                    className="bottomMenuCartImg"
-                    height="14"
-                    width="14"
-                    src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_28,h_28/ChatbotAssets/Checkout_Cart"></img>
-                </span>
-              </span>
-            </button>
+              </button>
+            </Link>
           </div>
         </div>
       }

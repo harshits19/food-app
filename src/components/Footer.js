@@ -1,3 +1,7 @@
+import appStoreIcon from "../assets/appStoreIcon.png";
+import playStoreIcon from "../assets/playStoreIcon.png";
+import logoFooter from "../assets/logoFooter.png";
+
 const Footer = () => {
   return (
     <div className="footerContainer">
@@ -75,27 +79,17 @@ const Footer = () => {
           </div>
           <div className="footerApps">
             <a href="#" target="_blank" className="appImg">
-              <img
-                alt=""
-                src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_200,h_65/icon-AppStore_lg30tv"
-              />
+              <img alt="" src={appStoreIcon} />
             </a>
             <a href="#" target="_blank" className="appImg">
-              <img
-                alt=""
-                src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_200,h_65/icon-GooglePlay_1_zixjxl"
-              />
+              <img alt="" src={playStoreIcon} />
             </a>
           </div>
         </div>
         <div className="footerStrip">
           <div className="stripLogo">
             <a href="#">
-              <img
-                width="142"
-                alt=""
-                src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_284/Logo_f5xzza"
-              />
+              <img width="142" alt="" src={logoFooter} />
             </a>
           </div>
           <div className="copyright">© 2023 FoodSimp</div>

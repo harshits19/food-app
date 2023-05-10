@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItems, removeItems } from "../utils/cartSlice";
 import { IMG_CDN_URL } from "../utils/config";
 import GoToTop from "../utils/gotoTop";
+import vegFoodIcon from "../assets/vegFoodIcon.png";
+import nonVegFoodIcon from "../assets/nonVegFoodIcon.png";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
@@ -89,12 +91,12 @@ const Cart = () => {
                                 {items.item.isVeg ? (
                                   <img
                                     style={{ height: "17px", width: "17px" }}
-                                    src="https://img.icons8.com/color/48/null/vegetarian-food-symbol.png"
+                                    src={vegFoodIcon}
                                   />
                                 ) : (
                                   <img
                                     style={{ height: "17px", width: "17px" }}
-                                    src="https://img.icons8.com/color/48/null/non-vegetarian-food-symbol.png"
+                                    src={nonVegFoodIcon}
                                   />
                                 )}
                                 <div>{items?.item?.name}</div>

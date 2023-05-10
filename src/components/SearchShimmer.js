@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
-import { IMG_CDN_URL } from "../utils/config";
+import { IMG_CDN_URL, RESTAURANT_PRE_SEARCH } from "../utils/config";
 const searchShimmer = () => {
   const [searchData, setSearchData] = useState([]);
   useEffect(() => {
     getSearchAPI();
   }, []);
   async function getSearchAPI() {
-    const response = await fetch(
-      "https://www.swiggy.com/dapi/landing/PRE_SEARCH?lat=26.4633953&lng=80.3554247"
-    );
+    const response = await fetch(RESTAURANT_PRE_SEARCH);
     const dataAPI = await response.json();
-    // console.log(dataAPI);
     setSearchData(dataAPI?.data?.cards[1]?.card?.card?.imageGridCards?.info);
   }
 

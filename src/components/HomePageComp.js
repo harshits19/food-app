@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import Shimmer from "./Shimmer";
+import HomePageShimmer from "./HomePageShimmer";
 import RestCards from "./RestCards";
-import { getRestaurants } from "../utils/useRestaurant";
+import { getRestaurants } from "../utils/useFetch";
 import { useState, useEffect } from "react";
+import filterIcons from "../assets/filterIcon.png";
 
 const RestContainer = () => {
   const [filterType, setFilterType] = useState("RELEVANCE");
@@ -106,13 +107,19 @@ const RestContainer = () => {
                   }}>
                   Cost: High to Low
                 </label>
+                <div className="btnLabel">
+                  <div className="filterBtn">Filters</div>
+                  <div className="filterBtnInner">
+                    <img className="filterIcon" src={filterIcons} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="restContainer">
             {allRestaurants?.length == 0 ? (
-              <Shimmer />
+              <HomePageShimmer />
             ) : (
               <>
                 {allRestaurants?.map((restaurant) => {
@@ -134,7 +141,7 @@ const RestContainer = () => {
                 })}
               </>
             )}
-            {loading && <Shimmer />}
+            {loading && <HomePageShimmer />}
           </div>
         </div>
       </div>

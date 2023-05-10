@@ -1,35 +1,62 @@
 import { useState, useEffect } from "react";
-import { ALL_RESTAURANT_URL } from "../utils/config";
+import { IMG_CDN_URL, RESTAURANT_SEARCH_URL } from "../utils/config";
 import { Link } from "react-router-dom";
 import SearchShimmer from "./SearchShimmer";
-import SearchCards from "./SearchCards";
+import GoToTop from "../utils/gotoTop";
 
-function filterData(searchText, allRestaurants) {
-  const filterData = allRestaurants.filter((restaurant) =>
-    restaurant.data.name.toLowerCase().includes(searchText.toLowerCase())
+const SearchCard = ({ data }) => {
+  let resId = 0;
+  return (
+    <div className="search">
+      {data?.suggestions?.map((restaurants) => {
+        if (restaurants?.metadata) {
+          resId = JSON.parse(restaurants?.metadata)?.data?.primaryRestaurantId;
+        }
+        return (
+          <Link
+            to={"/restaurants/" + resId}
+            style={{ textDecoration: "none" }}
+            key={restaurants?.cloudinaryId}>
+            <div className="searchCardsInner">
+              <div className="searchCardHeader">
+                <img src={IMG_CDN_URL + restaurants?.cloudinaryId} />
+              </div>
+              <div className="searchCardDesc">
+                <p>{restaurants.text}</p>
+                <p className="typeofCard">{restaurants?.tagToDisplay}</p>
+              </div>
+            </div>
+          </Link>
+        );
+      })}
+    </div>
   );
-  return filterData;
-}
+};
 
-const SearchComp = () => {
+const NewSearchComp = () => {
   const [searchText, setSearchText] = useState("");
-  const [allRestaurants, setAllRestaurants] = useState([]);
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([
+    {
+      statusCode: 1,
+      statusMessage: "Invalid query string",
+      tid: "ABC",
+      sid: "PQR",
+      deviceId: "STU",
+      csrfToken: "MNO",
+    },
+  ]);
   const [isSearched, setIsSearched] = useState(false);
 
   useEffect(() => {
-    fetchRestaurantsAPI();
-  }, []);
+    fetchRestaurantsAPI(searchText);
+  }, [searchText]);
 
-  async function fetchRestaurantsAPI() {
-    const data = await fetch(ALL_RESTAURANT_URL);
+  async function fetchRestaurantsAPI(searchText) {
+    const data = await fetch(RESTAURANT_SEARCH_URL + searchText);
     const dataAPI = await data.json();
     // console.log(json);
-    const restData = dataAPI?.data?.cards[2]?.data?.data;
-    setAllRestaurants(restData?.cards); //initially we have to fill both objects with API data
-    setFilteredRestaurants(restData?.cards);
+    setAllRestaurants(dataAPI);
   }
-
   return (
     <>
       <div className="searchContainer">
@@ -40,42 +67,39 @@ const SearchComp = () => {
               value={searchText}
               onChange={(e) => {
                 setSearchText(e.target.value);
-                const data = filterData(e.target.value, allRestaurants);
-                setFilteredRestaurants(data);
                 setIsSearched(true);
               }}
             />
             <button
               className="searchButton"
               onClick={() => {
-                const data = filterData(searchText, allRestaurants);
-                setFilteredRestaurants(data);
-                setIsSearched(true);
+                setIsSearched(false);
+                setSearchText("");
               }}>
-              <i
-                className="fa-solid fa-magnifying-glass fa-xl"
-                style={{ color: "#686b78" }}></i>
+              {!isSearched ? (
+                <i
+                  className="fa-solid fa-magnifying-glass fa-xl"
+                  style={{ color: "#686b78" }}></i>
+              ) : (
+                <i
+                  className="fa-solid fa-xmark fa-2xl"
+                  style={{ color: "#686b78" }}></i>
+              )}
             </button>
           </div>
         </div>
         <div className="searchCardsContainer">
           {!isSearched ? (
             <SearchShimmer />
+          ) : allRestaurants?.statusCode == 1 ? (
+            <h2>No restaurants</h2>
           ) : (
-            filteredRestaurants.map((restaurant) => {
-              return (
-                <Link
-                  to={"/restaurants/" + restaurant.data.id}
-                  key={restaurant.data.id}
-                  style={{ textDecoration: "none" }}>
-                  <SearchCards {...restaurant?.data} />
-                </Link>
-              );
-            })
+            <SearchCard {...allRestaurants} />
           )}
         </div>
       </div>
+      <GoToTop />
     </>
   );
 };
-export default SearchComp;
+export default NewSearchComp;

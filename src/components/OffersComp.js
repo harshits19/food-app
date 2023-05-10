@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { getOfferRestaurants } from "../utils/useRestaurant";
+import { getOfferRestaurants } from "../utils/useFetch";
 import RestCards from "./RestCards";
-import Shimmer from "./Shimmer";
+import HomePageShimmer from "./HomePageShimmer";
 import { IMG_CDN_URL } from "../utils/config";
+import offerBannerPic from "../assets/offerBannerPic.png";
 const Offers = () => {
   const { allRestaurants, paymentOffers } = getOfferRestaurants();
   const [isVisible, setIsVisible] = useState(true);
@@ -22,7 +23,7 @@ const Offers = () => {
           </div>
           <div className="offersContainer">
             {allRestaurants?.length == 0 ? (
-              <Shimmer />
+              <HomePageShimmer />
             ) : (
               <>
                 {allRestaurants?.data?.cards?.map((restaurant) => {
@@ -116,10 +117,7 @@ const Offers = () => {
             </div>
           </div>
           <div>
-            <img
-              className="bannerRightImg"
-              src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/KHu24Gqw_md3ham"
-            />
+            <img className="bannerRightImg" src={offerBannerPic} />
           </div>
         </div>
       </div>

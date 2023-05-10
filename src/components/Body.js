@@ -1,6 +1,6 @@
 import useOnline from "../utils/useOnline";
 import Carousel from "./Carousel";
-import RestContainer from "./RestContainer";
+import HomePageComp from "./HomePageComp";
 import GoToTop from "../utils/gotoTop";
 const Body = () => {
   const isOnline = useOnline();
@@ -11,7 +11,7 @@ const Body = () => {
   return (
     <>
       <Carousel />
-      <RestContainer />
+      <HomePageComp />
       <GoToTop />
     </>
   );

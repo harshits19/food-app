@@ -1,4 +1,6 @@
-import { getRestaurants } from "../utils/useRestaurant";
+import { getRestaurants } from "../utils/useFetch";
+import carouselShimmerIcon from "../assets/carouselShimmerIcon.webp";
+import { CAROUSEL_IMG_URL } from "../utils/config";
 
 const Carousel = () => {
   const { carouselData } = getRestaurants("RELEVANCE", -1);
@@ -10,10 +12,7 @@ const Carousel = () => {
         <div className="carouselShimmer">
           <div className="rotatingImgContainer">
             <div className="rotatingImgInnerContainer"></div>
-            <img
-              className="rotatingImg"
-              src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/icecream_wwomsa"
-            />
+            <img className="rotatingImg" src={carouselShimmerIcon} />
           </div>
           Looking for great food near you ...
         </div>
@@ -26,13 +25,7 @@ const Carousel = () => {
                   className="carouselItem"
                   id="box"
                   key={item?.data?.bannerId}>
-                  <img
-                    src={
-                      "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_520,h_520/" +
-                      item?.data?.creativeId
-                    }
-                    alt=""
-                  />
+                  <img src={CAROUSEL_IMG_URL + item?.data?.creativeId} alt="" />
                 </div>
               );
             })}

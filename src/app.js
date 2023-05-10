@@ -3,13 +3,13 @@ import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
-import About from "./components/About";
-import Error from "./components/Error";
-import Profile from "./components/Profile";
-import Cart from "./components/Cart";
-import RestaurantView from "./components/RestaurantView";
-import Shimmer from "./components/Shimmer";
-import NewSearchComp from "./components/NewSearchComp";
+import AboutComp from "./components/AboutComp";
+import ErrorComp from "./components/ErrorComp";
+import ProfileComp from "./components/ProfileComp";
+import CartComp from "./components/CartComp";
+import RestaurantMenuComp from "./components/RestaurantMenuComp";
+import Shimmer from "./components/HomePageShimmer";
+import SearchComp from "./components/SearchComp";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Provider } from "react-redux";
@@ -17,7 +17,7 @@ import reduxStore from "./utils/reduxStore";
 
 //Lazy loading
 // import Offers from "./components/Offers";
-const Offers = lazy(() => import("./components/Offers"));
+const OffersComp = lazy(() => import("./components/OffersComp"));
 
 /*wrapping whole app in provider so that we can use redux-store anywhere */
 const Applayout = () => {
@@ -33,17 +33,17 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <Applayout />,
-    errorElement: <Error />,
+    errorElement: <ErrorComp />,
     children: [
       { path: "/", element: <Body /> },
       {
         path: "about",
-        element: <About />,
+        element: <AboutComp />,
         children: [
           {
             path: "profile",
             //dont write /about/profile or/profile/
-            element: <Profile />,
+            element: <ProfileComp />,
           },
         ],
       },
@@ -51,18 +51,18 @@ const appRouter = createBrowserRouter([
         path: "/offers",
         element: (
           <Suspense fallback={<Shimmer />}>
-            <Offers />
+            <OffersComp />
           </Suspense>
         ),
       }, //to dynamic/lazy load, wrap the component in suspense tag
-      { path: "/restaurants/:resId", element: <RestaurantView /> },
+      { path: "/restaurants/:resId", element: <RestaurantMenuComp /> },
       {
         path: "/search",
-        element: <NewSearchComp />,
+        element: <SearchComp />,
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: <CartComp />,
       },
     ],
   },

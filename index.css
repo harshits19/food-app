@@ -2,7 +2,7 @@
 
 :root {
   --primary-color: #000000ab;
-  --secondary-color: #ffffff;
+  --secondary-color: #fc8019;
   --primary-font: "Figtree", sans-serif;
 }
 * {
@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 body {
-  font-size: 1em;
+  font-size: 14px;
   font-family: var(--primary-font);
   width: 100%;
   margin: auto;
@@ -26,25 +26,12 @@ body {
 .headers {
   box-shadow: 0 15px 40px -20px rgba(40, 44, 63, 0.15);
   top: 0;
-  left: 0;
-  right: 0;
   height: 80px;
   background: #fff;
   z-index: 1000;
-  will-change: transform;
-  transform: translateZ(0);
-  transition: transform 0.3s ease;
-  contain: size layout style;
   padding: 0px 20px;
+  position: sticky;
 }
-
-.fixed {
-  position: fixed;
-}
-.filler {
-  visibility: hidden;
-}
-
 .navBar {
   width: 1200px;
   position: relative;
@@ -97,8 +84,8 @@ body {
 }
 .navItems a.activeLink,
 a.activeLink .svgSet {
-  color: #fc8019 !important;
-  fill: #fc8019 !important;
+  color: var(--secondary-color) !important;
+  fill: var(--secondary-color) !important;
 }
 .navIcons {
   position: absolute;
@@ -110,14 +97,14 @@ a.activeLink .svgSet {
 }
 .navListItems :hover a,
 .navItems:hover .cartCountActive {
-  color: #fc8019 !important;
+  color: var(--secondary-color) !important;
 }
 .navItems:hover .svgSet {
-  fill: #fc8019 !important;
+  fill: var(--secondary-color) !important;
 }
 .navItems:hover .cartSet {
   fill: #ffffff !important;
-  stroke: #fc8019;
+  stroke: var(--secondary-color);
 }
 .svgSet {
   fill: #3d4152;
@@ -144,7 +131,7 @@ a.activeLink .svgSet {
   color: #ffffff;
 }
 .sticky {
-  background-color: var(--secondary-color);
+  background-color: #ffffff;
   transition: 0.2s;
 }
 
@@ -160,7 +147,7 @@ a.activeLink .svgSet {
   padding: 26px 30px;
   position: absolute;
   background-color: #fff;
-  border-top: 2px solid #fc8019;
+  border-top: 2px solid var(--secondary-color);
   box-shadow: 0 2px 20px 0 #93959f;
   visibility: hidden;
 }
@@ -206,7 +193,7 @@ a.activeLink .svgSet {
   top: 5px;
   box-shadow: -3px -4px 9px -4px rgba(40, 44, 63, 0.5);
   background-color: #fff;
-  border: 2px solid #fc8019;
+  border: 2px solid var(--secondary-color);
   border-right: none;
   border-bottom: none;
   -ms-transform: translateX(-50%) rotate(45deg);
@@ -356,7 +343,7 @@ a.activeLink .svgSet {
   color: #fff;
   text-align: center;
   cursor: pointer;
-  background: #fc8019;
+  background: var(--secondary-color);
   margin-bottom: 4px;
   font-weight: 600;
   -ms-transform: translateY(0);
@@ -381,7 +368,7 @@ a.activeLink .svgSet {
   gap: 10px 53px;
   align-items: flex-start;
   flex-wrap: wrap;
-  padding-top: 1em;
+  padding-top: 18px;
   border-top: 1px solid #e9e9eb;
 }
 .filterContainer {
@@ -392,7 +379,7 @@ a.activeLink .svgSet {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  height: 50px;
+  height: 45px;
 }
 .restFilters h2 {
   color: #282c3f;
@@ -407,7 +394,28 @@ a.activeLink .svgSet {
   flex: 1;
   justify-content: end;
 }
-
+.filterBtn {
+  font-weight: 600;
+  color: #3d4152;
+  margin: 0 10px 0 0;
+}
+.filterBtnInner {
+  width: 31px;
+  height: 31px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 20px;
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.filterIcon {
+  height: 16px;
+  width: 16px;
+}
+.filterBtn:hover {
+  color: var(--secondary-color);
+}
 input[type="radio"] {
   display: none;
 }
@@ -1309,6 +1317,7 @@ div.foodItemsBody > div.foodItemsAccordion {
   pointer-events: auto;
   width: 100%;
   border: none;
+  cursor: pointer;
 }
 .stickyMenuInnerBody {
   height: 100%;
@@ -1373,7 +1382,7 @@ div.foodItemsBody > div.foodItemsAccordion {
   margin-top: 30px;
   padding: 11px 20px;
   text-transform: uppercase;
-  background-color: #fc8019;
+  background-color: var(--secondary-color);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -1666,9 +1675,6 @@ div.foodItemsBody > div.foodItemsAccordion {
 }
 .paymentsContainer {
   display: flex;
-  /* justify-content: space-between; */
-  /* gap: 10px 0; */
-  /* align-items: flex-start; */
   flex-wrap: wrap;
 }
 .couponCard {
@@ -1743,8 +1749,8 @@ div.foodItemsBody > div.foodItemsAccordion {
   font-size: 14px;
   font-weight: 700;
   padding: 0 2rem;
-  color: #fc8019;
-  border: 1px solid #fc8019;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
   margin-top: 26px;
   line-height: 36px;
   width: auto;

@@ -1,4 +1,5 @@
 import { IMG_CDN_URL } from "../utils/config";
+import offerIconCart from "../assets/offerIconCart.png";
 
 const RestCards = ({
   name,
@@ -45,10 +46,7 @@ const RestCards = ({
         {aggregatedDiscountInfo?.shortDescriptionList[0]?.meta && (
           <div className="restOffers">
             <span>
-              <img
-                src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_28,h_28/Store_Assets/Icons/OfferIconCart"
-                className="restCardIcon"
-              />
+              <img src={offerIconCart} className="restCardIcon" />
             </span>{" "}
             <span>{aggregatedDiscountInfo?.shortDescriptionList[0]?.meta}</span>
           </div>

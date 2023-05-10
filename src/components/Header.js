@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../utils/config";
+import vegFoodIcon from "../assets/vegFoodIcon.png";
+import nonVegFoodIcon from "../assets/nonVegFoodIcon.png";
 
 const Header = () => {
   const cartItems = useSelector((reduxStore) => reduxStore.cart.items);
@@ -32,7 +34,7 @@ const Header = () => {
   }
   return (
     <>
-      <div className="headers fixed" id="myHeader">
+      <div className="headers" id="myHeader">
         <div className="navBar">
           <NavLink className="navlogo" to="/">
             <svg viewBox="0 0 559 825" height="49" width="34" fill="#fc8019">
@@ -116,12 +118,12 @@ const Header = () => {
                             {items?.item?.isVeg ? (
                               <img
                                 className="vegNonVegIcon"
-                                src="https://img.icons8.com/color/48/null/vegetarian-food-symbol.png"
+                                src={vegFoodIcon}
                               />
                             ) : (
                               <img
                                 className="vegNonVegIcon"
-                                src="https://img.icons8.com/color/48/null/non-vegetarian-food-symbol.png"
+                                src={nonVegFoodIcon}
                               />
                             )}
                             <div className="cartMenuItemName">
@@ -235,7 +237,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="headers filler"></div>
+      {/* <div className="headers filler"></div> */}
     </>
   );
 };

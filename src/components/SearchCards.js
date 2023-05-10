@@ -1,14 +1,6 @@
 import { IMG_CDN_URL } from "../utils/config";
 
-const SearchCards = ({
-  name,
-  costForTwoString,
-  slaString,
-  cuisines,
-  avgRating,
-  cloudinaryImageId,
-  aggregatedDiscountInfo,
-}) => {
+const SearchCards = ({ name, cloudinaryImageId }) => {
   return (
     <>
       <div className="searchCardsInner">
