@@ -159,7 +159,8 @@ const RestaurantView = () => {
   const restroOffers =
     restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
   const restaurantMenuItems =
-    restaurantAPI?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+    restaurantAPI?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
+    restaurantAPI?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
 
   const dispatch = useDispatch();
   setTimeout(() => dispatch(getDetails(restaurants)), 3000);
@@ -188,12 +189,23 @@ const RestaurantView = () => {
   ) : (
     <div className="restoBody">
       <div className="breadcrumbContainer">
-        <span>
-          <Link to={"/"}>Home</Link>
-        </span>
-        <span>{" / " + restaurants?.city}</span>
-        <span>{" / " + restaurants?.areaName}</span>
-        <span>{" / " + restaurants?.name}</span>
+        <div>
+          <span>
+            <Link to={"/"}>Home</Link>
+          </span>
+          <span>{" / " + restaurants?.city}</span>
+          <span>{" / " + restaurants?.areaName}</span>
+          <span>{" / " + restaurants?.name}</span>
+        </div>
+        <div style={{ cursor: "pointer" }}>
+          <i
+            className="fa-solid fa-magnifying-glass fa-2xl"
+            style={{
+              color: "#3d4152",
+              marginRight: "16px",
+              fontSize: "18px",
+            }}></i>
+        </div>
       </div>
       <div className="restroHeaderContainer">
         <div className="leftHeaderContainer">

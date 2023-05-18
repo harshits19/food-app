@@ -143,54 +143,56 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="beforeCheckContainer">
-                <div className="beforeCheckInner">
-                  <div className="beforeCheckBox">
-                    <input
-                      type="checkbox"
-                      className="checkBoxInput"
-                      id="myCheck"
-                      onClick={() => myFunction()}
-                    />
-                  </div>
-                  <div aria-hidden="true" className="checkBoxBody">
-                    <div className="checkBoxInnerHeader">
-                      Opt in for No-contact Delivery
+                <div className="beforeCheckContainer">
+                  <div className="beforeCheckInner">
+                    <div className="beforeCheckBox">
+                      <input
+                        type="checkbox"
+                        className="checkBoxInput"
+                        id="myCheck"
+                        onClick={() => myFunction()}
+                      />
                     </div>
-                    <div className="checkBoxInnerBody" id="hiddenText">
-                      Unwell, or avoiding contact? Please select no-contact
-                      delivery. Partner will safely place the order outside your
-                      door (not for COD)
+                    <div aria-hidden="true" className="checkBoxBody">
+                      <div className="checkBoxInnerHeader">
+                        Opt in for No-contact Delivery
+                      </div>
+                      <div className="checkBoxInnerBody" id="hiddenText">
+                        Unwell, or avoiding contact? Please select no-contact
+                        delivery. Partner will safely place the order outside
+                        your door (not for COD)
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="cartCostSection">
-                <div className="billDetails">Bill Details</div>
-                <div className="costnDelSection">
-                  <div className="">Item Total</div>
-                  <div>{totalCost / 100}</div>
-                </div>
-                <div className="costnDelSection">
-                  <div className="">
-                    Delivery Fee | {restDetails[restNo]?.sla?.lastMileTravel} Km{" "}
+                <div className="cartCostSection">
+                  <div className="billDetails">Bill Details</div>
+                  <div className="costnDelSection">
+                    <div className="">Item Total</div>
+                    <div>{totalCost / 100}</div>
                   </div>
-                  <div>
-                    {"₹"}
-                    {restDetails[restNo]?.feeDetails?.totalFee / 100}
+                  <div className="costnDelSection">
+                    <div className="">
+                      Delivery Fee | {restDetails[restNo]?.sla?.lastMileTravel}{" "}
+                      Km{" "}
+                    </div>
+                    <div>
+                      {"₹"}
+                      {restDetails[restNo]?.feeDetails?.totalFee / 100}
+                    </div>
                   </div>
-                </div>
-                <div className="otherCharges"></div>
+                  <div className="otherCharges"></div>
 
-                <div className="costnDelSection">
-                  <div className="">Govt Taxes & Other Charges</div>
-                  <div>
-                    {"₹"}
-                    {restDetails[restNo]?.feeDetails?.totalFee / 200}
+                  <div className="costnDelSection">
+                    <div className="">Govt Taxes & Other Charges</div>
+                    <div>
+                      {"₹"}
+                      {restDetails[restNo]?.feeDetails?.totalFee / 200}
+                    </div>
                   </div>
                 </div>
               </div>
+
               <div className="totalPayoutSec">
                 <div className="totalPayoutInner">
                   <div>TO PAY</div>

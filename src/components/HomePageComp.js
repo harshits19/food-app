@@ -9,12 +9,14 @@ const RestContainer = () => {
   const [filterType, setFilterType] = useState("RELEVANCE");
   const [page, setPage] = useState(-1);
 
-  const { allRestaurants, otherRestInfo, loading, setLoading } = getRestaurants(
-    filterType,
-    page
-  );
-
-  const handleScrollEvents = async () => {
+  const {
+    allRestaurants,
+    otherRestInfo,
+    loading,
+    setLoading,
+    setAllRestaurants,
+  } = getRestaurants(filterType, page);
+  const handleScrollEvents = () => {
     try {
       if (
         window.innerHeight + document.documentElement.scrollTop >=
@@ -28,8 +30,14 @@ const RestContainer = () => {
     }
   };
 
+  const mediaQuery = window.matchMedia("(min-width: 768px)");
   useEffect(() => {
-    window.addEventListener("scroll", handleScrollEvents);
+    if (mediaQuery.matches) {
+      window.addEventListener("scroll", handleScrollEvents);
+      return () => {
+        window.removeEventListener("scroll", handleScrollEvents);
+      };
+    }
   }, []);
 
   return (
@@ -58,6 +66,7 @@ const RestContainer = () => {
                   htmlFor="relevance"
                   className="btnLabel"
                   onClick={() => {
+                    setAllRestaurants("");
                     setFilterType("RELEVANCE");
                     setPage(-1);
                   }}>
@@ -69,6 +78,7 @@ const RestContainer = () => {
                   htmlFor="delTime"
                   className="btnLabel"
                   onClick={() => {
+                    setAllRestaurants("");
                     setFilterType("DELIVERY_TIME");
                     setPage(-1);
                   }}>
@@ -80,6 +90,7 @@ const RestContainer = () => {
                   htmlFor="rating"
                   className="btnLabel"
                   onClick={() => {
+                    setAllRestaurants("");
                     setFilterType("RATING");
                     setPage(-1);
                   }}>
@@ -91,6 +102,7 @@ const RestContainer = () => {
                   htmlFor="lth"
                   className="btnLabel"
                   onClick={() => {
+                    setAllRestaurants("");
                     setFilterType("COST_FOR_TWO");
                     setPage(-1);
                   }}>
@@ -102,6 +114,7 @@ const RestContainer = () => {
                   htmlFor="htl"
                   className="btnLabel"
                   onClick={() => {
+                    setAllRestaurants("");
                     setFilterType("COST_FOR_TWO_H2L");
                     setPage(-1);
                   }}>

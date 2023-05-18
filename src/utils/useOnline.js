@@ -15,6 +15,36 @@ const useOnline = () => {
       window.removeEventListener("offline", handleOffline);
     };
   }, []);
-  return isOnline;
+
+  if (!isOnline) {
+    //if user is not online (then isOnline is false)
+    document
+      .getElementById("errorPopupContainer")
+      .classList.add("errorPopupShow");
+  } else {
+    if (
+      document
+        ?.getElementById("errorPopupContainer")
+        ?.classList.contains("errorPopupShow")
+    )
+      document
+        ?.getElementById("errorPopupContainer")
+        ?.classList.remove("errorPopupShow");
+  }
+
+  return (
+    <div className="errorPopupContainer" id="errorPopupContainer">
+      <div className="errorPopupBox">
+        <div className="errorPopupInner">
+          <div className="errorPopup">
+            <div className="errorPopupHeader">Connection Error</div>
+            <div className="errorPopupDesc">
+              Please check your internet connection and try again.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 export default useOnline;

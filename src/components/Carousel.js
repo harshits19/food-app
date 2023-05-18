@@ -1,11 +1,36 @@
 import { getRestaurants } from "../utils/useFetch";
 import carouselShimmerIcon from "../assets/carouselShimmerIcon.webp";
 import { CAROUSEL_IMG_URL } from "../utils/config";
-
+import { useEffect } from "react";
 const Carousel = () => {
   const { carouselData } = getRestaurants("RELEVANCE", -1);
   const carElements = carouselData?.data?.data?.cards;
 
+  const moveLeft = () => {
+    document.getElementById("bbox").scrollLeft -= 313;
+  };
+  const moveRight = () => {
+    document.getElementById("bbox").scrollLeft += 313;
+  };
+  const handleNavBtn = async (ele) => {
+    const leftBtn = document.getElementById("leftBtn");
+    const rightBtn = document.getElementById("rightBtn");
+    if (ele.scrollLeft === 0) leftBtn.style.display = "none";
+    else if (ele.scrollLeft + ele.clientWidth + 1 > ele.scrollWidth)
+      rightBtn.style.display = "none";
+    else {
+      leftBtn.style.display = "block";
+      rightBtn.style.display = "block";
+    }
+  };
+
+  useEffect(() => {
+    const ele = document.getElementById("bbox");
+    ele?.addEventListener("scroll", () => handleNavBtn(ele));
+    return () => {
+      ele?.removeEventListener("scroll", () => handleNavBtn(ele));
+    };
+  }, [carouselData]);
   return (
     <div className="carouselContainer">
       {carouselData?.length == 0 ? (
@@ -32,8 +57,9 @@ const Carousel = () => {
           </div>
           <button
             className="carouselBtn btnRight"
+            id="rightBtn"
             onClick={() => {
-              document.getElementById("bbox").scrollLeft += 310;
+              moveRight();
             }}>
             <i
               className="fa-solid fa-arrow-right fa-xl"
@@ -41,8 +67,9 @@ const Carousel = () => {
           </button>
           <button
             className="carouselBtn btnLeft"
+            id="leftBtn"
             onClick={() => {
-              document.getElementById("bbox").scrollLeft -= 310;
+              moveLeft();
             }}>
             <i
               className="fa-solid fa-arrow-left fa-xl"

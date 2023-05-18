@@ -28,7 +28,7 @@ body {
   top: 0;
   height: 80px;
   background: #fff;
-  z-index: 1000;
+  z-index: 900;
   padding: 0px 20px;
   position: sticky;
 }
@@ -48,6 +48,9 @@ body {
   transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
   margin-right: 16px;
   text-decoration: none;
+}
+.navtoggle {
+  display: none;
 }
 
 .navList {
@@ -570,6 +573,87 @@ input[type="radio"] ~ label {
   padding: 0 20px;
   contain: content;
 }
+.carouselInnerContainer {
+  position: relative;
+  margin: 0 auto;
+  width: 1200px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+}
+.carouselInnerBox {
+  height: 260px;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  column-gap: 53px;
+  align-items: center;
+  padding-right: 313px;
+}
+.carouselItem {
+  display: inline-block;
+  cursor: pointer;
+  width: 260px;
+  height: 260px;
+  /* margin-right: 55px; */
+}
+.carouselItem img {
+  width: 260px;
+  height: 260px;
+  backface-visibility: visible;
+  transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.carouselItem img:hover {
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+.carouselBtn {
+  position: absolute;
+  top: 50%;
+  width: 47px;
+  height: 47px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgba(41, 48, 63, 0.25);
+  border-radius: 100%;
+  text-align: center;
+  cursor: pointer;
+  outline: 0;
+  border: none;
+}
+.carouselBtn img {
+  display: block;
+  margin: 0 auto;
+}
+.btnLeft {
+  left: 0;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.btnRight {
+  right: 0;
+  -ms-transform: translate(50%, -50%);
+  transform: translate(50%, -50%);
+}
+
+.btnRight > i:hover {
+  transform: translateX(4px);
+  transition: 0.5s;
+}
+.btnLeft > i:hover {
+  transform: translateX(-4px);
+  transition: 0.5s;
+}
+#rightBtn {
+  display: block;
+}
+#leftBtn {
+  display: none;
+}
+/* -------------Carousel Shimmer------------- */
 .carouselShimmer {
   position: relative;
   margin: 0 auto;
@@ -646,82 +730,10 @@ input[type="radio"] ~ label {
   }
 }
 
-.carouselInnerContainer {
-  position: relative;
-  margin: 0 auto;
-  width: 1200px;
-  height: 340px;
-  display: flex;
-  align-items: center;
-}
-.carouselInnerBox {
-  height: 280px;
-  white-space: nowrap;
-  width: 100%;
-  overflow: hidden;
-  scroll-behavior: smooth;
-  display: flex;
-  flex-direction: row;
-  justify-content: stretch;
-  column-gap: 53px;
-  align-items: center;
-}
-.carouselItem {
-  display: inline-block;
-  cursor: pointer;
-  /* margin-right: 55px; */
-}
-.carouselItem img {
-  width: 260px;
-  height: 260px;
-  backface-visibility: visible;
-  transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-.carouselItem img:hover {
-  -ms-transform: scale(1.05);
-  transform: scale(1.05);
-}
-.carouselBtn {
-  position: absolute;
-  top: 50%;
-  width: 47px;
-  height: 47px;
-  background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgba(41, 48, 63, 0.25);
-  border-radius: 100%;
-  text-align: center;
-  cursor: pointer;
-  outline: 0;
-  border: none;
-}
-.carouselBtn img {
-  display: block;
-  margin: 0 auto;
-}
-.btnLeft {
-  left: 0;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.btnRight {
-  right: 0;
-  -ms-transform: translate(50%, -50%);
-  transform: translate(50%, -50%);
-}
-
-.btnRight > i:hover {
-  transform: translateX(4px);
-  transition: 0.5s;
-}
-.btnLeft > i:hover {
-  transform: translateX(-4px);
-  transition: 0.5s;
-}
-
 /*-------------Footer---------------*/
 .footerContainer {
   padding: 0 20px;
-  z-index: 20;
+  z-index: 900;
   background-color: #000;
   min-height: 298px;
   width: 100%;
@@ -820,6 +832,10 @@ input[type="radio"] ~ label {
   margin: 18px 0 2px;
   border: 1px solid #fff;
 }
+.shimmerLines {
+  display: flex;
+  flex-direction: column;
+}
 .lines {
   height: 10px;
   width: 255px;
@@ -891,13 +907,13 @@ input[type="radio"] ~ label {
 /* --------- Restaurant View Shimmer ------------ */
 
 .restroShimHeaderCont {
-  height: 130px;
+  height: 200px;
   width: 100%;
 }
 .restroShimInnerCont {
   display: flex;
   flex-direction: column;
-  row-gap: 4px;
+  row-gap: 7px;
   height: 100%;
   width: 100%;
 }
@@ -907,20 +923,20 @@ input[type="radio"] ~ label {
 }
 .restroLines {
   width: 100%;
-  height: 12px;
+  height: 30px;
 }
 .restroShimTCWrapper {
-  height: 300px;
+  height: 340px;
   width: 100%;
   display: flex;
-  column-gap: 8px;
+  column-gap: 20px;
   justify-content: space-around;
-  padding-top: 10px;
+  padding-top: 18px;
 }
 .restroShimOfferCont {
   width: 100%;
   height: 160px;
-  padding-top: 5px;
+  padding-top: 20px;
 }
 
 /* ---------- Search Component------------------- */
@@ -1000,8 +1016,9 @@ input[type="radio"] ~ label {
   height: 40px;
   font-size: 10px;
   color: #93959f;
-  /* margin: 0 16px; */
   padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
 }
 .breadcrumbContainer span a {
   text-decoration: none;
@@ -1099,10 +1116,9 @@ input[type="radio"] ~ label {
 }
 .restroOffersContainer {
   display: flex;
-  /* width: 100%; */
   overflow-x: scroll;
   overflow-y: hidden;
-  margin: 0 16px;
+  margin: 0 8px;
 }
 
 .restroOffersContainer::-webkit-scrollbar {
@@ -1440,18 +1456,18 @@ div.foodItemsBody > div.foodItemsAccordion {
   max-height: calc(100vh - 270px);
   display: flex;
   background: #fff;
+  flex-direction: column;
+  overflow-y: auto;
 }
 .cartInnerItemContainer {
   display: flex;
   position: relative;
-  overflow-y: hidden;
 }
 .cartItemSection {
   display: flex;
   flex-grow: 1;
   position: relative;
   flex-direction: column;
-  overflow-y: auto;
   overflow-x: hidden;
   padding: 0 30px;
   width: 366px;
@@ -1459,10 +1475,7 @@ div.foodItemsBody > div.foodItemsAccordion {
 }
 .cartItems {
   margin: 0 -16px;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 16px !important;
-  padding-right: 16px !important;
+  padding: 0 16px;
   position: relative;
 }
 .cartItemInner {
@@ -1508,7 +1521,6 @@ div.foodItemsBody > div.foodItemsAccordion {
   background: #fff;
   padding: 8px 30px;
   position: relative;
-  overflow: hidden;
   display: flex;
 }
 .beforeCheckInner {
@@ -1516,8 +1528,11 @@ div.foodItemsBody > div.foodItemsAccordion {
   display: flex;
   padding: 4px 10px;
   font-size: 14px;
+  cursor: pointer;
 }
-
+.beforeCheckInner:hover {
+  box-shadow: 0 3px 8px #e9e9eb;
+}
 .checkBoxBody {
   overflow: hidden;
 }
@@ -1525,7 +1540,9 @@ div.foodItemsBody > div.foodItemsAccordion {
   margin-top: 1px;
   margin-right: 9px;
 }
-
+.checkBoxInput {
+  cursor: pointer;
+}
 .checkBoxInnerHeader {
   font-weight: 500;
   color: #3e4152;
@@ -1815,4 +1832,527 @@ div.foodItemsBody > div.foodItemsAccordion {
   bottom: -2px;
   border: 5px solid transparent;
   border-bottom: 5px solid #fff;
+}
+.noTopBorder {
+  border-top: none !important;
+}
+
+/* ----------------Error Popup-------------------- */
+.errorPopupContainer {
+  position: fixed;
+  bottom: 0;
+  -ms-transform: translateY(100%);
+  transform: translateY(100%);
+  width: 100%;
+  z-index: 10002;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+.errorPopupShow {
+  transform: translateY(-30px) !important;
+  opacity: 1;
+}
+.errorPopupBox {
+  display: table;
+  max-width: 400px;
+  padding: 0;
+  margin: 0 auto;
+  background: #3d4152;
+  pointer-events: auto;
+  color: #fff;
+}
+.errorPopupInner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 12px 15px;
+  position: relative;
+  box-shadow: 0 3px 15px 0 rgba(40, 44, 63, 0.3);
+  min-height: 50px;
+}
+.errorPopup {
+  flex: 1;
+}
+.errorPopupHeader {
+  font-weight: 500;
+}
+.errorPopupDesc {
+  font-size: 12px;
+  margin-top: 3px;
+}
+.aboutContainer {
+  width: 100%;
+  background-color: #e9ecee;
+  padding: 3em 1em;
+}
+.aboutHeader {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em 0;
+}
+.aboutHeaderInner {
+  font-weight: 800;
+  font-size: 3.5em;
+  color: var(--primary-color);
+}
+
+.aboutHeaderBorder {
+  height: 8px;
+  width: 20%;
+  margin-top: 20px;
+  background-color: var(--secondary-color);
+}
+.aboutBody {
+  padding: 2em 0;
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+}
+.dpImg {
+  height: 350px;
+  width: 350px;
+  border-radius: 200px;
+}
+.aboutBodyRight {
+  margin-left: 7em;
+  width: 100%;
+  padding: 2em 0;
+}
+.aboutSection {
+  border-bottom: 1px solid #80808042;
+  font-size: 22px;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+.aboutSectionBodyHeading {
+  margin: 1em 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+.aboutSectionBodyDesc {
+  font-size: 20px;
+  list-style: none;
+  line-height: 1.5;
+}
+.socialSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--primary-color);
+  padding: 2em;
+}
+
+/* ----------Side Drawer --------------- */
+.side-drawer {
+  height: 100%;
+  background: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 562px;
+  z-index: 1001;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-out;
+}
+.side-drawer.open {
+  box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
+  transform: translateX(0);
+  overflow-y: scroll;
+}
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #282c3f;
+  opacity: 0.7;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+}
+.drawerOpen {
+  overflow: hidden;
+  position: relative;
+  padding-right: 15px;
+}
+.drawerCloseBtn {
+  cursor: pointer;
+}
+.drawerContainer {
+  padding: 30px 160px 40px 40px;
+}
+.drawerLoginHead {
+  height: 120px;
+  width: 100%;
+  position: relative;
+}
+.loginHeading {
+  margin-top: 25px;
+  font-size: 30px;
+  font-weight: 500;
+}
+.loginDesc {
+  margin-top: 10px;
+  position: relative;
+}
+.loginIcon {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: -10px;
+  right: 0;
+}
+.loginBorder {
+  height: 2px;
+  background-color: #000;
+  margin-top: 20px;
+  width: 10%;
+}
+.drawerLoginInput {
+  border: 1px solid #d4d5d9;
+  padding: 0;
+  display: block;
+  position: relative;
+  transform: translateZ(0);
+  margin-bottom: 20px;
+}
+.phoneInput {
+  background-color: transparent;
+  line-height: normal;
+  border: none;
+  outline: none;
+  height: 70px;
+  width: 100%;
+  font-size: 17px;
+  margin: 0;
+  padding: 22px 20px 20px;
+  box-shadow: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+.policySection {
+  font-size: 12px;
+  color: #686b78;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.policySection a {
+  color: #282c3f;
+}
+
+/* ------------------Responsive Section--------------------- */
+@media (max-width: 767.98px) {
+  .headers {
+    height: 100%;
+    padding: 0;
+  }
+  .navBar {
+    width: 100%;
+    height: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: #ffffff;
+  }
+  .navlogo {
+    height: 100%;
+    margin: 5px 0 5px 10px;
+  }
+  .navList {
+    flex-direction: column-reverse;
+    background-color: #ffffff;
+    margin: 0;
+    height: 0;
+    width: 100%;
+    flex: none;
+    overflow: hidden;
+    transition: height 0.9s ease;
+  }
+  .navListActive {
+    height: 208px;
+    transition: height 0.9s ease;
+  }
+  .navListItems {
+    background-color: #ffffff;
+    width: 100%;
+    padding-left: 20px;
+    margin: 0;
+    border-top: 1px solid #e9e9eb;
+  }
+  .navItems {
+    height: 40px;
+    width: 100%;
+  }
+  .navListItems:hover .cartMenu {
+    visibility: hidden;
+  }
+  .navtoggle {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 12px 20px;
+    font-size: 25px;
+  }
+  .carouselContainer {
+    margin: 20px 0 0;
+  }
+  .carouselInnerBox {
+    height: 100%;
+    column-gap: 20px;
+    overflow-x: scroll;
+    padding-right: 0;
+    justify-content: inherit;
+  }
+  .carouselInnerContainer {
+    width: 100%;
+    height: 220px;
+  }
+  .carouselItem {
+    width: 200px;
+    height: 200px;
+  }
+  .carouselItem img {
+    width: 200px;
+    height: 200px;
+  }
+  .carouselBtn {
+    display: none !important;
+  }
+  .carouselShimmer {
+    width: 100%;
+    height: 220px;
+    font-size: 18px;
+  }
+  .filterBtnContainer {
+    display: none;
+  }
+  .restoBody {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  .restContainer {
+    gap: 10px 0px;
+    justify-content: center;
+    align-items: center;
+  }
+  .restbox {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    display: flex;
+    margin: 0;
+  }
+  .restbox .restimg {
+    height: 120px;
+    width: 200px;
+    background-color: #ffffff;
+  }
+  .restbox .restimg img {
+    height: 120px;
+    width: 125px;
+    border-radius: 15px;
+  }
+  .restbox .restdesc {
+    width: 100%;
+    padding: 10px 0 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .restName {
+    font-weight: 600;
+  }
+  .restOffers {
+    display: none;
+  }
+  .restQuickView {
+    display: none;
+  }
+  .stickyBottomMenuContainer {
+    width: 100%;
+  }
+  .footerContainer {
+    min-height: 100%;
+  }
+  .footerInner {
+    padding-top: 20px;
+    width: 100%;
+  }
+  .footerRow {
+    display: none;
+  }
+  .footerStrip {
+    flex-direction: column;
+  }
+  .stripIcons {
+    display: none;
+  }
+  .searchContainer {
+    width: 100%;
+    padding: 0 10px;
+  }
+  .searchShimmer {
+    width: 100%;
+  }
+  .ssBody {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  .offerBannerInner {
+    justify-content: space-evenly;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .bannerRightImg {
+    height: 100px;
+  }
+  .tglBtnInner {
+    width: 100%;
+  }
+  .offerPageContainer {
+    width: 100%;
+    padding: 0 10px;
+  }
+  .aboutBody {
+    width: 100%;
+    flex-direction: column;
+  }
+  .aboutBodyRight {
+    margin: 0;
+  }
+  .socialSection {
+    flex-direction: column;
+  }
+  .side-drawer {
+    width: 100%;
+  }
+  .drawerContainer {
+    padding: 20px;
+  }
+  .shimmerInnerContainer {
+    flex-direction: row;
+  }
+  .shimmerBox {
+    height: 140px;
+    width: 140px;
+    margin: 0;
+  }
+  .shimmerLines {
+    justify-content: space-evenly;
+    margin-left: 8px;
+  }
+  .lines {
+    height: 17px;
+    width: 190px;
+    margin: 0;
+  }
+}
+@media (max-width: 991.98px) and (min-width: 768px) {
+  body {
+    font-size: 12px;
+  }
+  .navBar {
+    width: 100%;
+  }
+  .navItems a {
+    font-size: 14px;
+  }
+  .carouselInnerContainer {
+    width: 100%;
+  }
+  .restFilters h2 {
+    font-size: 24px;
+  }
+  .btnLabel {
+    margin-left: 8px;
+    font-size: 14px;
+  }
+  .restContainer {
+    justify-content: space-between;
+    gap: 5px 0;
+  }
+  .restbox {
+    width: 220px;
+    margin: 0;
+    padding: 10px 0;
+  }
+  .restbox .restimg {
+    width: 220px;
+  }
+  .restQuickView {
+    display: none;
+  }
+  .searchContainer {
+    width: 100%;
+    padding: 0 20px;
+  }
+  .searchShimmer {
+    width: 100%;
+  }
+  .ssBody {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .offerPageContainer {
+    width: 100%;
+    padding: 3em 10px;
+  }
+  .offersContainer {
+    justify-content: space-between;
+    gap: 12px 0;
+  }
+  .tglBtnInner {
+    width: 100%;
+  }
+  .offerBannerInner {
+    width: 100%;
+    padding: 20px;
+  }
+  .footerInner {
+    width: 100%;
+  }
+  .footerLeft,
+  .footerCenter,
+  .footerRight {
+    min-width: 0;
+  }
+  .tglBtnContainer {
+    padding: 0 10px;
+  }
+  .paymentsContainer {
+    justify-content: space-evenly;
+    gap: 20px;
+  }
+  .couponCard {
+    width: 300px;
+    margin: 0;
+    padding: 15px;
+  }
+  .aboutBody {
+    width: 100%;
+  }
+  .aboutBodyRight {
+    margin-left: 2em;
+    padding: 0;
+  }
+  .shimmerBox {
+    width: 220px;
+  }
+  .lines {
+    width: 220px;
+  }
+  .carouselShimmer {
+    width: 100%;
+  }
 }

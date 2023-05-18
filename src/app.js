@@ -5,7 +5,6 @@ import Body from "./components/Body";
 import Footer from "./components/Footer";
 import AboutComp from "./components/AboutComp";
 import ErrorComp from "./components/ErrorComp";
-import ProfileComp from "./components/ProfileComp";
 import CartComp from "./components/CartComp";
 import RestaurantMenuComp from "./components/RestaurantMenuComp";
 import Shimmer from "./components/HomePageShimmer";
@@ -14,6 +13,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Provider } from "react-redux";
 import reduxStore from "./utils/reduxStore";
+import UseOnline from "./utils/useOnline";
+import SideDrawer from "./components/SideDrawer";
+import OffersCompShimmer from "./components/OffersCompShimmer";
 
 //Lazy loading
 // import Offers from "./components/Offers";
@@ -21,11 +23,19 @@ const OffersComp = lazy(() => import("./components/OffersComp"));
 
 /*wrapping whole app in provider so that we can use redux-store anywhere */
 const Applayout = () => {
+  const [drawerState, setDrawerState] = React.useState(false);
+
+  const drawerToggleClickHandler = () => {
+    setDrawerState(!drawerState);
+  };
+
   return (
     <Provider store={reduxStore}>
-      <Header />
+      <Header toggle={drawerToggleClickHandler} />
+      <SideDrawer open={drawerState} toggle={drawerToggleClickHandler} />
       <Outlet />
       <Footer />
+      <UseOnline />
     </Provider>
   );
 };
@@ -39,18 +49,18 @@ const appRouter = createBrowserRouter([
       {
         path: "about",
         element: <AboutComp />,
-        children: [
+        /* children: [
           {
             path: "profile",
             //dont write /about/profile or/profile/
             element: <ProfileComp />,
           },
-        ],
+        ], */
       },
       {
         path: "/offers",
         element: (
-          <Suspense fallback={<Shimmer />}>
+          <Suspense fallback={<OffersCompShimmer />}>
             <OffersComp />
           </Suspense>
         ),

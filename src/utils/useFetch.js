@@ -14,7 +14,9 @@ const useRestaurant = (resId) => {
     fetchAPI();
   }, []);
   async function fetchAPI() {
-    const response = await fetch(RESTAURANT_MENU_URL + resId);
+    const response = await fetch(
+      "https://corsproxy.io/?" + RESTAURANT_MENU_URL + resId
+    );
     const jsonData = await response.json();
     setRestaurant(jsonData?.data);
   }
@@ -32,20 +34,26 @@ const getRestaurants = (options, page) => {
     fetchRestaurantsAPI();
   }, [options, page]);
 
+  const mediaQuery = window.matchMedia("(min-width: 991.98px)");
+
   async function fetchRestaurantsAPI() {
     let res, restData, json;
     if (page === -1) {
-      res = await fetch(ALL_RESTAURANT_URL + "&sortBy=" + options);
+      res = await fetch(
+        "https://corsproxy.io/?" + ALL_RESTAURANT_URL + "&sortBy=" + options
+      );
       json = await res?.json();
       restData =
         options == "RELEVANCE"
           ? json?.data?.cards[2]?.data?.data
           : json?.data?.cards[0]?.data?.data;
       setAllRestaurants(restData?.cards);
-      setCarouselData(json?.data?.cards[0]);
+      if (mediaQuery.matches) setCarouselData(json?.data?.cards[0]);
+      else setCarouselData(json?.data?.cards[1]);
     } else {
       res = await fetch(
-        HOMEPAGE_REST_URL +
+        "https://corsproxy.io/?" +
+          HOMEPAGE_REST_URL +
           "&offset=" +
           page +
           "&sortBy=" +
@@ -53,15 +61,22 @@ const getRestaurants = (options, page) => {
           "&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING"
       );
       json = await res?.json();
-      // if (json.data.currentOffset < json.data.totalSize) {
       restData = json?.data;
+      // if (page < otherRestInfo.totalSize)
       setAllRestaurants((prev) => [...prev, ...restData?.cards]);
+      // else setLoading(true);
     }
-
-    setOtherRestInfo(restData);
     setLoading(false);
+    setOtherRestInfo(restData);
   }
-  return { allRestaurants, otherRestInfo, loading, setLoading, carouselData };
+  return {
+    allRestaurants,
+    otherRestInfo,
+    loading,
+    setLoading,
+    carouselData,
+    setAllRestaurants,
+  };
 };
 
 const getOfferRestaurants = () => {
@@ -72,9 +87,9 @@ const getOfferRestaurants = () => {
   }, []);
 
   async function fetchRestaurantsAPI() {
-    const res = await fetch(OFFERS_PAGE_URL);
+    const res = await fetch("https://corsproxy.io/?" + OFFERS_PAGE_URL);
     const json = await res.json();
-    const restwo = await fetch(PAYMENTS_PAGE_URL);
+    const restwo = await fetch("https://corsproxy.io/?" + PAYMENTS_PAGE_URL);
     const jsontwo = await restwo.json();
 
     setAllRestaurants(json);

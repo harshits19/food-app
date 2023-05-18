@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getOfferRestaurants } from "../utils/useFetch";
 import RestCards from "./RestCards";
 import HomePageShimmer from "./HomePageShimmer";
+import GoToTop from "../utils/gotoTop";
 import { IMG_CDN_URL } from "../utils/config";
 import offerBannerPic from "../assets/offerBannerPic.png";
 const Offers = () => {
@@ -26,7 +27,7 @@ const Offers = () => {
               <HomePageShimmer />
             ) : (
               <>
-                {allRestaurants?.data?.cards?.map((restaurant) => {
+                {allRestaurants?.data?.cards?.map((restaurant, idx) => {
                   return !restaurant?.data?.data?.message ? (
                     <Link
                       to={"/restaurants/" + restaurant?.data?.data?.id}
@@ -35,7 +36,7 @@ const Offers = () => {
                       <RestCards {...restaurant?.data?.data} />
                     </Link>
                   ) : (
-                    <></>
+                    <div key={idx} style={{ display: "none" }}></div>
                   );
                 })}
               </>
@@ -158,6 +159,7 @@ const Offers = () => {
           <PaymentsContainer isVisible={visibleSection === "paymentSection"} />
         )}
       </div>
+      <GoToTop />
     </>
   );
 };
