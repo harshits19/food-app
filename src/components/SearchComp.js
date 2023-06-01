@@ -10,11 +10,14 @@ const SearchCard = ({ data }) => {
     <div className="search">
       {data?.suggestions?.map((restaurants) => {
         if (restaurants?.metadata) {
-          resId = JSON.parse(restaurants?.metadata)?.data?.primaryRestaurantId;
+          var url = JSON.parse(restaurants?.metadata)?.data
+            ?.primaryRestaurantId;
+          if (url === undefined) resId = "";
+          else resId = "/restaurants/" + url;
         }
         return (
           <Link
-            to={"/restaurants/" + resId}
+            to={resId}
             style={{ textDecoration: "none" }}
             key={restaurants?.cloudinaryId}>
             <div className="searchCardsInner">

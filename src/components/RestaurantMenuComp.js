@@ -1,91 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import RestaurantMenuShimmer from "./RestaurantMenuShimmer";
-import { useRestaurant } from "../utils/useFetch";
-import { IMG_CDN_URL } from "../utils/config";
+import { RESTAURANT_MENU_URL } from "../utils/config";
 import { useDispatch, useSelector } from "react-redux";
-import { addItems, removeItems } from "../utils/cartSlice";
 import { getDetails } from "../utils/restroSlice";
-import vegFoodIcon from "../assets/vegFoodIcon.png";
-import nonVegFoodIcon from "../assets/nonVegFoodIcon.png";
 import OfferIconCart from "../assets/offerIconCart.png";
 import checkOutCart from "../assets/checkOutCart.png";
 import GoToTop from "../utils/gotoTop";
+import leafIcon from "../assets/leaf.png";
+import ItemCont from "./ItemBox";
+import RestMenuNav from "./RestMenuNav";
 
-const ItemCont = ({ card }) => {
-  const dispatch = useDispatch();
-
-  const addIntoCart = (item) => {
-    dispatch(addItems(item));
-  };
-  const removeFromCart = (item) => {
-    dispatch(removeItems(item));
-  };
-  const cartItems = useSelector((store) => store.cart.items);
-  let qty = 0;
-  cartItems.map((obj) => {
-    if (obj.item.id === card.info.id) {
-      qty = obj.quantity;
-    }
-  });
-
-  return (
-    <div className="itemContainer">
-      <div className="itemBody">
-        <div>
-          {card.info.isVeg ? (
-            <img className="vegNonvegClassifier" src={vegFoodIcon} />
-          ) : (
-            <img className="vegNonvegClassifier" src={nonVegFoodIcon} />
-          )}
-        </div>
-        <div className="itemTitle">{card.info.name}</div>
-        <div className="rateAndOffersBox">
-          <span className="itemRate">
-            <i
-              className="fa-solid fa-indian-rupee-sign fa-xs"
-              style={{ color: "#3e4152" }}></i>{" "}
-            {card.info.price
-              ? card.info.price / 100
-              : card.info.finalPrice
-              ? card.info.finalPrice / 100
-              : card.info.defaultPrice / 100}
-          </span>
-        </div>
-        <div className="itemDescription">{card.info.description}</div>
-      </div>
-      <div className="itemPic">
-        {card.info.imageId && <img src={IMG_CDN_URL + card.info.imageId} />}
-        {qty == 0 ? (
-          <div
-            className="itemOuterBtn addBtn"
-            onClick={() => addIntoCart(card.info)}>
-            ADD
-          </div>
-        ) : (
-          <div className="itemOuterBtn itemCounter">
-            <span
-              className="itemInnerBtn minusItemBtn"
-              onClick={() => removeFromCart(card.info)}>
-              -
-            </span>
-            {qty}
-            <span
-              className="itemInnerBtn plusItemBtn"
-              onClick={() => addIntoCart(card.info)}>
-              +
-            </span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const FoodItemsAccordion = ({ itemCards, title }) => {
+const FoodItemsAccordion = ({
+  itemCards,
+  title,
+  isVeg,
+  setIsVeg,
+  vegDetails,
+  isPureVeg,
+}) => {
   const [isAVisible, setIsAVisible] = useState(true);
-  return (
-    <div className="foodItemsAccordion">
+  return title ? (
+    <div className="foodItemsAccordion" id={title}>
       <div
         className="foodItemsHeader"
         onClick={() => {
@@ -117,13 +53,45 @@ const FoodItemsAccordion = ({ itemCards, title }) => {
                   itemCards={itemDetails.itemCards}
                   title={itemDetails.title}
                   key={idx}
+                  isVeg={isVeg}
+                  setIsVeg={setIsVeg}
                 />
               );
-            } else return <ItemCont {...itemDetails} key={idx} />;
+            } else {
+              return isVeg ? (
+                itemDetails?.card?.info?.isVeg && (
+                  <ItemCont {...itemDetails} key={idx} />
+                )
+              ) : (
+                <ItemCont {...itemDetails} key={idx} />
+              );
+            }
           })}
         </div>
       )}
     </div>
+  ) : vegDetails ? (
+    isPureVeg ? (
+      <div className="vegSection">
+        <img src={leafIcon} className="leafIcon" />
+        PURE VEG
+      </div>
+    ) : (
+      <div className="vegOnlySection">
+        Veg Only
+        <label className="switch">
+          <input
+            type="checkbox"
+            onClick={() => {
+              isVeg ? setIsVeg(false) : setIsVeg(true);
+            }}
+          />
+          <span className="slider"></span>
+        </label>
+      </div>
+    )
+  ) : (
+    <></>
   );
 };
 
@@ -152,15 +120,27 @@ const OffersBox = ({ header, couponCode, description, offerTag }) => {
 
 const RestaurantView = () => {
   const { resId } = useParams();
-  // console.log(resId);
+  const [restaurantAPI, setRestaurant] = useState(null);
+  const [restaurantMenuItems, setRestaurantMenuItems] = useState(null);
+  const [isVeg, setIsVeg] = useState(false);
+  useEffect(() => {
+    fetchAPI();
+  }, []);
+  async function fetchAPI() {
+    const response = await fetch(
+      "https://corsproxy.io/?" + RESTAURANT_MENU_URL + resId
+    );
+    const jsonData = await response.json();
+    setRestaurant(jsonData?.data);
+    setRestaurantMenuItems(
+      jsonData?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
+        jsonData?.data?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+    );
+  }
 
-  const restaurantAPI = useRestaurant(resId); //created custom hook for fetching restaurant menu api
   const restaurants = restaurantAPI?.cards[0]?.card?.card?.info;
   const restroOffers =
     restaurantAPI?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
-  const restaurantMenuItems =
-    restaurantAPI?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
-    restaurantAPI?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
 
   const dispatch = useDispatch();
   setTimeout(() => dispatch(getDetails(restaurants)), 3000);
@@ -175,14 +155,22 @@ const RestaurantView = () => {
         : items.item.defaultPrice) * items.quantity;
   });
   var cartBottomMenu = document.getElementById("stickyBottomMenu");
+  var restMenuBtnContainer = document.getElementById("restMenuBtnContainer");
   if (cartDetails.length > 0) {
     cartBottomMenu?.classList?.add("stickyBottomMenuVisible");
+    restMenuBtnContainer?.classList?.add("restMenuVisible");
   } else if (
     cartBottomMenu?.classList?.contains("stickyBottomMenuVisible") &&
     cartDetails.length == 0
   ) {
     cartBottomMenu?.classList?.remove("stickyBottomMenuVisible");
+    restMenuBtnContainer?.classList?.remove("restMenuVisible");
   }
+
+  const [menuNavState, setMenuNavState] = useState(false);
+  const menuNavToggleClickHandler = () => {
+    setMenuNavState(!menuNavState);
+  };
 
   return !restaurants ? (
     <RestaurantMenuShimmer />
@@ -198,13 +186,15 @@ const RestaurantView = () => {
           <span>{" / " + restaurants?.name}</span>
         </div>
         <div style={{ cursor: "pointer" }}>
-          <i
-            className="fa-solid fa-magnifying-glass fa-2xl"
-            style={{
-              color: "#3d4152",
-              marginRight: "16px",
-              fontSize: "18px",
-            }}></i>
+          <Link to="./search=true">
+            <i
+              className="fa-solid fa-magnifying-glass fa-2xl"
+              style={{
+                color: "#3d4152",
+                marginRight: "16px",
+                fontSize: "18px",
+              }}></i>
+          </Link>
         </div>
       </div>
       <div className="restroHeaderContainer">
@@ -230,7 +220,6 @@ const RestaurantView = () => {
           </div>
         </div>
       </div>
-
       <ul className="restroTimeCostWrapper">
         <li className="restroTimeCostItem">
           <svg
@@ -279,22 +268,36 @@ const RestaurantView = () => {
       </div>
       <div className="restroFoodItemContainer">
         {restaurantMenuItems?.map((restObject, index) => {
-          if (restObject.card.card.title) {
-            return (
-              <FoodItemsAccordion
-                itemCards={
-                  restObject?.card?.card?.itemCards ||
-                  restObject?.card?.card?.categories
-                }
-                title={restObject?.card?.card?.title}
-                key={index}
-              />
-            );
-          }
+          return (
+            <FoodItemsAccordion
+              itemCards={
+                restObject?.card?.card?.itemCards ||
+                restObject?.card?.card?.categories
+              }
+              title={restObject?.card?.card?.title}
+              key={index}
+              isVeg={isVeg}
+              setIsVeg={setIsVeg}
+              vegDetails={restObject?.card?.card?.vegOnlyDetails}
+              isPureVeg={restObject?.card?.card?.isPureVeg}
+            />
+          );
         })}
       </div>
       {
         <div className="stickyBottomMenuContainer">
+          <div className="restMenuBtnInnerContainer" id="restMenuBtnContainer">
+            <div className="restMenuBtnContainer">
+              <div
+                className="restMenuBtn"
+                onClick={() => menuNavToggleClickHandler()}>
+                <i
+                  className="fa-solid fa-utensils fa-2xs"
+                  style={{ color: "#ffffff", marginRight: "2px" }}></i>
+                Browse Menu
+              </div>
+            </div>
+          </div>
           <div className="stickyBottomMenu" id="stickyBottomMenu">
             <Link to="/cart/" style={{ textDecoration: "none" }}>
               <button className="stickyMenuStyleContainer">
@@ -320,6 +323,11 @@ const RestaurantView = () => {
           </div>
         </div>
       }
+      <RestMenuNav
+        open={menuNavState}
+        toggle={menuNavToggleClickHandler}
+        data={restaurantMenuItems}
+      />
       <GoToTop />
     </div>
   );

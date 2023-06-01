@@ -67,7 +67,7 @@ const Header = (props) => {
             </svg>
           </NavLink>
           <div className="navList" id="navlist">
-            <div className="navListItems">
+            <div className="navListItems" onClick={() => handleNavList()}>
               <div className="navItems">
                 <NavLink to="/cart/">
                   <span className="navIcons">
@@ -187,7 +187,7 @@ const Header = (props) => {
                 </NavLink>
               </div>
             </div>
-            <div className="navListItems">
+            <div className="navListItems" onClick={() => handleNavList()}>
               <div className="navItems">
                 <NavLink
                   to="/about/"
@@ -205,7 +205,7 @@ const Header = (props) => {
                 </NavLink>
               </div>
             </div>
-            <div className="navListItems">
+            <div className="navListItems" onClick={() => handleNavList()}>
               <div className="navItems">
                 <NavLink
                   to="/offers/"
@@ -223,7 +223,7 @@ const Header = (props) => {
                 </NavLink>
               </div>
             </div>
-            <div className="navListItems">
+            <div className="navListItems" onClick={() => handleNavList()}>
               <div className="navItems">
                 <NavLink
                   to="/search/"

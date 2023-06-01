@@ -7,7 +7,6 @@ import AboutComp from "./components/AboutComp";
 import ErrorComp from "./components/ErrorComp";
 import CartComp from "./components/CartComp";
 import RestaurantMenuComp from "./components/RestaurantMenuComp";
-import Shimmer from "./components/HomePageShimmer";
 import SearchComp from "./components/SearchComp";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { lazy, Suspense } from "react";
@@ -16,6 +15,7 @@ import reduxStore from "./utils/reduxStore";
 import UseOnline from "./utils/useOnline";
 import SideDrawer from "./components/SideDrawer";
 import OffersCompShimmer from "./components/OffersCompShimmer";
+import RestaurantSearch from "./components/RestaurantSearch";
 
 //Lazy loading
 // import Offers from "./components/Offers";
@@ -65,7 +65,14 @@ const appRouter = createBrowserRouter([
           </Suspense>
         ),
       }, //to dynamic/lazy load, wrap the component in suspense tag
-      { path: "/restaurants/:resId", element: <RestaurantMenuComp /> },
+      {
+        path: "/restaurants/:resId",
+        element: <RestaurantMenuComp />,
+      },
+      {
+        path: "/restaurants/:resId/search=true",
+        element: <RestaurantSearch />,
+      },
       {
         path: "/search",
         element: <SearchComp />,

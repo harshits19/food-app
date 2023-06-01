@@ -9,7 +9,9 @@ import {
 
 //A custom hook for Fetching Restaurant Menu View
 const useRestaurant = (resId) => {
-  const [restaurant, setRestaurant] = useState(null);
+  const [restaurantAPI, setRestaurantAPI] = useState(null);
+  const [restaurantMenuItems, setRestaurantMenuItems] = useState(null);
+
   useEffect(() => {
     fetchAPI();
   }, []);
@@ -18,9 +20,13 @@ const useRestaurant = (resId) => {
       "https://corsproxy.io/?" + RESTAURANT_MENU_URL + resId
     );
     const jsonData = await response.json();
-    setRestaurant(jsonData?.data);
+    setRestaurantAPI(jsonData?.data);
+    setRestaurantMenuItems(
+      jsonData?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
+        jsonData?.data?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+    );
+    return { restaurantAPI, restaurantMenuItems };
   }
-  return restaurant;
 };
 
 // Hook for fetching Homepage Restaurant Cards
