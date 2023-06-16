@@ -16,9 +16,7 @@ const useRestaurant = (resId) => {
     fetchAPI();
   }, []);
   async function fetchAPI() {
-    const response = await fetch(
-      "https://corsproxy.io/?" + RESTAURANT_MENU_URL + resId
-    );
+    const response = await fetch(RESTAURANT_MENU_URL + resId);
     const jsonData = await response.json();
     setRestaurantAPI(jsonData?.data);
     setRestaurantMenuItems(
@@ -40,26 +38,23 @@ const getRestaurants = (options, page) => {
     fetchRestaurantsAPI();
   }, [options, page]);
 
-  const mediaQuery = window.matchMedia("(min-width: 991.98px)");
+  const mediaQuery = window.matchMedia("(max-width: 767.98px)");
 
   async function fetchRestaurantsAPI() {
     let res, restData, json;
     if (page === -1) {
-      res = await fetch(
-        "https://corsproxy.io/?" + ALL_RESTAURANT_URL + "&sortBy=" + options
-      );
+      res = await fetch(ALL_RESTAURANT_URL + "&sortBy=" + options);
       json = await res?.json();
       restData =
         options == "RELEVANCE"
           ? json?.data?.cards[2]?.data?.data
           : json?.data?.cards[0]?.data?.data;
       setAllRestaurants(restData?.cards);
-      if (mediaQuery.matches) setCarouselData(json?.data?.cards[0]);
-      else setCarouselData(json?.data?.cards[1]);
+      if (mediaQuery.matches) setCarouselData(json?.data?.cards[1]);
+      else setCarouselData(json?.data?.cards[0]);
     } else {
       res = await fetch(
-        "https://corsproxy.io/?" +
-          HOMEPAGE_REST_URL +
+        HOMEPAGE_REST_URL +
           "&offset=" +
           page +
           "&sortBy=" +
@@ -93,9 +88,9 @@ const getOfferRestaurants = () => {
   }, []);
 
   async function fetchRestaurantsAPI() {
-    const res = await fetch("https://corsproxy.io/?" + OFFERS_PAGE_URL);
+    const res = await fetch(OFFERS_PAGE_URL);
     const json = await res.json();
-    const restwo = await fetch("https://corsproxy.io/?" + PAYMENTS_PAGE_URL);
+    const restwo = await fetch(PAYMENTS_PAGE_URL);
     const jsontwo = await restwo.json();
 
     setAllRestaurants(json);

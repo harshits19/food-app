@@ -6,9 +6,7 @@ const searchShimmer = () => {
     getSearchAPI();
   }, []);
   async function getSearchAPI() {
-    const response = await fetch(
-      "https://corsproxy.io/?" + RESTAURANT_PRE_SEARCH
-    );
+    const response = await fetch(RESTAURANT_PRE_SEARCH);
     const dataAPI = await response.json();
     setSearchData(dataAPI?.data?.cards[1]?.card?.card?.imageGridCards?.info);
   }

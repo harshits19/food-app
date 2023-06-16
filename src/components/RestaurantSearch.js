@@ -17,9 +17,7 @@ const RestaurantSearch = () => {
     fetchAPI();
   }, []);
   async function fetchAPI() {
-    const response = await fetch(
-      "https://corsproxy.io/?" + RESTAURANT_MENU_URL + resId
-    );
+    const response = await fetch(RESTAURANT_MENU_URL + resId);
     const jsonData = await response.json();
     setRestName(jsonData?.data?.cards[0]?.card?.card?.info?.name);
     setRestaurantMenuItems(

@@ -55,9 +55,7 @@ const NewSearchComp = () => {
   }, [searchText]);
 
   async function fetchRestaurantsAPI(searchText) {
-    const data = await fetch(
-      "https://corsproxy.io/?" + RESTAURANT_SEARCH_URL + searchText
-    );
+    const data = await fetch(RESTAURANT_SEARCH_URL + searchText);
     const dataAPI = await data.json();
     // console.log(json);
     setAllRestaurants(dataAPI);
