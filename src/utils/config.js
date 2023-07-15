@@ -1,5 +1,6 @@
 /* Config file used to store the hard coded data, which is used in multiple files */
-const proxyVar = "https://corsproxy.io/?";
+// const proxyVar = "https://corsproxy.io/?"; //for production
+const proxyVar = ""; //for dev builds only
 const mediaQuery = window.matchMedia("(max-width: 768px)");
 export let IMG_CDN_URL = null;
 if (mediaQuery.matches)
@@ -8,10 +9,6 @@ if (mediaQuery.matches)
 else
   IMG_CDN_URL =
     "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
-//export const IMG_CDN_URL =
-//"https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
-// export const RES_IMG_URL =
-// "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_264,h_288,c_fill/";
 export const RESTAURANT_MENU_URL =
   proxyVar +
   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.4633953&lng=80.3554247&restaurantId=";

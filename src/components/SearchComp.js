@@ -3,6 +3,7 @@ import { IMG_CDN_URL, RESTAURANT_SEARCH_URL } from "../utils/config";
 import { Link } from "react-router-dom";
 import SearchShimmer from "./SearchShimmer";
 import GoToTop from "../utils/gotoTop";
+import useTitle from "../utils/useTitle";
 
 const SearchCard = ({ data }) => {
   let resId = 0;
@@ -60,6 +61,7 @@ const NewSearchComp = () => {
     // console.log(json);
     setAllRestaurants(dataAPI);
   }
+  useTitle("Search for restaurants");
   return (
     <>
       <div className="searchContainer">

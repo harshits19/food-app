@@ -10,6 +10,7 @@ import GoToTop from "../utils/gotoTop";
 import leafIcon from "../assets/leaf.png";
 import ItemCont from "./ItemBox";
 import RestMenuNav from "./RestMenuNav";
+import useTitle from "../utils/useTitle";
 
 const FoodItemsAccordion = ({
   itemCards,
@@ -170,6 +171,8 @@ const RestaurantView = () => {
     setMenuNavState(!menuNavState);
   };
 
+  useTitle(restaurants?.name, " | Order Online"); //setting restaurant name as title for each restro page
+
   return !restaurants ? (
     <RestaurantMenuShimmer />
   ) : (
@@ -202,9 +205,11 @@ const RestaurantView = () => {
           <p className="restroCuisines">
             {restaurants?.areaName}, {restaurants?.sla?.lastMileTravelString}
           </p>
-          <div className="restroDelCost">
-            {restaurants?.expectationNotifiers[0]?.text}
-          </div>
+          {restaurants?.expectationNotifiers[0]?.text && (
+            <div className="restroDelCost">
+              {restaurants?.expectationNotifiers[0]?.text}
+            </div>
+          )}
         </div>
         <div className="rightHeaderContainer">
           <div className="ratingBox">
