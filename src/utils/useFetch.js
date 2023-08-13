@@ -43,7 +43,10 @@ const getRestaurants = (options, page) => {
   async function fetchRestaurantsAPI() {
     let res, restData, json;
     if (page === -1) {
-      res = await fetch(ALL_RESTAURANT_URL + "&sortBy=" + options);
+      // res = await fetch(ALL_RESTAURANT_URL + "&sortBy=" + options);
+      res = await fetch(
+        "https://dl.dropboxusercontent.com/scl/fi/d6i6o8a10i3fu6ouo2hx5/homepage.json?rlkey=efmu8drzc72rqwz47gec9sl49"
+      );
       json = await res?.json();
       restData =
         options == "RELEVANCE"
@@ -53,7 +56,7 @@ const getRestaurants = (options, page) => {
       if (mediaQuery.matches) setCarouselData(json?.data?.cards[1]);
       else setCarouselData(json?.data?.cards[0]);
     } else {
-      res = await fetch(
+      /*    res = await fetch(
         HOMEPAGE_REST_URL +
           "&offset=" +
           page +
@@ -65,7 +68,7 @@ const getRestaurants = (options, page) => {
       restData = json?.data;
       // if (page < otherRestInfo.totalSize)
       setAllRestaurants((prev) => [...prev, ...restData?.cards]);
-      // else setLoading(true);
+      // else setLoading(true); */
     }
     setLoading(false);
     setOtherRestInfo(restData);
