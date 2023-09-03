@@ -1,6 +1,6 @@
 /* Config file used to store the hard coded data, which is used in multiple files */
-// const proxyVar = "https://corsproxy.io/?"; //for production
-const proxyVar = ""; //for dev builds only
+const proxyVar = "https://corsproxy.io/?"; //for production
+// const proxyVar = ""; //for dev builds only
 const mediaQuery = window.matchMedia("(max-width: 768px)");
 export let IMG_CDN_URL = null;
 if (mediaQuery.matches)
@@ -12,15 +12,15 @@ else
 export const RESTAURANT_MENU_URL =
   proxyVar +
   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.4633953&lng=80.3554247&restaurantId=";
+
 export const ALL_RESTAURANT_URL =
-  proxyVar +
-  "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.4633953&lng=80.3554247&page_type=DESKTOP_WEB_LISTING";
+  "https://dl.dropboxusercontent.com/scl/fi/xdzxj7mch6nvq78fa7b82/newHomepageAPI.json?rlkey=vwigv90bs7zs7ooupsbkzc0f7";
+export const MOB_RESTAURANT_URL =
+  "https://dl.dropboxusercontent.com/scl/fi/lpbqfclgfszl0gqbz28j8/newHomepageMobileAPI.json?rlkey=f7vqyuchitu4z6dajbxbfe2ca";
+
 export const HOMEPAGE_REST_URL =
   proxyVar +
   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.4633953&lng=80.3554247";
-export const OFFERS_PAGE_URL =
-  proxyVar +
-  "https://www.swiggy.com/dapi/offers/restaurant?lat=26.4633953&lng=80.3554247&offset=0";
 export const PAYMENTS_PAGE_URL =
   proxyVar +
   "https://www.swiggy.com/dapi/offers/payment?lat=26.4633953&lng=80.3554247&offset=0";

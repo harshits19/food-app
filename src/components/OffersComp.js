@@ -16,7 +16,7 @@ const Offers = () => {
         <>
           <div className="offerPageHeader">
             <div className="offerPageHeading">
-              All offers ({allRestaurants?.data?.totalSize})
+              All offers ({allRestaurants?.length})
             </div>
             <div className="offerPageDesc">
               All offers and deals, from restaurants near you
@@ -27,16 +27,14 @@ const Offers = () => {
               <HomePageShimmer />
             ) : (
               <>
-                {allRestaurants?.data?.cards?.map((restaurant, idx) => {
-                  return !restaurant?.data?.data?.message ? (
+                {allRestaurants.map((restaurant) => {
+                  return (
                     <Link
-                      to={"/restaurants/" + restaurant?.data?.data?.id}
-                      key={restaurant?.data?.data?.id}
+                      to={"/restaurants/" + restaurant?.info?.id}
+                      key={restaurant?.info?.id}
                       style={{ textDecoration: "none" }}>
-                      <RestCards {...restaurant?.data?.data} />
+                      <RestCards {...restaurant?.info} />
                     </Link>
-                  ) : (
-                    <div key={idx} style={{ display: "none" }}></div>
                   );
                 })}
               </>

@@ -3,8 +3,8 @@ import offerIconCart from "../assets/offerIconCart.png";
 
 const RestCards = ({
   name,
-  costForTwoString,
-  slaString,
+  costForTwo,
+  sla,
   cuisines,
   avgRating,
   cloudinaryImageId,
@@ -39,9 +39,9 @@ const RestCards = ({
             {avgRating}
           </div>
           <div>•</div>
-          <div className="resDelTiming">{slaString}</div>
+          <div className="resDelTiming">{sla?.slaString}</div>
           <div>•</div>
-          <div className="resCostppn">{costForTwoString}</div>
+          <div className="resCostppn">{costForTwo}</div>
         </div>
         {aggregatedDiscountInfo?.shortDescriptionList[0]?.meta && (
           <div className="restOffers">

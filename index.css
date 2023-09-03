@@ -576,96 +576,82 @@ input[type="radio"] ~ label {
 /*------------Homepage Carousel--------------*/
 
 .carouselContainer {
+  padding: 0 20px;
+  contain: content;
+}
+.carouselShimmerContainer {
   background-color: #171a29;
   padding: 0 20px;
   contain: content;
 }
 .carouselInnerContainer {
-  position: relative;
   margin: 0 auto;
   width: 1200px;
-  height: 340px;
+  height: 220px;
   display: flex;
   align-items: center;
 }
+.carouselBtnCont {
+  margin: 0 auto;
+  width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  color: #282c3f;
+  font-size: 26px;
+  font-weight: 700;
+  padding: 30px 0 10px;
+}
 .carouselInnerBox {
-  height: 260px;
+  height: 100%;
   white-space: nowrap;
   width: 100%;
-  overflow: hidden;
   scroll-behavior: smooth;
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-  column-gap: 53px;
+  column-gap: 15px;
   align-items: center;
-  padding-right: 313px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.carouselInnerBox::-webkit-scrollbar {
+  display: none;
 }
 .carouselItem {
   display: inline-block;
   cursor: pointer;
-  width: 260px;
-  height: 260px;
-  /* margin-right: 55px; */
+  width: 100%;
+  height: 100%;
 }
 .carouselItem img {
-  width: 260px;
-  height: 260px;
+  width: 370px;
+  height: 100%;
   backface-visibility: visible;
   transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
-.carouselItem img:hover {
-  -ms-transform: scale(1.05);
-  transform: scale(1.05);
-}
-.carouselBtn {
-  position: absolute;
-  top: 50%;
-  width: 47px;
-  height: 47px;
-  background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgba(41, 48, 63, 0.25);
-  border-radius: 100%;
-  text-align: center;
-  cursor: pointer;
-  outline: 0;
-  border: none;
-}
-.carouselBtn img {
-  display: block;
+.foodCardsContainer {
   margin: 0 auto;
+  width: 1200px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: scroll hidden;
+  padding: 0 10px;
 }
-.btnLeft {
-  left: 0;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.btnRight {
-  right: 0;
-  -ms-transform: translate(50%, -50%);
-  transform: translate(50%, -50%);
-}
-
-.btnRight > i:hover {
-  transform: translateX(4px);
-  transition: 0.5s;
-}
-.btnLeft > i:hover {
-  transform: translateX(-4px);
-  transition: 0.5s;
-}
-#rightBtn {
-  display: block;
-}
-#leftBtn {
+.foodCardsContainer::-webkit-scrollbar {
   display: none;
+}
+.foodCardItem img {
+  height: 180px;
+  width: 144px;
+  cursor: pointer;
 }
 /* -------------Carousel Shimmer------------- */
 .carouselShimmer {
   position: relative;
   margin: 0 auto;
   width: 1200px;
-  height: 340px;
+  height: 290px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2241,6 +2227,14 @@ div.foodItemsBody > div.foodItemsAccordion {
 
 /* ------------------Responsive Section--------------------- */
 @media (max-width: 767.98px) {
+  .stickyBottomMenuContainer,
+  .menu-drawer,
+  .searchShimmer,
+  .side-drawer,
+  .carouselBtnCont,
+  .foodCardsContainer {
+    width: 100%;
+  }
   .headers {
     height: 100%;
     padding: 0;
@@ -2293,30 +2287,23 @@ div.foodItemsBody > div.foodItemsAccordion {
     margin: 12px 20px;
     font-size: 25px;
   }
-  .carouselContainer {
-    margin: 20px 0 0;
-  }
   .carouselInnerBox {
     height: 100%;
     column-gap: 20px;
-    overflow-x: scroll;
     padding-right: 0;
     justify-content: inherit;
   }
   .carouselInnerContainer {
     width: 100%;
-    height: 220px;
-  }
-  .carouselItem {
-    width: 200px;
     height: 200px;
   }
+  .carouselItem,
   .carouselItem img {
-    width: 200px;
-    height: 200px;
+    width: 325px;
   }
-  .carouselBtn {
-    display: none !important;
+  .foodCardItem img {
+    height: 165px;
+    width: 135px;
   }
   .carouselShimmer {
     width: 100%;
@@ -2411,12 +2398,6 @@ div.foodItemsBody > div.foodItemsAccordion {
   .restMenuBtnContainer {
     display: none;
   }
-  .stickyBottomMenuContainer {
-    width: 100%;
-  }
-  .menu-drawer {
-    width: 100%;
-  }
   .footerContainer {
     min-height: 100%;
   }
@@ -2440,6 +2421,10 @@ div.foodItemsBody > div.foodItemsAccordion {
   .searchInnerContainer {
     top: 62px;
   }
+  .ssBody img {
+    height: 100px;
+    width: 85px;
+  }
   .aboutBodyLeft {
     margin: auto;
   }
@@ -2447,9 +2432,7 @@ div.foodItemsBody > div.foodItemsAccordion {
     height: 250px;
     width: 250px;
   }
-  .searchShimmer {
-    width: 100%;
-  }
+
   .ssBody {
     width: 100%;
     flex-wrap: wrap;
@@ -2487,9 +2470,6 @@ div.foodItemsBody > div.foodItemsAccordion {
   }
   .socialSection {
     flex-direction: column;
-  }
-  .side-drawer {
-    width: 100%;
   }
   .drawerContainer {
     padding: 20px;
@@ -2631,16 +2611,30 @@ div.foodItemsBody > div.foodItemsAccordion {
   }
 }
 @media (max-width: 1280px) and (min-width: 992px) {
-  .navBar {
-    width: 100%;
-  }
   .restContainer {
     gap: 10px 35px;
+    justify-content: center;
   }
   .menu-drawer {
     bottom: 0;
   }
+  .btnLabel {
+    margin-left: 10px;
+  }
   .menu-drawer.open {
     transform: translate(50%, -15%);
+  }
+  .navBar,
+  .carouselBtnCont,
+  .carouselInnerContainer,
+  .foodCardsContainer,
+  .carouselShimmer,
+  .footerInner {
+    width: 100%;
+  }
+  .footerLeft,
+  .footerCenter,
+  .footerRight {
+    min-width: 250px;
   }
 }
