@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import RestaurantMenuShimmer from "./RestaurantMenuShimmer";
 import { RESTAURANT_MENU_URL } from "../utils/config";
-import { useDispatch, useSelector } from "react-redux";
 import { getDetails } from "../utils/restroSlice";
+import useTitle from "../utils/useTitle";
+import GoToTop from "../utils/gotoTop";
 import OfferIconCart from "../assets/offerIconCart.png";
 import checkOutCart from "../assets/checkOutCart.png";
-import GoToTop from "../utils/gotoTop";
 import leafIcon from "../assets/leaf.png";
 import ItemCont from "./ItemBox";
 import RestMenuNav from "./RestMenuNav";
-import useTitle from "../utils/useTitle";
 
 const FoodItemsAccordion = ({
   itemCards,
@@ -19,58 +19,81 @@ const FoodItemsAccordion = ({
   setIsVeg,
   vegDetails,
   isPureVeg,
+  carousel,
 }) => {
   const [isAVisible, setIsAVisible] = useState(true);
   return title ? (
-    <div className="foodItemsAccordion" id={title}>
-      <div
-        className="foodItemsHeader"
-        onClick={() => {
-          isAVisible ? setIsAVisible(false) : setIsAVisible(true);
-        }}>
-        {itemCards ? title + " " + "(" + itemCards?.length + ")" : title}
-        <button>
-          {isAVisible ? (
-            <span>
-              <i
-                className="fa-solid fa-chevron-up fa-lg"
-                style={{ color: "#000000" }}></i>
-            </span>
-          ) : (
-            <span>
-              <i
-                className="fa-solid fa-chevron-down fa-lg"
-                style={{ color: "#000000" }}></i>
-            </span>
-          )}
-        </button>
-      </div>
-      {isAVisible && (
-        <div className="foodItemsBody">
-          {itemCards?.map((itemDetails, idx) => {
-            if (itemDetails.itemCards) {
-              return (
-                <FoodItemsAccordion
-                  itemCards={itemDetails.itemCards}
-                  title={itemDetails.title}
-                  key={idx}
-                  isVeg={isVeg}
-                  setIsVeg={setIsVeg}
-                />
-              );
-            } else {
-              return isVeg ? (
-                itemDetails?.card?.info?.isVeg && (
-                  <ItemCont {...itemDetails} key={idx} />
-                )
-              ) : (
-                <ItemCont {...itemDetails} key={idx} />
-              );
-            }
+    title == "Top Picks" ? (
+      <div>
+        <div className="foodCarouselTitle">Top Picks</div>
+        <div className="foodCarousel">
+          {carousel?.map((item) => {
+            return (
+              <img
+                src={
+                  "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_628,h_704/" +
+                  item?.creativeId
+                }
+                key={item?.bannerId}
+                className="foodCarouselImg"
+              />
+            );
           })}
         </div>
-      )}
-    </div>
+      </div>
+    ) : (
+      title && (
+        <div className="foodItemsAccordion" id={title}>
+          <div
+            className="foodItemsHeader"
+            onClick={() => {
+              isAVisible ? setIsAVisible(false) : setIsAVisible(true);
+            }}>
+            {itemCards ? title + " " + "(" + itemCards?.length + ")" : title}
+            <button>
+              {isAVisible ? (
+                <span>
+                  <i
+                    className="fa-solid fa-chevron-up fa-lg"
+                    style={{ color: "#000000" }}></i>
+                </span>
+              ) : (
+                <span>
+                  <i
+                    className="fa-solid fa-chevron-down fa-lg"
+                    style={{ color: "#000000" }}></i>
+                </span>
+              )}
+            </button>
+          </div>
+          {isAVisible && (
+            <div className="foodItemsBody">
+              {itemCards?.map((itemDetails, idx) => {
+                if (itemDetails?.itemCards) {
+                  return (
+                    <FoodItemsAccordion
+                      itemCards={itemDetails.itemCards}
+                      title={itemDetails.title}
+                      key={idx}
+                      isVeg={isVeg}
+                      setIsVeg={setIsVeg}
+                    />
+                  );
+                } else {
+                  return isVeg ? (
+                    itemDetails?.card?.info?.isVeg && (
+                      <ItemCont {...itemDetails} key={idx} />
+                    )
+                  ) : (
+                    <ItemCont {...itemDetails} key={idx} />
+                  );
+                }
+              })}
+            </div>
+          )}
+        </div>
+      )
+    )
   ) : vegDetails ? (
     isPureVeg ? (
       <div className="vegSection">
@@ -130,6 +153,7 @@ const RestaurantView = () => {
   async function fetchAPI() {
     const response = await fetch(RESTAURANT_MENU_URL + resId);
     const jsonData = await response.json();
+    // console.log(jsonData);
     setRestaurant(jsonData?.data);
     setRestaurantMenuItems(
       jsonData?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
@@ -205,7 +229,7 @@ const RestaurantView = () => {
           <p className="restroCuisines">
             {restaurants?.areaName}, {restaurants?.sla?.lastMileTravelString}
           </p>
-          {restaurants?.expectationNotifiers[0]?.text && (
+          {restaurants?.expectationNotifiers && (
             <div className="restroDelCost">
               {restaurants?.expectationNotifiers[0]?.text}
             </div>
@@ -240,7 +264,10 @@ const RestaurantView = () => {
               d="M3 15.2569C4.58666 16.9484 6.81075 18 9.273 18C14.0928 18 18 13.9706 18 9C18 4.02944 14.0928 0 9.273 0C9.273 2.25 9.273 9 9.273 9C6.36399 12 5.63674 12.75 3 15.2569Z"
               fill="#3E4152"></path>
           </svg>
-          <span>{restaurants?.sla?.slaString}</span>
+          <span>
+            {restaurants?.sla?.slaString ||
+              restaurants?.orderabilityCommunication?.title?.text}
+          </span>
         </li>
         <li className="restroTimeCostItem">
           <svg
@@ -261,6 +288,11 @@ const RestaurantView = () => {
           </svg>
           <span>{restaurants?.costForTwoMessage}</span>
         </li>
+        {restaurants?.orderabilityCommunication?.message?.text && (
+          <div className="restroMsgTooltip">
+            {restaurants?.orderabilityCommunication?.message?.text}
+          </div>
+        )}
       </ul>
       <div className="restroOffersContainer">
         {restroOffers?.offers?.map((offersData) => {
@@ -283,6 +315,7 @@ const RestaurantView = () => {
               setIsVeg={setIsVeg}
               vegDetails={restObject?.card?.card?.vegOnlyDetails}
               isPureVeg={restObject?.card?.card?.isPureVeg}
+              carousel={restObject?.card?.card?.carousel}
             />
           );
         })}

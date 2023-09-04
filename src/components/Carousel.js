@@ -5,7 +5,32 @@ const Carousel = () => {
   const { banners, foodCards } = carouselData;
   return (
     <>
-      {!banners ? (
+      {banners ? (
+        banners?.length > 0 && (
+          <div className="carouselContainer">
+            <div className="carouselBtnCont">
+              <div className="carouselTitle">Best offers for you</div>
+            </div>
+            <div className="carouselInnerContainer">
+              <div className="carouselInnerBox" id="bbox">
+                {banners?.map((item) => {
+                  return (
+                    <div className="carouselItem" id="box" key={item?.imageId}>
+                      <img
+                        src={
+                          "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_850,h_504/" +
+                          item?.imageId
+                        }
+                        alt=""
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )
+      ) : (
         <div className="carouselShimmerContainer">
           <div className="carouselShimmer">
             <div className="rotatingImgContainer">
@@ -15,50 +40,60 @@ const Carousel = () => {
             Looking for great food near you ...
           </div>
         </div>
-      ) : (
-        <div className="carouselContainer">
-          <div className="carouselBtnCont">
-            <div className="carouselTitle">Best offers for you</div>
-          </div>
-          <div className="carouselInnerContainer">
-            <div className="carouselInnerBox" id="bbox">
-              {banners?.map((item) => {
+      )}
+      {foodCards ? (
+        foodCards?.length > 0 && (
+          <div className="carouselContainer">
+            <div className="carouselBtnCont">
+              <div>What's on your mind?</div>
+            </div>
+            <div className="foodCardsContainer">
+              {foodCards?.map((item, idx) => {
+                if (idx < 9) return;
                 return (
-                  <div className="carouselItem" id="box" key={item?.imageId}>
+                  <div className="foodCardItem" key={item?.id}>
                     <img
                       src={
-                        "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_850,h_504/" +
+                        "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/" +
                         item?.imageId
                       }
-                      alt=""
                     />
                   </div>
                 );
               })}
             </div>
           </div>
+        )
+      ) : (
+        <div className="carouselContainer">
+          <div className="carouselBtnCont">
+            <div className="carouselTitle">What's on your mind?</div>
+          </div>
+          <div className="foodCardsContainer" style={{ height: "200px" }}>
+            <div>
+              <div className="shimmerCircles"></div>
+            </div>
+            <div>
+              <div className="shimmerCircles"></div>
+            </div>
+            <div>
+              <div className="shimmerCircles"></div>
+            </div>
+            <div>
+              <div className="shimmerCircles"></div>
+            </div>
+            <div>
+              <div className="shimmerCircles"></div>
+            </div>
+            <div>
+              <div className="shimmerCircles"></div>
+            </div>
+            <div>
+              <div className="shimmerCircles"></div>
+            </div>
+          </div>
         </div>
       )}
-      <div className="carouselContainer">
-        <div className="carouselBtnCont">
-          <div>What's on your mind?</div>
-        </div>
-        <div className="foodCardsContainer">
-          {foodCards?.map((item, idx) => {
-            if (idx < 9) return;
-            return (
-              <div className="foodCardItem" key={item?.id}>
-                <img
-                  src={
-                    "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/" +
-                    item?.imageId
-                  }
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </>
   );
 };

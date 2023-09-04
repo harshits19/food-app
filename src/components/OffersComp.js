@@ -22,7 +22,7 @@ const Offers = () => {
               All offers and deals, from restaurants near you
             </div>
           </div>
-          <div className="offersContainer">
+          <div className="restContainer">
             {allRestaurants?.length == 0 ? (
               <HomePageShimmer />
             ) : (
@@ -51,10 +51,12 @@ const Offers = () => {
           <div className="offerPageHeader">
             <div className="offerPageHeading">Available Coupons</div>
           </div>
-          <div className="paymentsContainer">
+          <div className="restContainer" style={{ gap: "10px" }}>
             {paymentOffers?.data?.cards?.map((coupon) => {
-              return coupon.cardType === "couponCardV2" ? (
-                <div className="couponCard">
+              return coupon?.cardType === "couponCardV2" ? (
+                <div
+                  className="couponCard"
+                  key={coupon?.data?.data?.couponCode}>
                   <div className="couponCodeBox">
                     <div className="couponCodeInnerBox">
                       <span className="couponCodeImg">

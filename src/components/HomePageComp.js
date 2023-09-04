@@ -36,7 +36,7 @@ const RestContainer = () => {
         <div className="filterContainer">
           <div className="restFilters">
             <div>
-              <h2>{allRestaurants.length + " restaurants"}</h2>
+              <h2>{allRestaurants?.length + " restaurants"}</h2>
             </div>
             <div className="filterBtnContainer">
               <input

@@ -16,6 +16,7 @@ body {
   width: 100%;
   margin: auto;
   overflow-x: hidden;
+  cursor: default;
 }
 .container {
   width: 90%;
@@ -373,13 +374,10 @@ a.activeLink .svgSet {
 }
 
 .restContainer {
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px 53px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  padding-top: 18px;
+  padding-top: 2rem;
   border-top: 1px solid #e9e9eb;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 .filterContainer {
   width: 100%;
@@ -455,14 +453,14 @@ input[type="radio"] ~ label {
 #htl:checked + .btnLabel {
   border-bottom: 2px solid #000000;
 }
-
 .restbox {
-  width: 300px;
+  width: 100%;
+  max-width: 330px;
   height: 100%;
   transition: 0.2s ease;
   padding: 20px;
   border: 1px solid #fff;
-  margin: 0px -20px;
+  margin: 0px;
 }
 .restbox:hover {
   border-color: #d3d5df;
@@ -471,7 +469,7 @@ input[type="radio"] ~ label {
 .restbox .restimg {
   overflow: hidden;
   position: relative;
-  width: 254px;
+  width: 100%;
   height: 160px;
 }
 
@@ -620,7 +618,7 @@ input[type="radio"] ~ label {
 .carouselItem {
   display: inline-block;
   cursor: pointer;
-  width: 100%;
+  width: max-content;
   height: 100%;
 }
 .carouselItem img {
@@ -722,6 +720,14 @@ input[type="radio"] ~ label {
     transform: rotate(1turn);
   }
 }
+.shimmerCircles {
+  height: 150px;
+  width: 150px;
+  border-radius: 100%;
+  margin: 0 10px;
+  display: block;
+  background: #f6f7f8;
+}
 
 /*-------------Footer---------------*/
 .footerContainer {
@@ -818,9 +824,10 @@ input[type="radio"] ~ label {
 .shimmerInnerContainer {
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 .shimmerBox {
-  width: 260px;
+  width: 100%;
   height: 160px;
   margin: 18px 0 2px;
   border: 1px solid #fff;
@@ -831,7 +838,7 @@ input[type="radio"] ~ label {
 }
 .lines {
   height: 10px;
-  width: 255px;
+  width: 100%;
   margin: 10px 0 0 0;
 }
 .shine {
@@ -898,7 +905,7 @@ input[type="radio"] ~ label {
   display: none;
 }
 .ssBody img {
-  height: 109px;
+  height: 105px;
   width: 77px;
 }
 /* --------- Restaurant View Shimmer ------------ */
@@ -1199,6 +1206,16 @@ input:checked + .slider:before {
   font-weight: 700;
   margin: 18px 0;
   padding: 0 16px;
+  position: relative;
+}
+.restroMsgTooltip {
+  background-color: #f1f1f6;
+  border-radius: 8px;
+  position: relative;
+  padding: 14px 18px 14px 16px;
+  margin-top: 16px;
+  font-weight: 400;
+  color: rgb(245, 126, 71);
 }
 .restroTimeCostItem {
   margin-right: 24px;
@@ -1311,7 +1328,29 @@ div.foodItemsBody > div.foodItemsAccordion {
   cursor: pointer;
   margin-right: 10px;
 }
-
+.foodCarousel {
+  display: flex;
+  width: 100%;
+  overflow: scroll hidden;
+  gap: 0 20px;
+  padding: 10px 0;
+}
+.foodCarouselTitle {
+  color: #3e4152;
+  cursor: default;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 800;
+  padding: 20px 0 10px;
+}
+.foodCarousel::-webkit-scrollbar {
+  display: none;
+}
+.foodCarouselImg {
+  height: 337px;
+  width: 300px;
+  border-radius: 20px;
+}
 .itemContainer {
   display: flex;
   justify-content: space-between;
@@ -1847,13 +1886,6 @@ div.foodItemsBody > div.foodItemsAccordion {
   margin: 0 auto;
   padding: 3em 0;
 }
-.offersContainer {
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px 53px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
 .offerPageHeader {
   margin-bottom: 38px;
 }
@@ -1869,19 +1901,10 @@ div.foodItemsBody > div.foodItemsAccordion {
   margin-top: 4px;
   color: #93959f;
 }
-.paymentsContainer {
-  display: flex;
-  flex-wrap: wrap;
-}
 .couponCard {
-  padding: 30px;
+  padding: 20px;
   border: 1px solid #d4d5d9;
-  width: 380px;
-  margin-right: 30px;
-  margin-bottom: 40px;
-}
-.couponCard:nth-child(3n) {
-  margin-right: 0;
+  width: 100%;
 }
 .couponCodeBox {
   display: flex;
@@ -2319,15 +2342,21 @@ div.foodItemsBody > div.foodItemsAccordion {
   }
   .restContainer {
     gap: 10px 0px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    padding-top: 10px;
   }
   .restbox {
-    width: 90vw;
+    width: 100%;
     height: 100%;
     padding: 0;
     display: flex;
     margin: 0;
+  }
+  .restbox:hover {
+    border: none;
+    box-shadow: none;
   }
   .restbox .restimg {
     background-color: #ffffff;
@@ -2373,11 +2402,13 @@ div.foodItemsBody > div.foodItemsAccordion {
     text-overflow: ellipsis;
     overflow: hidden;
   }
-  .restOffers {
-    display: none;
-  }
+  .restOffers,
   .restQuickView {
     display: none;
+  }
+  .foodCarouselImg {
+    height: 270px;
+    width: 240px;
   }
   .itemBody {
     overflow: hidden;
@@ -2432,13 +2463,11 @@ div.foodItemsBody > div.foodItemsAccordion {
     height: 250px;
     width: 250px;
   }
-
   .ssBody {
     width: 100%;
     flex-wrap: wrap;
     justify-content: space-evenly;
   }
-
   .offerBannerInner {
     justify-content: space-evenly;
     padding: 20px;
@@ -2446,15 +2475,18 @@ div.foodItemsBody > div.foodItemsAccordion {
     width: 100%;
     flex-wrap: wrap;
   }
+  .offerPageHeader {
+    margin-bottom: 20px;
+  }
   .bannerRightImg {
     height: 100px;
   }
-  .tglBtnInner {
-    width: 90%;
+  .tglBtnInner,
+  .offerPageContainer {
+    width: 95%;
   }
   .offerPageContainer {
-    width: 100%;
-    padding: 0 10px;
+    padding-top: 10px;
   }
   .couponCard {
     margin-bottom: 10px;
@@ -2477,16 +2509,18 @@ div.foodItemsBody > div.foodItemsAccordion {
   .shimmerInnerContainer {
     flex-direction: row;
     width: 100%;
+    padding: 0;
   }
   .shimmerBox {
-    height: 140px;
-    width: 140px;
+    height: 96px;
+    width: 88px;
     margin: 0;
+    border-radius: 10px;
   }
   .shimmerLines {
     justify-content: space-evenly;
     margin-left: 8px;
-    width: 60%;
+    width: 75%;
   }
   .lines {
     height: 17px;
@@ -2494,18 +2528,26 @@ div.foodItemsBody > div.foodItemsAccordion {
     margin: 0;
   }
 }
-@media (max-width: 991.98px) and (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 991.98px) {
   body {
     font-size: 12px;
   }
-  .navBar {
+  .carouselInnerContainer,
+  .navBar,
+  .restbox .restimg,
+  .searchShimmer,
+  .footerInner,
+  .aboutBody,
+  .carouselShimmer {
     width: 100%;
+  }
+  .tglBtnInner,
+  .offerPageContainer,
+  .container {
+    width: 95%;
   }
   .navItems a {
     font-size: 14px;
-  }
-  .carouselInnerContainer {
-    width: 100%;
   }
   .restFilters h2 {
     font-size: 24px;
@@ -2517,7 +2559,8 @@ div.foodItemsBody > div.foodItemsAccordion {
   .restContainer {
     gap: 5px 0;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    padding-top: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   }
   .restoBody {
     width: 100%;
@@ -2526,15 +2569,13 @@ div.foodItemsBody > div.foodItemsAccordion {
     max-width: 100%;
   }
   .restbox {
-    width: 220px;
+    width: 100%;
+    max-width: 300px;
     margin: 0;
-    padding: 10px 0;
+    padding: 10px;
   }
   .restbox:hover {
     box-shadow: 0 4px 7px #dadce699;
-  }
-  .restbox .restimg {
-    width: 220px;
   }
   .restQuickView {
     display: none;
@@ -2549,31 +2590,13 @@ div.foodItemsBody > div.foodItemsAccordion {
     width: 100%;
     padding: 0 20px;
   }
-  .searchShimmer {
-    width: 100%;
-  }
   .ssBody {
     width: 100%;
     overflow: hidden;
   }
-  .offerPageContainer {
-    width: 100%;
-    padding: 3em 20px;
-  }
-  .offersContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-  }
-  .tglBtnInner {
-    width: 100%;
-  }
   .offerBannerInner {
     width: 100%;
     padding: 20px;
-  }
-  .footerInner {
-    width: 100%;
   }
   .footerLeft,
   .footerCenter,
@@ -2583,37 +2606,24 @@ div.foodItemsBody > div.foodItemsAccordion {
   .tglBtnContainer {
     padding: 0 10px;
   }
-  .paymentsContainer {
-    gap: 5px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
   .couponCard {
     width: 100%;
     margin: 0;
     padding: 10px 8px;
   }
-  .aboutBody {
-    width: 100%;
-  }
   .aboutBodyRight {
     margin-left: 2em;
     padding: 0;
   }
-  .shimmerBox {
-    width: 220px;
-  }
-  .lines {
-    width: 220px;
-  }
-  .carouselShimmer {
-    width: 100%;
-  }
 }
-@media (max-width: 1280px) and (min-width: 992px) {
+@media (min-width: 992px) and (max-width: 1280px) {
   .restContainer {
-    gap: 10px 35px;
     justify-content: center;
+    padding-top: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  }
+  .restbox {
+    max-width: 340px;
   }
   .menu-drawer {
     bottom: 0;
@@ -2623,6 +2633,12 @@ div.foodItemsBody > div.foodItemsAccordion {
   }
   .menu-drawer.open {
     transform: translate(50%, -15%);
+  }
+  .offerPageContainer,
+  .tglBtnInner,
+  .offerBannerInner,
+  .container {
+    width: 95%;
   }
   .navBar,
   .carouselBtnCont,

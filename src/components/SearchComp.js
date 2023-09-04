@@ -26,7 +26,7 @@ const SearchCard = ({ data }) => {
                 <img src={IMG_CDN_URL + restaurants?.cloudinaryId} />
               </div>
               <div className="searchCardDesc">
-                <p>{restaurants.text}</p>
+                <p>{restaurants?.text}</p>
                 <p className="typeofCard">{restaurants?.tagToDisplay}</p>
               </div>
             </div>
