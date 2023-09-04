@@ -52,10 +52,10 @@ const getRestaurants = () => {
           setAllRestaurants(
             item?.card?.card?.gridElements?.infoWithStyle?.restaurants
           );
-        if (item?.card?.card?.id === "restaurant_grid_listing")
+        /* if (item?.card?.card?.id === "restaurant_grid_listing")
           setAllRestaurants(
             item?.card?.card?.gridElements?.infoWithStyle?.restaurants
-          );
+          ); */
       });
     };
     // setData(restData?.data?.cards?.reverse());
@@ -76,13 +76,17 @@ const getOfferRestaurants = () => {
   }, []);
 
   async function fetchRestaurantsAPI() {
+    // const res = await fetch(HOMEPAGE_REST_URL);
     const res = await fetch(ALL_RESTAURANT_URL);
     const json = await res.json();
     const restwo = await fetch(PAYMENTS_PAGE_URL);
     const jsontwo = await restwo.json();
 
     setAllRestaurants(
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants ||
+        json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
     );
     setPaymentOffers(jsontwo);
   }

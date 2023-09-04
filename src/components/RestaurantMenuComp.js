@@ -149,6 +149,10 @@ const RestaurantView = () => {
   const [isVeg, setIsVeg] = useState(false);
   useEffect(() => {
     fetchAPI();
+    document.getElementById("footered").style.display = "none";
+    return () => {
+      document.getElementById("footered").style.display = "block";
+    };
   }, []);
   async function fetchAPI() {
     const response = await fetch(RESTAURANT_MENU_URL + resId);

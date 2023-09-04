@@ -1,4 +1,3 @@
-import { IMG_CDN_URL } from "../utils/config";
 import offerIconCart from "../assets/offerIconCart.png";
 
 const RestCards = ({
@@ -26,7 +25,12 @@ const RestCards = ({
   return (
     <div className="restbox">
       <div className="restimg">
-        <img src={IMG_CDN_URL + cloudinaryImageId} alt=""></img>
+        <img
+          src={
+            "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" +
+            cloudinaryImageId
+          }
+          alt=""></img>
       </div>
       <div className="restdesc">
         <div className="restName">{name}</div>

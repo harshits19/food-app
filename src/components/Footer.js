@@ -4,7 +4,7 @@ import logoFooter from "../assets/logoFooter.png";
 
 const Footer = () => {
   return (
-    <div className="footerContainer">
+    <div className="footerContainer" id="footered">
       <div className="footerInner">
         <div className="footerRow">
           <div className="footerLeft">
